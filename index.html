@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playoffs Καλοκαιριού – Estia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --card: #161616;
+      --border: #222222;
+      --gold: #f0a500;
+      --gold-dim: #7a5200;
+      --orange: #e05c00;
+      --text: #e8e8e8;
+      --muted: #666666;
+      --red: #c0392b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    header::after {
+      content: '🏀';
+      position: absolute;
+      font-size: 22rem;
+      opacity: 0.025;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .league-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+
+    h1 span {
+      color: var(--gold);
+    }
+
+    .header-meta {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+    }
+
+    .header-meta span::before {
+      content: '▸ ';
+      color: var(--gold);
+    }
+
+    /* ── SCOREBOARD ── */
+    .score-section {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 1.5rem;
+      background: linear-gradient(135deg, #0f0f0f 0%, #141414 100%);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .score-label {
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .scoreboard {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .team-score-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    .team-score-block.leading {
+      background: linear-gradient(135deg, rgba(240,165,0,0.06), transparent);
+    }
+
+    .team-name-score {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .leading .team-name-score {
+      color: var(--gold);
+    }
+
+    .score-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(5rem, 15vw, 9rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin-top: 0.2rem;
+    }
+
+    .leading .score-number { color: var(--gold); }
+    .trailing .score-number { color: #fff; }
+
+    .score-divider {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 9vw, 5rem);
+      font-weight: 900;
+      color: var(--border);
+      padding: 0 0.5rem;
+      align-self: center;
+      margin-bottom: 0.3rem;
+    }
+
+    .leading-badge {
+      margin-top: 0.5rem;
+      font-size: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.25rem 0.6rem;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.45em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ── TEAMS GRID ── */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .teams-grid { grid-template-columns: 1fr; }
+    }
+
+    .team-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .team-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+
+    .team-card.leading-team::before {
+      background: var(--gold);
+    }
+
+    .team-card:hover {
+      border-color: #333;
+    }
+
+    .team-card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.3rem;
+      color: #fff;
+    }
+
+    .leading-team .team-card-name {
+      color: var(--gold);
+    }
+
+    .player-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .player-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .player-list li:last-child { border-bottom: none; }
+
+    .player-list li:hover { color: #fff; }
+
+    .player-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: var(--muted);
+      min-width: 1.4rem;
+      text-align: right;
+    }
+
+    .leading-team .player-num { color: var(--gold-dim); }
+
+    /* ── INFO ROW ── */
+    .info-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .info-card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .info-card-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+    }
+
+    .info-card-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── STAKES BANNER ── */
+    .stakes-banner {
+      border: 1px solid var(--gold-dim);
+      background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(224,92,0,0.04));
+      padding: 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stakes-banner::before {
+      content: '🦞';
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 4rem;
+      opacity: 0.15;
+    }
+
+    .stakes-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .stakes-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+      max-width: 80%;
+    }
+
+    .stakes-text strong {
+      color: var(--gold);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header, .score-section, main > * {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .score-section { animation-delay: 0.1s; }
+    .teams-grid    { animation-delay: 0.2s; }
+    .info-row      { animation-delay: 0.3s; }
+    .stakes-banner { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="league-label">Playoffs Καλοκαιριού · Estia</div>
+    <h1>Φετινός <span>Τελικός</span></h1>
+    <div class="header-meta">
+      <span>Κάθε Πέμπτη 19:15</span>
+      <span>Παρκο Estia</span>
+    </div>
+  </header>
+
+  <!-- SCOREBOARD -->
+  <section class="score-section">
+    <div class="score-label">Βαθμολογία Σειράς</div>
+    <div class="scoreboard">
+      <div class="team-score-block leading">
+        <div class="team-name-score">Άνω<br>Πατήσια</div>
+        <div class="score-number">7</div>
+        <div class="leading-badge">Προηγείται</div>
+      </div>
+      <div class="score-divider">–</div>
+      <div class="team-score-block trailing">
+        <div class="team-name-score">Άνω<br>Γλυφάδα</div>
+        <div class="score-number">5</div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- TEAMS -->
+    <div class="section-title">Ομάδες &amp; Παίκτες</div>
+    <div class="teams-grid">
+
+      <div class="team-card leading-team">
+        <div class="team-card-name">Άνω Πατήσια</div>
+        <ul class="player-list">
+          <li><span class="player-num">#1</span> Ορφέας Πετρόπουλος</li>
+          <li><span class="player-num">#2</span> Πέτρος Λινιαρδής</li>
+          <li><span class="player-num">#3</span> Μάρκος Λάνης</li>
+        </ul>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card-name">Άνω Γλυφάδα</div>
+        <ul class="player-list">
+          <li><span class="player-num">#1</span> Χρήστος Ηγούμενος</li>
+          <li><span class="player-num">#2</span> Άρης Δαμίγος</li>
+          <li><span class="player-num">#3</span> Μαρίνος Σμαραγδάκης</li>
+          <li><span class="player-num">#4</span> Δημήτριος Κοσμάς</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- INFO -->
+    <div class="section-title">Πληροφορίες Αγώνων</div>
+    <div class="info-row">
+      <div class="info-card">
+        <div class="info-card-icon">📅</div>
+        <div class="info-card-label">Ημέρα</div>
+        <div class="info-card-value">Κάθε Πέμπτη</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🕖</div>
+        <div class="info-card-label">Ώρα Έναρξης</div>
+        <div class="info-card-value">19:15</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📍</div>
+        <div class="info-card-label">Γήπεδο</div>
+        <div class="info-card-value">Estia</div>
+      </div>
+    </div>
+
+    <!-- STAKES -->
+    <div class="section-title">Το Στοίχημα</div>
+    <div class="stakes-banner">
+      <div class="stakes-title">Τι παίζεται στο τέλος</div>
+      <div class="stakes-text">
+        Ο <strong>χαμένος</strong> των playoffs κερνάει την νικήτρια ομάδα
+        <strong>αστακομακαρονάδα</strong> από το Mezeclick 🦞🍝
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    Playoffs Καλοκαιριού · Estia · Αθήνα
+  </footer>
+
+</body>
+</html>
