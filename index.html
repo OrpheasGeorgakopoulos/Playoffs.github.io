@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Playoffs Καλοκαιριού – Estia</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>" />
+
+  <meta property="og:title" content="Playoffs Estia" />
+  <meta property="og:description" content="Φετινός Τελικός · Άνω Πατήσια vs Άνω Γλυφάδα · Κάθε Πέμπτη 19:15 · Πάρκο Estia" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Playoffs Estia" />
+  <meta name="twitter:description" content="Φετινός Τελικός · Άνω Πατήσια vs Άνω Γλυφάδα · Κάθε Πέμπτη 19:15 · Πάρκο Estia" />
+
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -40,7 +50,6 @@
       z-index: 0;
     }
 
-    /* ── HEADER ── */
     header {
       position: relative;
       padding: 3rem 2rem 2rem;
@@ -102,7 +111,6 @@
       color: var(--gold);
     }
 
-    /* ── SCOREBOARD ── */
     .score-section {
       position: relative;
       z-index: 1;
@@ -189,7 +197,30 @@
       clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
     }
 
-    /* ── MAIN ── */
+    .prev-match-note {
+      text-align: center;
+      margin-top: 1.8rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1.2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .prev-match-note strong {
+      color: var(--text);
+    }
+
+    .prev-match-note .mvp-highlight {
+      color: var(--gold);
+    }
+
     main {
       position: relative;
       z-index: 1;
@@ -226,7 +257,6 @@
       background: linear-gradient(to right, var(--border), transparent);
     }
 
-    /* ── TEAMS ── */
     .teams-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -327,7 +357,6 @@
       font-style: italic;
     }
 
-    /* ── INFO ROW ── */
     .info-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -364,7 +393,6 @@
 
     .info-card-icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
 
-    /* ── STAKES ── */
     .stakes-banner {
       border: 1px solid var(--gold-dim);
       background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(224,92,0,0.04));
@@ -407,7 +435,6 @@
 
     .stakes-text strong { color: var(--gold); }
 
-    /* ── VIDEOS ── */
     .videos-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -451,7 +478,6 @@
       color: var(--gold);
     }
 
-    /* ── FOOTER ── */
     footer {
       position: relative;
       z-index: 1;
@@ -465,7 +491,6 @@
       text-transform: uppercase;
     }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -503,11 +528,13 @@
         <div class="score-number">5</div>
       </div>
     </div>
+    <div class="prev-match-note">
+      Προηγούμενος αγώνας: <strong>Νίκη Άνω Γλυφάδας 69–67</strong> &nbsp;·&nbsp; MVP: <span class="mvp-highlight">Χρήστος Ηγούμενος</span>
+    </div>
   </section>
 
   <main>
 
-    <!-- TEAMS -->
     <div class="section-block">
       <div class="section-title">Ομάδες &amp; Παίκτες</div>
       <div class="teams-grid">
@@ -543,7 +570,6 @@
       </div>
     </div>
 
-    <!-- INFO -->
     <div class="section-block">
       <div class="section-title">Πληροφορίες Αγώνων</div>
       <div class="info-row">
@@ -565,7 +591,6 @@
       </div>
     </div>
 
-    <!-- STAKES -->
     <div class="section-block">
       <div class="section-title">Το Στοίχημα</div>
       <div class="stakes-banner">
@@ -577,7 +602,6 @@
       </div>
     </div>
 
-    <!-- VIDEOS -->
     <div class="section-block">
       <div class="section-title">Συνεντεύξεις</div>
       <div class="videos-grid">
