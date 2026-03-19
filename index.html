@@ -20,7 +20,6 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -41,6 +40,7 @@
       z-index: 0;
     }
 
+    /* ── HEADER ── */
     header {
       position: relative;
       padding: 3rem 2rem 2rem;
@@ -102,6 +102,7 @@
       color: var(--gold);
     }
 
+    /* ── SCOREBOARD ── */
     .score-section {
       position: relative;
       z-index: 1;
@@ -125,7 +126,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0;
       max-width: 700px;
       margin: 0 auto;
     }
@@ -136,7 +136,6 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem 1rem;
-      position: relative;
     }
 
     .team-score-block.leading {
@@ -175,7 +174,6 @@
       color: var(--border);
       padding: 0 0.5rem;
       align-self: center;
-      margin-bottom: 0.3rem;
     }
 
     .leading-badge {
@@ -191,12 +189,22 @@
       clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
     }
 
+    /* ── MAIN ── */
     main {
       position: relative;
       z-index: 1;
       max-width: 1100px;
       margin: 0 auto;
       padding: 3rem 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .section-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .section-title {
@@ -206,7 +214,6 @@
       letter-spacing: 0.45em;
       color: var(--gold);
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -219,15 +226,16 @@
       background: linear-gradient(to right, var(--border), transparent);
     }
 
+    /* ── TEAMS ── */
     .teams-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
-      margin-bottom: 3.5rem;
     }
 
     @media (max-width: 600px) {
       .teams-grid { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: 1fr; }
     }
 
     .team-card {
@@ -235,7 +243,6 @@
       border: 1px solid var(--border);
       padding: 1.8rem;
       position: relative;
-      overflow: hidden;
       transition: border-color 0.3s;
     }
 
@@ -267,23 +274,20 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
     }
 
     .player-list li {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       font-size: 0.95rem;
-      font-weight: 400;
       color: var(--text);
-      padding: 0.5rem 0;
+      padding: 0.55rem 0;
       border-bottom: 1px solid var(--border);
-      transition: color 0.2s;
     }
 
     .player-list li:last-child { border-bottom: none; }
-    .player-list li:hover { color: #fff; }
 
     .player-num {
       font-family: 'Barlow Condensed', sans-serif;
@@ -296,40 +300,38 @@
 
     .leading-team .player-num { color: var(--gold-dim); }
 
-    /* ── PLAYER BADGES ── */
     .badge {
-      margin-left: auto;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
+      padding: 0.2rem 0.55rem;
       clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+      white-space: nowrap;
     }
 
     .badge-mvp {
-      color: #000;
       background: var(--gold);
+      color: #000;
     }
 
     .badge-injured {
-      color: #fff;
       background: var(--red);
+      color: #fff;
     }
 
     .player-note {
       font-size: 0.75rem;
       color: var(--muted);
       font-style: italic;
-      margin-left: 0.2rem;
     }
 
+    /* ── INFO ROW ── */
     .info-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.2rem;
-      margin-bottom: 3.5rem;
     }
 
     .info-card {
@@ -360,21 +362,18 @@
       line-height: 1.1;
     }
 
-    .info-card-icon {
-      font-size: 1.4rem;
-      margin-bottom: 0.2rem;
-    }
+    .info-card-icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
 
+    /* ── STAKES ── */
     .stakes-banner {
       border: 1px solid var(--gold-dim);
       background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(224,92,0,0.04));
       padding: 2rem;
       position: relative;
       overflow: hidden;
-      margin-bottom: 3.5rem;
     }
 
-    .stakes-banner::before {
+    .stakes-banner::after {
       content: '🦞';
       position: absolute;
       right: 1.5rem;
@@ -382,6 +381,7 @@
       transform: translateY(-50%);
       font-size: 4rem;
       opacity: 0.15;
+      pointer-events: none;
     }
 
     .stakes-title {
@@ -414,10 +414,6 @@
       gap: 1.5rem;
     }
 
-    @media (max-width: 600px) {
-      .videos-grid { grid-template-columns: 1fr; }
-    }
-
     .video-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -425,12 +421,15 @@
       transition: border-color 0.3s;
     }
 
-    .video-card:hover { border-color: #333; }
+    .video-card:hover { border-color: #444; }
 
     .video-card video {
       width: 100%;
+      height: auto;
       display: block;
       background: #000;
+      max-height: 300px;
+      object-fit: contain;
     }
 
     .video-card-label {
@@ -442,13 +441,17 @@
       text-transform: uppercase;
       color: var(--muted);
       border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .video-card-label span {
+    .video-card-label::before {
+      content: '▸';
       color: var(--gold);
-      margin-right: 0.4rem;
     }
 
+    /* ── FOOTER ── */
     footer {
       position: relative;
       z-index: 1;
@@ -462,20 +465,15 @@
       text-transform: uppercase;
     }
 
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    header, .score-section, main > * {
-      animation: fadeUp 0.5s ease both;
-    }
-
-    .score-section  { animation-delay: 0.1s; }
-    .teams-grid     { animation-delay: 0.2s; }
-    .info-row       { animation-delay: 0.3s; }
-    .stakes-banner  { animation-delay: 0.4s; }
-    .videos-grid    { animation-delay: 0.5s; }
+    header       { animation: fadeUp 0.5s ease both 0s; }
+    .score-section { animation: fadeUp 0.5s ease both 0.1s; }
+    .section-block { animation: fadeUp 0.5s ease both 0.2s; }
   </style>
 </head>
 <body>
@@ -509,78 +507,94 @@
 
   <main>
 
-    <div class="section-title">Ομάδες &amp; Παίκτες</div>
-    <div class="teams-grid">
+    <!-- TEAMS -->
+    <div class="section-block">
+      <div class="section-title">Ομάδες &amp; Παίκτες</div>
+      <div class="teams-grid">
 
-      <div class="team-card leading-team">
-        <div class="team-card-name">Άνω Πατήσια</div>
-        <ul class="player-list">
-          <li><span class="player-num">#1</span> Ορφέας Πετρόπουλος</li>
-          <li><span class="player-num">#2</span> Πέτρος Λινιαρδής</li>
-          <li><span class="player-num">#3</span> Μάρκος Λάνης</li>
-        </ul>
-      </div>
+        <div class="team-card leading-team">
+          <div class="team-card-name">Άνω Πατήσια</div>
+          <ul class="player-list">
+            <li><span class="player-num">#1</span> Ορφέας Πετρόπουλος</li>
+            <li><span class="player-num">#2</span> Πέτρος Λινιαρδής</li>
+            <li><span class="player-num">#3</span> Μάρκος Λάνης</li>
+          </ul>
+        </div>
 
-      <div class="team-card">
-        <div class="team-card-name">Άνω Γλυφάδα</div>
-        <ul class="player-list">
-          <li>
-            <span class="player-num">#1</span> Χρήστος Ηγούμενος
-            <span class="badge badge-mvp">MVP</span>
-          </li>
-          <li><span class="player-num">#2</span> Άρης Δαμίγος</li>
-          <li><span class="player-num">#3</span> Μαρίνος Σμαραγδάκης</li>
-          <li>
-            <span class="player-num">#4</span> Δημήτριος Κοσμάς
-            <span class="badge badge-injured">Τραυματίας</span>
-            <span class="player-note">· εκτός 3 μήνες</span>
-          </li>
-        </ul>
-      </div>
+        <div class="team-card">
+          <div class="team-card-name">Άνω Γλυφάδα</div>
+          <ul class="player-list">
+            <li>
+              <span class="player-num">#1</span>
+              Χρήστος Ηγούμενος
+              <span class="badge badge-mvp">MVP</span>
+            </li>
+            <li><span class="player-num">#2</span> Άρης Δαμίγος</li>
+            <li><span class="player-num">#3</span> Μαρίνος Σμαραγδάκης</li>
+            <li>
+              <span class="player-num">#4</span>
+              Δημήτριος Κοσμάς
+              <span class="badge badge-injured">Τραυματίας</span>
+              <span class="player-note">εκτός 3 μήνες</span>
+            </li>
+          </ul>
+        </div>
 
-    </div>
-
-    <div class="section-title">Πληροφορίες Αγώνων</div>
-    <div class="info-row">
-      <div class="info-card">
-        <div class="info-card-icon">📅</div>
-        <div class="info-card-label">Ημέρα</div>
-        <div class="info-card-value">Κάθε Πέμπτη</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">🕖</div>
-        <div class="info-card-label">Ώρα Έναρξης</div>
-        <div class="info-card-value">19:15</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">📍</div>
-        <div class="info-card-label">Γήπεδο</div>
-        <div class="info-card-value">Estia</div>
       </div>
     </div>
 
-    <div class="section-title">Το Στοίχημα</div>
-    <div class="stakes-banner">
-      <div class="stakes-title">Τι παίζεται στο τέλος</div>
-      <div class="stakes-text">
-        Ο <strong>χαμένος</strong> των playoffs κερνάει την νικήτρια ομάδα
-        <strong>αστακομακαρονάδα</strong> από το Mezeclick 🦞🍝
+    <!-- INFO -->
+    <div class="section-block">
+      <div class="section-title">Πληροφορίες Αγώνων</div>
+      <div class="info-row">
+        <div class="info-card">
+          <div class="info-card-icon">📅</div>
+          <div class="info-card-label">Ημέρα</div>
+          <div class="info-card-value">Κάθε Πέμπτη</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">🕖</div>
+          <div class="info-card-label">Ώρα Έναρξης</div>
+          <div class="info-card-value">19:15</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">📍</div>
+          <div class="info-card-label">Γήπεδο</div>
+          <div class="info-card-value">Estia</div>
+        </div>
       </div>
     </div>
 
-    <div class="section-title">Συνεντεύξεις</div>
-    <div class="videos-grid">
-      <div class="video-card">
-        <video controls preload="metadata">
-          <source src="Interview1.mp4" type="video/mp4" />
-        </video>
-        <div class="video-card-label"><span>▸</span> Συνέντευξη 1</div>
+    <!-- STAKES -->
+    <div class="section-block">
+      <div class="section-title">Το Στοίχημα</div>
+      <div class="stakes-banner">
+        <div class="stakes-title">Τι παίζεται στο τέλος</div>
+        <div class="stakes-text">
+          Ο <strong>χαμένος</strong> των playoffs κερνάει την νικήτρια ομάδα
+          <strong>αστακομακαρονάδα</strong> από το Mezeclick 🦞🍝
+        </div>
       </div>
-      <div class="video-card">
-        <video controls preload="metadata">
-          <source src="Interview2.mp4" type="video/mp4" />
-        </video>
-        <div class="video-card-label"><span>▸</span> Συνέντευξη 2</div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="section-block">
+      <div class="section-title">Συνεντεύξεις</div>
+      <div class="videos-grid">
+        <div class="video-card">
+          <video controls preload="metadata">
+            <source src="Interview1.mp4" type="video/mp4" />
+            Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
+          </video>
+          <div class="video-card-label">Συνέντευξη 1</div>
+        </div>
+        <div class="video-card">
+          <video controls preload="metadata">
+            <source src="Interview2.mp4" type="video/mp4" />
+            Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
+          </video>
+          <div class="video-card-label">Συνέντευξη 2</div>
+        </div>
       </div>
     </div>
 
