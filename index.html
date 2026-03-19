@@ -31,7 +31,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NOISE OVERLAY ── */
     body::before {
       content: '';
       position: fixed;
@@ -42,7 +41,6 @@
       z-index: 0;
     }
 
-    /* ── HEADER ── */
     header {
       position: relative;
       padding: 3rem 2rem 2rem;
@@ -84,9 +82,7 @@
       color: #fff;
     }
 
-    h1 span {
-      color: var(--gold);
-    }
+    h1 span { color: var(--gold); }
 
     .header-meta {
       margin-top: 1.2rem;
@@ -106,7 +102,6 @@
       color: var(--gold);
     }
 
-    /* ── SCOREBOARD ── */
     .score-section {
       position: relative;
       z-index: 1;
@@ -159,9 +154,7 @@
       line-height: 1.1;
     }
 
-    .leading .team-name-score {
-      color: var(--gold);
-    }
+    .leading .team-name-score { color: var(--gold); }
 
     .score-number {
       font-family: 'Barlow Condensed', sans-serif;
@@ -198,7 +191,6 @@
       clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
     }
 
-    /* ── MAIN CONTENT ── */
     main {
       position: relative;
       z-index: 1;
@@ -227,7 +219,6 @@
       background: linear-gradient(to right, var(--border), transparent);
     }
 
-    /* ── TEAMS GRID ── */
     .teams-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -257,13 +248,8 @@
       transition: background 0.3s;
     }
 
-    .team-card.leading-team::before {
-      background: var(--gold);
-    }
-
-    .team-card:hover {
-      border-color: #333;
-    }
+    .team-card.leading-team::before { background: var(--gold); }
+    .team-card:hover { border-color: #333; }
 
     .team-card-name {
       font-family: 'Barlow Condensed', sans-serif;
@@ -275,9 +261,7 @@
       color: #fff;
     }
 
-    .leading-team .team-card-name {
-      color: var(--gold);
-    }
+    .leading-team .team-card-name { color: var(--gold); }
 
     .player-list {
       list-style: none;
@@ -299,7 +283,6 @@
     }
 
     .player-list li:last-child { border-bottom: none; }
-
     .player-list li:hover { color: #fff; }
 
     .player-num {
@@ -313,7 +296,35 @@
 
     .leading-team .player-num { color: var(--gold-dim); }
 
-    /* ── INFO ROW ── */
+    /* ── PLAYER BADGES ── */
+    .badge {
+      margin-left: auto;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .badge-mvp {
+      color: #000;
+      background: var(--gold);
+    }
+
+    .badge-injured {
+      color: #fff;
+      background: var(--red);
+    }
+
+    .player-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-left: 0.2rem;
+    }
+
     .info-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -354,13 +365,13 @@
       margin-bottom: 0.2rem;
     }
 
-    /* ── STAKES BANNER ── */
     .stakes-banner {
       border: 1px solid var(--gold-dim);
       background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(224,92,0,0.04));
-      padding: 2rem 2rem;
+      padding: 2rem;
       position: relative;
       overflow: hidden;
+      margin-bottom: 3.5rem;
     }
 
     .stakes-banner::before {
@@ -394,11 +405,50 @@
       max-width: 80%;
     }
 
-    .stakes-text strong {
-      color: var(--gold);
+    .stakes-text strong { color: var(--gold); }
+
+    /* ── VIDEOS ── */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
 
-    /* ── FOOTER ── */
+    @media (max-width: 600px) {
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .video-card:hover { border-color: #333; }
+
+    .video-card video {
+      width: 100%;
+      display: block;
+      background: #000;
+    }
+
+    .video-card-label {
+      padding: 0.9rem 1.2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .video-card-label span {
+      color: var(--gold);
+      margin-right: 0.4rem;
+    }
+
     footer {
       position: relative;
       z-index: 1;
@@ -412,7 +462,6 @@
       text-transform: uppercase;
     }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -422,10 +471,11 @@
       animation: fadeUp 0.5s ease both;
     }
 
-    .score-section { animation-delay: 0.1s; }
-    .teams-grid    { animation-delay: 0.2s; }
-    .info-row      { animation-delay: 0.3s; }
-    .stakes-banner { animation-delay: 0.4s; }
+    .score-section  { animation-delay: 0.1s; }
+    .teams-grid     { animation-delay: 0.2s; }
+    .info-row       { animation-delay: 0.3s; }
+    .stakes-banner  { animation-delay: 0.4s; }
+    .videos-grid    { animation-delay: 0.5s; }
   </style>
 </head>
 <body>
@@ -439,19 +489,18 @@
     </div>
   </header>
 
-  <!-- SCOREBOARD -->
   <section class="score-section">
     <div class="score-label">Βαθμολογία Σειράς</div>
     <div class="scoreboard">
       <div class="team-score-block leading">
-        <img src="LogoA.png" alt="Άνω Πατήσια" style="height:60px; width:auto; margin-bottom:0.5rem; object-fit:contain;" />
+        <img src="LogoA.png" alt="Άνω Πατήσια" style="height:90px; width:auto; margin-bottom:0.6rem; object-fit:contain;" />
         <div class="team-name-score">Άνω<br>Πατήσια</div>
         <div class="score-number">7</div>
         <div class="leading-badge">Προηγείται</div>
       </div>
       <div class="score-divider">–</div>
       <div class="team-score-block trailing">
-        <img src="LogoB.png" alt="Άνω Γλυφάδα" style="height:60px; width:auto; margin-bottom:0.5rem; object-fit:contain;" />
+        <img src="LogoB.png" alt="Άνω Γλυφάδα" style="height:90px; width:auto; margin-bottom:0.6rem; object-fit:contain;" />
         <div class="team-name-score">Άνω<br>Γλυφάδα</div>
         <div class="score-number">5</div>
       </div>
@@ -460,7 +509,6 @@
 
   <main>
 
-    <!-- TEAMS -->
     <div class="section-title">Ομάδες &amp; Παίκτες</div>
     <div class="teams-grid">
 
@@ -476,16 +524,22 @@
       <div class="team-card">
         <div class="team-card-name">Άνω Γλυφάδα</div>
         <ul class="player-list">
-          <li><span class="player-num">#1</span> Χρήστος Ηγούμενος</li>
+          <li>
+            <span class="player-num">#1</span> Χρήστος Ηγούμενος
+            <span class="badge badge-mvp">MVP</span>
+          </li>
           <li><span class="player-num">#2</span> Άρης Δαμίγος</li>
           <li><span class="player-num">#3</span> Μαρίνος Σμαραγδάκης</li>
-          <li><span class="player-num">#4</span> Δημήτριος Κοσμάς</li>
+          <li>
+            <span class="player-num">#4</span> Δημήτριος Κοσμάς
+            <span class="badge badge-injured">Τραυματίας</span>
+            <span class="player-note">· εκτός 3 μήνες</span>
+          </li>
         </ul>
       </div>
 
     </div>
 
-    <!-- INFO -->
     <div class="section-title">Πληροφορίες Αγώνων</div>
     <div class="info-row">
       <div class="info-card">
@@ -505,13 +559,28 @@
       </div>
     </div>
 
-    <!-- STAKES -->
     <div class="section-title">Το Στοίχημα</div>
     <div class="stakes-banner">
       <div class="stakes-title">Τι παίζεται στο τέλος</div>
       <div class="stakes-text">
         Ο <strong>χαμένος</strong> των playoffs κερνάει την νικήτρια ομάδα
         <strong>αστακομακαρονάδα</strong> από το Mezeclick 🦞🍝
+      </div>
+    </div>
+
+    <div class="section-title">Συνεντεύξεις</div>
+    <div class="videos-grid">
+      <div class="video-card">
+        <video controls preload="metadata">
+          <source src="Interview1.mp4" type="video/mp4" />
+        </video>
+        <div class="video-card-label"><span>▸</span> Συνέντευξη 1</div>
+      </div>
+      <div class="video-card">
+        <video controls preload="metadata">
+          <source src="Interview2.mp4" type="video/mp4" />
+        </video>
+        <div class="video-card-label"><span>▸</span> Συνέντευξη 2</div>
       </div>
     </div>
 
