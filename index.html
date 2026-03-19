@@ -266,6 +266,7 @@
     @media (max-width: 600px) {
       .teams-grid { grid-template-columns: 1fr; }
       .videos-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
     }
 
     .team-card {
@@ -478,6 +479,120 @@
       color: var(--gold);
     }
 
+    /* ── Blog Section ── */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--border);
+      transition: background 0.3s;
+      z-index: 1;
+    }
+
+    .blog-card:hover {
+      border-color: #444;
+      transform: translateY(-2px);
+    }
+
+    .blog-card:hover::before {
+      background: var(--gold);
+    }
+
+    .blog-card-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      background: #111;
+      transition: opacity 0.3s;
+    }
+
+    .blog-card:hover .blog-card-img {
+      opacity: 0.85;
+    }
+
+    .blog-card-body {
+      padding: 1.4rem 1.6rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .blog-card-meta .blog-tag {
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.15rem 0.5rem;
+      clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
+    }
+
+    .blog-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #fff;
+      line-height: 1.15;
+    }
+
+    .blog-card-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    .blog-card-read-more {
+      margin-top: 0.4rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    .blog-card-read-more::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+
+    .blog-card:hover .blog-card-read-more::after {
+      transform: translateX(4px);
+    }
+
     footer {
       position: relative;
       z-index: 1;
@@ -619,6 +734,44 @@
           </video>
           <div class="video-card-label">Συνέντευξη 2</div>
         </div>
+      </div>
+    </div>
+
+    <!-- ── Blog Section ── -->
+    <div class="section-block">
+      <div class="section-title">Blog</div>
+      <div class="blog-grid">
+
+        <div class="blog-card">
+          <img class="blog-card-img" src="Blog_1.jpg" alt="Blog Post 1" />
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag">Ανάλυση</span>
+              <span>Playoffs 2025</span>
+            </div>
+            <div class="blog-card-title">Ο Δρόμος προς τον Τελικό</div>
+            <p class="blog-card-excerpt">
+              Πώς έφτασαν οι δύο ομάδες στον μεγάλο τελικό — τα highlights, τα κλειδιά και οι αποφασιστικές στιγμές της σεζόν.
+            </p>
+            <a href="#" class="blog-card-read-more">Διαβάστε Περισσότερα</a>
+          </div>
+        </div>
+
+        <div class="blog-card">
+          <img class="blog-card-img" src="Blog_2.jpg" alt="Blog Post 2" />
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-tag">Αφιέρωμα</span>
+              <span>Παίκτες</span>
+            </div>
+            <div class="blog-card-title">Οι Πρωταγωνιστές του Καλοκαιριού</div>
+            <p class="blog-card-excerpt">
+              Αφιέρωμα στους παίκτες που ξεχώρισαν φέτος — από τον MVP της σειράς ως τις αθόρυβες ηρωικές παρουσίες.
+            </p>
+            <a href="#" class="blog-card-read-more">Διαβάστε Περισσότερα</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
