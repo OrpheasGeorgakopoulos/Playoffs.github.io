@@ -4,34 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Playoffs Καλοκαιριού – Estia</title>
-
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>" />
-
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>" />
   <meta property="og:title" content="Playoffs Estia" />
-  <meta property="og:description" content="Φετινός Τελικός · Άνω Πατήσια vs Άνω Γλυφάδα · Κάθε Πέμπτη 19:15 · Πάρκο Estia" />
+  <meta property="og:description" content="Πρωταθλητές: Άνω Πατήσια · Playoffs Καλοκαιριού · Πάρκο Estia" />
   <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Playoffs Estia" />
-  <meta name="twitter:description" content="Φετινός Τελικός · Άνω Πατήσια vs Άνω Γλυφάδα · Κάθε Πέμπτη 19:15 · Πάρκο Estia" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0a0a0a;
-      --surface: #111111;
-      --card: #161616;
-      --border: #222222;
+      --bg: #080808;
+      --surface: #0f0f0f;
+      --card: #131313;
+      --border: #1e1e1e;
       --gold: #f0a500;
       --gold-dim: #7a5200;
+      --gold-glow: rgba(240,165,0,0.15);
       --orange: #e05c00;
       --text: #e8e8e8;
-      --muted: #666666;
+      --muted: #555;
       --red: #c0392b;
+      --champion: #ffd700;
+      --green: #27ae60;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -39,17 +34,113 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.03;
+      opacity: 0.025;
       pointer-events: none;
       z-index: 0;
     }
 
+    /* ── CHAMPION BANNER ── */
+    .champion-banner {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(135deg, #1a1100 0%, #0f0a00 40%, #1a1100 100%);
+      border-bottom: 2px solid var(--champion);
+      overflow: hidden;
+    }
+    .champion-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .champion-confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .champion-confetti span {
+      position: absolute;
+      top: -10px;
+      font-size: 1.2rem;
+      animation: fall linear infinite;
+      opacity: 0.55;
+    }
+    @keyframes fall {
+      to { transform: translateY(110%) rotate(720deg); opacity: 0; }
+    }
+    .champion-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      text-align: center;
+    }
+    .champion-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5em;
+      color: var(--champion);
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .champion-trophy {
+      font-size: 5rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
+      animation: trophyPulse 2s ease-in-out infinite;
+    }
+    @keyframes trophyPulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.4)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 45px rgba(255,215,0,0.8)); transform: scale(1.06); }
+    }
+    .champion-title {
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+      font-size: clamp(3.5rem, 12vw, 8rem);
+      font-weight: 400;
+      line-height: 0.85;
+      letter-spacing: 0.04em;
+      color: var(--champion);
+      text-shadow: 0 0 60px rgba(255,215,0,0.3), 0 4px 0 rgba(0,0,0,0.5);
+      text-transform: uppercase;
+    }
+    .champion-team {
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+      font-size: clamp(2rem, 7vw, 4.5rem);
+      font-weight: 400;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .champion-season {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .champion-logo {
+      height: 100px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 25px rgba(255,215,0,0.35));
+      margin-top: 0.3rem;
+    }
+
+    /* ── HEADER ── */
     header {
       position: relative;
       padding: 3rem 2rem 2rem;
@@ -58,19 +149,17 @@
       overflow: hidden;
       z-index: 1;
     }
-
     header::after {
       content: '🏀';
       position: absolute;
       font-size: 22rem;
-      opacity: 0.025;
+      opacity: 0.02;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-15deg);
       pointer-events: none;
       line-height: 1;
     }
-
     .league-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.75rem;
@@ -80,19 +169,16 @@
       text-transform: uppercase;
       margin-bottom: 0.6rem;
     }
-
     h1 {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
       font-size: clamp(2.8rem, 8vw, 6rem);
-      font-weight: 900;
+      font-weight: 400;
       line-height: 0.92;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.02em;
       color: #fff;
     }
-
     h1 span { color: var(--gold); }
-
     .header-meta {
       margin-top: 1.2rem;
       display: flex;
@@ -105,20 +191,16 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 600;
     }
+    .header-meta span::before { content: '▸ '; color: var(--gold); }
 
-    .header-meta span::before {
-      content: '▸ ';
-      color: var(--gold);
-    }
-
+    /* ── SCOREBOARD ── */
     .score-section {
       position: relative;
       z-index: 1;
       padding: 3rem 1.5rem;
-      background: linear-gradient(135deg, #0f0f0f 0%, #141414 100%);
+      background: linear-gradient(135deg, #0c0c0c 0%, #111 100%);
       border-bottom: 3px solid var(--gold);
     }
-
     .score-label {
       text-align: center;
       font-family: 'Barlow Condensed', sans-serif;
@@ -129,7 +211,6 @@
       margin-bottom: 1.5rem;
       font-weight: 700;
     }
-
     .scoreboard {
       display: flex;
       align-items: center;
@@ -137,7 +218,6 @@
       max-width: 700px;
       margin: 0 auto;
     }
-
     .team-score-block {
       flex: 1;
       display: flex;
@@ -145,11 +225,9 @@
       align-items: center;
       padding: 2rem 1rem;
     }
-
     .team-score-block.leading {
-      background: linear-gradient(135deg, rgba(240,165,0,0.06), transparent);
+      background: linear-gradient(135deg, rgba(240,165,0,0.07), transparent);
     }
-
     .team-name-score {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(1.1rem, 3vw, 1.6rem);
@@ -160,30 +238,25 @@
       text-align: center;
       line-height: 1.1;
     }
-
     .leading .team-name-score { color: var(--gold); }
-
     .score-number {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
       font-size: clamp(5rem, 15vw, 9rem);
-      font-weight: 900;
+      font-weight: 400;
       line-height: 0.9;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.01em;
       margin-top: 0.2rem;
     }
-
     .leading .score-number { color: var(--gold); }
     .trailing .score-number { color: #fff; }
-
     .score-divider {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
       font-size: clamp(3rem, 9vw, 5rem);
-      font-weight: 900;
+      font-weight: 400;
       color: var(--border);
       padding: 0 0.5rem;
       align-self: center;
     }
-
     .leading-badge {
       margin-top: 0.5rem;
       font-size: 0.6rem;
@@ -196,7 +269,6 @@
       padding: 0.25rem 0.6rem;
       clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
     }
-
     .prev-match-note {
       text-align: center;
       margin-top: 1.8rem;
@@ -212,15 +284,10 @@
       margin-left: auto;
       margin-right: auto;
     }
+    .prev-match-note strong { color: var(--text); }
+    .prev-match-note .mvp-highlight { color: var(--gold); }
 
-    .prev-match-note strong {
-      color: var(--text);
-    }
-
-    .prev-match-note .mvp-highlight {
-      color: var(--gold);
-    }
-
+    /* ── MAIN ── */
     main {
       position: relative;
       z-index: 1;
@@ -231,13 +298,7 @@
       flex-direction: column;
       gap: 3.5rem;
     }
-
-    .section-block {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
+    .section-block { display: flex; flex-direction: column; gap: 1.5rem; }
     .section-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.65rem;
@@ -249,7 +310,6 @@
       align-items: center;
       gap: 0.8rem;
     }
-
     .section-title::after {
       content: '';
       flex: 1;
@@ -257,18 +317,12 @@
       background: linear-gradient(to right, var(--border), transparent);
     }
 
+    /* ── TEAMS ── */
     .teams-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
-
-    @media (max-width: 600px) {
-      .teams-grid { grid-template-columns: 1fr; }
-      .videos-grid { grid-template-columns: 1fr; }
-      .blog-grid { grid-template-columns: 1fr; }
-    }
-
     .team-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -276,7 +330,6 @@
       position: relative;
       transition: border-color 0.3s;
     }
-
     .team-card::before {
       content: '';
       position: absolute;
@@ -285,10 +338,8 @@
       background: var(--border);
       transition: background 0.3s;
     }
-
     .team-card.leading-team::before { background: var(--gold); }
     .team-card:hover { border-color: #333; }
-
     .team-card-name {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.5rem;
@@ -297,16 +348,12 @@
       letter-spacing: 0.04em;
       margin-bottom: 1.3rem;
       color: #fff;
-    }
-
-    .leading-team .team-card-name { color: var(--gold); }
-
-    .player-list {
-      list-style: none;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
     }
-
+    .leading-team .team-card-name { color: var(--gold); }
+    .player-list { list-style: none; display: flex; flex-direction: column; }
     .player-list li {
       display: flex;
       align-items: center;
@@ -317,9 +364,7 @@
       padding: 0.55rem 0;
       border-bottom: 1px solid var(--border);
     }
-
     .player-list li:last-child { border-bottom: none; }
-
     .player-num {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
@@ -328,9 +373,7 @@
       min-width: 1.4rem;
       text-align: right;
     }
-
     .leading-team .player-num { color: var(--gold-dim); }
-
     .badge {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.6rem;
@@ -341,29 +384,19 @@
       clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
       white-space: nowrap;
     }
+    .badge-mvp { background: var(--gold); color: #000; }
+    .badge-injured { background: var(--red); color: #fff; }
+    .badge-healthy { background: var(--green); color: #fff; }
+    .badge-champ { background: var(--champion); color: #000; }
+    .player-note { font-size: 0.75rem; color: var(--muted); font-style: italic; }
+    .player-note.good { color: var(--green); font-style: normal; font-weight: 600; }
 
-    .badge-mvp {
-      background: var(--gold);
-      color: #000;
-    }
-
-    .badge-injured {
-      background: var(--red);
-      color: #fff;
-    }
-
-    .player-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-style: italic;
-    }
-
+    /* ── INFO CARDS ── */
     .info-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.2rem;
     }
-
     .info-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -372,7 +405,6 @@
       flex-direction: column;
       gap: 0.4rem;
     }
-
     .info-card-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.6rem;
@@ -381,7 +413,6 @@
       text-transform: uppercase;
       color: var(--muted);
     }
-
     .info-card-value {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.5rem;
@@ -391,9 +422,9 @@
       letter-spacing: 0.03em;
       line-height: 1.1;
     }
-
     .info-card-icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
 
+    /* ── STAKES ── */
     .stakes-banner {
       border: 1px solid var(--gold-dim);
       background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(224,92,0,0.04));
@@ -401,7 +432,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .stakes-banner::after {
       content: '🦞';
       position: absolute;
@@ -412,7 +442,6 @@
       opacity: 0.15;
       pointer-events: none;
     }
-
     .stakes-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.65rem;
@@ -422,7 +451,6 @@
       color: var(--gold);
       margin-bottom: 0.6rem;
     }
-
     .stakes-text {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.35rem;
@@ -433,24 +461,126 @@
       line-height: 1.3;
       max-width: 80%;
     }
-
     .stakes-text strong { color: var(--gold); }
 
+    /* ── FRIENDLIES ── */
+    .friendlies-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .friendlies-section::before {
+      content: '⚡';
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 5rem;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .friendlies-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .friendlies-live-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(39,174,96,0.5); }
+      50% { opacity: 0.5; box-shadow: 0 0 0 5px rgba(39,174,96,0); }
+    }
+    .friendlies-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+    .friendlies-status-pill {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(39,174,96,0.12);
+      color: var(--green);
+      border: 1px solid rgba(39,174,96,0.3);
+      padding: 0.2rem 0.7rem;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+    .friendlies-matches { display: flex; flex-direction: column; gap: 1rem; }
+    .friendly-match {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .friendly-match-teams {
+      flex: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .friendly-match-teams .vs { color: var(--muted); font-size: 0.85rem; margin: 0 0.4rem; }
+    .friendly-match-result {
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: #fff;
+    }
+    .friendly-match-result.winner { color: var(--green); }
+    .friendly-match-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+      width: 100%;
+      margin-top: -0.2rem;
+      line-height: 1.5;
+    }
+    .friendly-winner-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    /* ── VIDEOS ── */
     .videos-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
-
     .video-card {
       background: var(--card);
       border: 1px solid var(--border);
       overflow: hidden;
       transition: border-color 0.3s;
     }
-
     .video-card:hover { border-color: #444; }
-
     .video-card video {
       width: 100%;
       height: auto;
@@ -459,7 +589,6 @@
       max-height: 300px;
       object-fit: contain;
     }
-
     .video-card-label {
       padding: 0.9rem 1.2rem;
       font-family: 'Barlow Condensed', sans-serif;
@@ -473,19 +602,14 @@
       align-items: center;
       gap: 0.5rem;
     }
+    .video-card-label::before { content: '▸'; color: var(--gold); }
 
-    .video-card-label::before {
-      content: '▸';
-      color: var(--gold);
-    }
-
-    /* ── Blog Section ── */
+    /* ── BLOG ── */
     .blog-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
-
     .blog-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -493,7 +617,6 @@
       position: relative;
       transition: border-color 0.3s, transform 0.3s;
     }
-
     .blog-card::before {
       content: '';
       position: absolute;
@@ -503,17 +626,8 @@
       transition: background 0.3s;
       z-index: 1;
     }
-
-    .blog-card:hover {
-      border-color: #444;
-      transform: translateY(-2px);
-    }
-
-    .blog-card:hover::before {
-      background: var(--gold);
-    }
-
-    /* Blog video replaces the old img */
+    .blog-card:hover { border-color: #444; transform: translateY(-2px); }
+    .blog-card:hover::before { background: var(--gold); }
     .blog-card-video {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -521,22 +635,18 @@
       background: #000;
       object-fit: cover;
     }
-
-    /* Picture below the video */
     .blog-card-pic {
       width: 100%;
       display: block;
       object-fit: cover;
       border-top: 1px solid var(--border);
     }
-
     .blog-card-body {
       padding: 1.4rem 1.6rem 1.6rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
     }
-
     .blog-card-meta {
       display: flex;
       align-items: center;
@@ -548,14 +658,12 @@
       text-transform: uppercase;
       color: var(--muted);
     }
-
     .blog-card-meta .blog-tag {
       color: var(--gold);
       border: 1px solid var(--gold-dim);
       padding: 0.15rem 0.5rem;
       clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
     }
-
     .blog-card-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.3rem;
@@ -565,14 +673,12 @@
       color: #fff;
       line-height: 1.15;
     }
-
     .blog-card-excerpt {
       font-size: 0.85rem;
       color: var(--muted);
       line-height: 1.55;
       font-weight: 300;
     }
-
     .blog-card-read-more {
       margin-top: 0.4rem;
       font-family: 'Barlow Condensed', sans-serif;
@@ -587,16 +693,92 @@
       text-decoration: none;
       width: fit-content;
     }
+    .blog-card-read-more::after { content: '→'; transition: transform 0.2s; }
+    .blog-card:hover .blog-card-read-more::after { transform: translateX(4px); }
 
-    .blog-card-read-more::after {
-      content: '→';
-      transition: transform 0.2s;
+    /* ── GALLERY ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      aspect-ratio: 4/3;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: zoom-in;
+    }
+    .gallery-item:hover {
+      border-color: var(--gold);
+      transform: scale(1.02);
+      z-index: 2;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
 
-    .blog-card:hover .blog-card-read-more::after {
-      transform: translateX(4px);
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
     }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: #fff; }
 
+    /* ── FOOTER ── */
     footer {
       position: relative;
       z-index: 1;
@@ -609,19 +791,50 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .champion-footer-note {
+      color: var(--champion);
+      margin-top: 0.4rem;
+      font-size: 0.7rem;
     }
 
-    header       { animation: fadeUp 0.5s ease both 0s; }
-    .score-section { animation: fadeUp 0.5s ease both 0.1s; }
-    .section-block { animation: fadeUp 0.5s ease both 0.2s; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .teams-grid { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 420px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .champion-banner { animation: fadeUp 0.6s ease both 0s; }
+    header { animation: fadeUp 0.5s ease both 0.15s; }
+    .score-section { animation: fadeUp 0.5s ease both 0.25s; }
+    .section-block { animation: fadeUp 0.5s ease both 0.35s; }
   </style>
 </head>
 <body>
 
+  <!-- ── CHAMPIONS BANNER ── -->
+  <div class="champion-banner">
+    <div class="champion-confetti" id="confetti"></div>
+    <div class="champion-inner">
+      <div class="champion-eyebrow">Playoffs Καλοκαιριού · Estia · 2026</div>
+      <div class="champion-trophy">🏆</div>
+      <div class="champion-title">Πρωταθλητές</div>
+      <img src="LogoA.png" alt="Άνω Πατήσια" class="champion-logo" onerror="this.style.display='none'" />
+      <div class="champion-team">Άνω Πατήσια</div>
+      <div class="champion-season">Σεζόν 2026 · Estia Summer League</div>
+    </div>
+  </div>
+
+  <!-- ── HEADER ── -->
   <header>
     <div class="league-label">Playoffs Καλοκαιριού · Estia</div>
     <h1>Φετινός <span>Τελικός</span></h1>
@@ -631,42 +844,55 @@
     </div>
   </header>
 
+  <!-- ── SCOREBOARD ── -->
   <section class="score-section">
-    <div class="score-label">Βαθμολογία Σειράς</div>
+    <div class="score-label">Τελική Βαθμολογία Σειράς</div>
     <div class="scoreboard">
       <div class="team-score-block leading">
-        <img src="LogoA.png" alt="Άνω Πατήσια" style="height:90px; width:auto; margin-bottom:0.6rem; object-fit:contain;" />
+        <img src="LogoA.png" alt="Άνω Πατήσια" style="height:90px;width:auto;margin-bottom:0.6rem;object-fit:contain;" onerror="this.style.display='none'" />
         <div class="team-name-score">Άνω<br>Πατήσια</div>
         <div class="score-number">8</div>
-        <div class="leading-badge">Προηγείται</div>
+        <div class="leading-badge">🏆 Πρωταθλητές</div>
       </div>
       <div class="score-divider">–</div>
       <div class="team-score-block trailing">
-        <img src="LogoB.png" alt="Άνω Γλυφάδα" style="height:90px; width:auto; margin-bottom:0.6rem; object-fit:contain;" />
+        <img src="LogoB.png" alt="Άνω Γλυφάδα" style="height:90px;width:auto;margin-bottom:0.6rem;object-fit:contain;" onerror="this.style.display='none'" />
         <div class="team-name-score">Άνω<br>Γλυφάδα</div>
         <div class="score-number">6</div>
       </div>
     </div>
     <div class="prev-match-note">
-      Προηγούμενος αγώνας: <strong>Νίκη Άνω Πατήσια 108–94</strong> &nbsp;·&nbsp; MVP: <span class="mvp-highlight">Πέτρος Λινιαρδής</span>
+      Τελευταίος αγώνας: <strong>Νίκη Άνω Πατήσια 108–94</strong> &nbsp;·&nbsp; MVP: <span class="mvp-highlight">Πέτρος Λινιαρδής</span>
     </div>
   </section>
 
   <main>
 
+    <!-- ── TEAMS ── -->
     <div class="section-block">
       <div class="section-title">Ομάδες &amp; Παίκτες</div>
       <div class="teams-grid">
-
         <div class="team-card leading-team">
-          <div class="team-card-name">Άνω Πατήσια</div>
+          <div class="team-card-name">👑 Άνω Πατήσια</div>
           <ul class="player-list">
-            <li><span class="player-num">#1</span> Ορφέας Πετρόπουλος</li>
-            <li><span class="player-num">#2</span> Πέτρος Λινιαρδής</li>
-            <li><span class="player-num">#3</span> Μάρκος Λάνης</li>
+            <li>
+              <span class="player-num">#1</span>
+              Ορφέας Πετρόπουλος
+              <span class="badge badge-champ">Πρωταθλητής</span>
+            </li>
+            <li>
+              <span class="player-num">#2</span>
+              Πέτρος Λινιαρδής
+              <span class="badge badge-mvp">MVP</span>
+              <span class="badge badge-champ">Πρωταθλητής</span>
+            </li>
+            <li>
+              <span class="player-num">#3</span>
+              Μάρκος Λάνης
+              <span class="badge badge-champ">Πρωταθλητής</span>
+            </li>
           </ul>
         </div>
-
         <div class="team-card">
           <div class="team-card-name">Άνω Γλυφάδα</div>
           <ul class="player-list">
@@ -680,15 +906,15 @@
             <li>
               <span class="player-num">#4</span>
               Δημήτριος Κοσμάς
-              <span class="badge badge-injured">Τραυματίας</span>
-              <span class="player-note">εκτός 3 μήνες</span>
+              <span class="badge badge-healthy">Επέστρεψε! 💪</span>
+              <span class="player-note good">Γίνεται καλά – Παίζει ξανά!</span>
             </li>
           </ul>
         </div>
-
       </div>
     </div>
 
+    <!-- ── GAME INFO ── -->
     <div class="section-block">
       <div class="section-title">Πληροφορίες Αγώνων</div>
       <div class="info-row">
@@ -710,6 +936,33 @@
       </div>
     </div>
 
+    <!-- ── FRIENDLIES ── -->
+    <div class="section-block">
+      <div class="section-title">Φιλικοί Αγώνες</div>
+      <div class="friendlies-section">
+        <div class="friendlies-header">
+          <div class="friendlies-live-dot"></div>
+          <div class="friendlies-heading">Ξεκίνησαν τα Φιλικά!</div>
+          <div class="friendlies-status-pill">Off-Season</div>
+        </div>
+        <div class="friendlies-matches">
+          <div class="friendly-match">
+            <div class="friendly-match-teams">
+              Άνω Γλυφάδα
+              <span class="vs">VS</span>
+              Άνω Πατήσια
+            </div>
+            <div class="friendly-match-result winner">Νίκη Γλυφάδα ✅</div>
+            <div class="friendly-winner-badge">Φιλικό #1</div>
+            <div class="friendly-match-note">
+              🔥 Η Άνω Γλυφάδα επέστρεψε δυνατά! Ο Κοσμάς και οι υπόλοιποι τραυματίες είναι καλά, έπαιξαν κανονικά και οδήγησαν την ομάδα στη νίκη. Μπράβο τους 💪
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STAKES ── -->
     <div class="section-block">
       <div class="section-title">Το Στοίχημα</div>
       <div class="stakes-banner">
@@ -721,6 +974,7 @@
       </div>
     </div>
 
+    <!-- ── INTERVIEWS ── -->
     <div class="section-block">
       <div class="section-title">Συνεντεύξεις</div>
       <div class="videos-grid">
@@ -741,20 +995,17 @@
       </div>
     </div>
 
-    <!-- ── Blog Section ── -->
+    <!-- ── BLOG ── -->
     <div class="section-block">
       <div class="section-title">Blog</div>
       <div class="blog-grid">
-
         <div class="blog-card">
-          <!-- FIX: .mov file → <video> tag instead of <img> -->
           <video class="blog-card-video" controls preload="metadata">
             <source src="Blog_1.mov" type="video/quicktime" />
             <source src="Blog_1.mov" type="video/mp4" />
             Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
           </video>
-          <!-- Picture below the video -->
-          <img class="blog-card-pic" src="Pic_1.jpg" alt="Blog Post 1" />
+          <img class="blog-card-pic" src="Pic_1.jpg" alt="Blog Post 1" onerror="this.style.display='none'" />
           <div class="blog-card-body">
             <div class="blog-card-meta">
               <span class="blog-tag">Ανάλυση</span>
@@ -767,16 +1018,13 @@
             <a href="#" class="blog-card-read-more">Διαβάστε Περισσότερα</a>
           </div>
         </div>
-
         <div class="blog-card">
-          <!-- FIX: .mov file → <video> tag instead of <img> -->
           <video class="blog-card-video" controls preload="metadata">
             <source src="Blog_2.mov" type="video/quicktime" />
             <source src="Blog_2.mov" type="video/mp4" />
             Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
           </video>
-          <!-- Picture below the video -->
-          <img class="blog-card-pic" src="Pic_1.png" alt="Blog Post 2" />
+          <img class="blog-card-pic" src="Pic_1.png" alt="Blog Post 2" onerror="this.style.display='none'" />
           <div class="blog-card-body">
             <div class="blog-card-meta">
               <span class="blog-tag">Αφιέρωμα</span>
@@ -784,20 +1032,81 @@
             </div>
             <div class="blog-card-title">Οι Πρωταγωνιστές του Καλοκαιριού</div>
             <p class="blog-card-excerpt">
-              Αφιέρωμα στους παίκτες που ξεχώρισαν φέτος — από τον MVP μέχρι τους αθόρυβους ήρωες, με ξεχωριστή αναφορά στον Kosmi 💪 που μας έλειψε λόγω τραυματισμού αλλά τον περιμένουμε πιο δυνατό!
+              Αφιέρωμα στους παίκτες που ξεχώρισαν φέτος — ο Κοσμάς επέστρεψε πιο δυνατός από ποτέ! 💪
             </p>
             <a href="#" class="blog-card-read-more">Διαβάστε Περισσότερα</a>
           </div>
         </div>
+      </div>
+    </div>
 
+    <!-- ── GALLERY ── -->
+    <div class="section-block">
+      <div class="section-title">Φωτογραφίες</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('67.png')">
+          <img src="67.png" alt="Φωτογραφία 67" loading="lazy" />
+          <div class="gallery-item-overlay">
+            <div class="gallery-item-label">Φωτο #67</div>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('68.png')">
+          <img src="68.png" alt="Φωτογραφία 68" loading="lazy" />
+          <div class="gallery-item-overlay">
+            <div class="gallery-item-label">Φωτο #68</div>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('69.png')">
+          <img src="69.png" alt="Φωτογραφία 69" loading="lazy" />
+          <div class="gallery-item-overlay">
+            <div class="gallery-item-label">Φωτο #69</div>
+          </div>
+        </div>
       </div>
     </div>
 
   </main>
 
+  <!-- ── LIGHTBOX ── -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-close">✕ Κλείσιμο</div>
+    <img id="lightbox-img" src="" alt="Φωτογραφία" onclick="event.stopPropagation()" />
+  </div>
+
   <footer>
     Playoffs Καλοκαιριού · Estia · Αθήνα
+    <div class="champion-footer-note">🏆 Πρωταθλητές: Άνω Πατήσια · Σεζόν 2026</div>
   </footer>
 
+  <script>
+    // Falling confetti emojis
+    (function() {
+      const emojis = ['🏆','🥇','🎉','⭐','🏀','✨','🎊','👑','🔥'];
+      const container = document.getElementById('confetti');
+      for (let i = 0; i < 20; i++) {
+        const span = document.createElement('span');
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.left = Math.random() * 100 + '%';
+        span.style.animationDuration = (4 + Math.random() * 6) + 's';
+        span.style.animationDelay = (Math.random() * 6) + 's';
+        span.style.fontSize = (0.7 + Math.random() * 0.9) + 'rem';
+        container.appendChild(span);
+      }
+    })();
+
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightbox-img').src = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
 </body>
 </html>
