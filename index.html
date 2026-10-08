@@ -2,1111 +2,1250 @@
 <html lang="el">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Playoffs Καλοκαιριού – Estia</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>" />
-  <meta property="og:title" content="Playoffs Estia" />
-  <meta property="og:description" content="Πρωταθλητές: Άνω Πατήσια · Playoffs Καλοκαιριού · Πάρκο Estia" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Playoffs Estia · Άνω Πατήσια vs Άνω Γλυφάδα</title>
+  <meta name="description" content="Playoffs Estia — Άνω Πατήσια vs Άνω Γλυφάδα. Νέα σεζόν, νέα ρόστερ, μεταγραφές, πρωταθλητές, βίντεο και φωτογραφίες. Κάθε Πέμπτη 19:15 στο Πάρκο Estia." />
+  <meta name="theme-color" content="#07080b" />
+  <meta property="og:title" content="Playoffs Estia · Νέα Σεζόν" />
+  <meta property="og:description" content="Άνω Πατήσια vs Άνω Γλυφάδα. Νέα ρόστερ, μεγάλες μεταγραφές. Κάθε Πέμπτη 19:15 · Πάρκο Estia." />
   <meta property="og:type" content="website" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <meta property="og:image" content="media/champions-poster.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23ff7a1a'/%3E%3Cg fill='none' stroke='%2307080b' stroke-width='3.5'%3E%3Cpath d='M3 32h58M32 3v58'/%3E%3Cpath d='M12 11c8 7 8 35 0 42M52 11c-8 7-8 35 0 42'/%3E%3C/g%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&family=Sofia+Sans+Condensed:wght@600;700;800&family=Sofia+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="media/court-duo.jpg" />
   <style>
     :root {
-      --bg: #080808;
-      --surface: #0f0f0f;
-      --card: #131313;
-      --border: #1e1e1e;
-      --gold: #f0a500;
-      --gold-dim: #7a5200;
-      --gold-glow: rgba(240,165,0,0.15);
-      --orange: #e05c00;
-      --text: #e8e8e8;
-      --muted: #555;
-      --red: #c0392b;
-      --champion: #ffd700;
-      --green: #27ae60;
+      --bg: #07080b;
+      --bg-2: #0d0f14;
+      --card: #12151c;
+      --card-2: #171b24;
+      --line: rgba(255,255,255,0.08);
+      --line-2: rgba(255,255,255,0.14);
+      --ink: #f5f2ea;
+      --ink-2: #c9c6bf;
+      --muted: #8a8f9a;
+      --pat: #ff7a1a;
+      --pat-2: #ffb347;
+      --pat-glow: rgba(255,122,26,0.35);
+      --gly: #2bb8ff;
+      --gly-2: #7fe0ff;
+      --gly-glow: rgba(43,184,255,0.35);
+      --gold: #ffcc3d;
+      --gold-2: #fff0a8;
+      --live: #ff3b4e;
+      --ok: #3ddc84;
+      --display: 'Sofia Sans Extra Condensed', 'Arial Narrow', Impact, sans-serif;
+      --cond: 'Sofia Sans Condensed', 'Arial Narrow', sans-serif;
+      --body: 'Sofia Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --gutter: clamp(16px, 4vw, 40px);
+      --max: 1240px;
+      --ease: cubic-bezier(.2,.8,.2,1);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
     body {
       background: var(--bg);
-      color: var(--text);
-      font-family: 'Barlow', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── CHAMPION BANNER ── */
-    .champion-banner {
-      position: relative;
-      z-index: 2;
-      background: linear-gradient(135deg, #1a1100 0%, #0f0a00 40%, #1a1100 100%);
-      border-bottom: 2px solid var(--champion);
-      overflow: hidden;
-    }
-    .champion-banner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .champion-confetti {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .champion-confetti span {
-      position: absolute;
-      top: -10px;
-      font-size: 1.2rem;
-      animation: fall linear infinite;
-      opacity: 0.55;
-    }
-    @keyframes fall {
-      to { transform: translateY(110%) rotate(720deg); opacity: 0; }
-    }
-    .champion-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-      text-align: center;
-    }
-    .champion-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.5em;
-      color: var(--champion);
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-    .champion-trophy {
-      font-size: 5rem;
-      line-height: 1;
-      filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
-      animation: trophyPulse 2s ease-in-out infinite;
-    }
-    @keyframes trophyPulse {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.4)); transform: scale(1); }
-      50% { filter: drop-shadow(0 0 45px rgba(255,215,0,0.8)); transform: scale(1.06); }
-    }
-    .champion-title {
-      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
-      font-size: clamp(3.5rem, 12vw, 8rem);
-      font-weight: 400;
-      line-height: 0.85;
-      letter-spacing: 0.04em;
-      color: var(--champion);
-      text-shadow: 0 0 60px rgba(255,215,0,0.3), 0 4px 0 rgba(0,0,0,0.5);
-      text-transform: uppercase;
-    }
-    .champion-team {
-      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
-      font-size: clamp(2rem, 7vw, 4.5rem);
-      font-weight: 400;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .champion-season {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-    .champion-logo {
-      height: 100px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 25px rgba(255,215,0,0.35));
-      margin-top: 0.3rem;
-    }
-
-    /* ── HEADER ── */
-    header {
-      position: relative;
-      padding: 3rem 2rem 2rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      z-index: 1;
-    }
-    header::after {
-      content: '🏀';
-      position: absolute;
-      font-size: 22rem;
-      opacity: 0.02;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-15deg);
-      pointer-events: none;
-      line-height: 1;
-    }
-    .league-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-    h1 {
-      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
-      font-size: clamp(2.8rem, 8vw, 6rem);
-      font-weight: 400;
-      line-height: 0.92;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      color: #fff;
-    }
-    h1 span { color: var(--gold); }
-    .header-meta {
-      margin-top: 1.2rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-    }
-    .header-meta span::before { content: '▸ '; color: var(--gold); }
-
-    /* ── SCOREBOARD ── */
-    .score-section {
-      position: relative;
-      z-index: 1;
-      padding: 3rem 1.5rem;
-      background: linear-gradient(135deg, #0c0c0c 0%, #111 100%);
-      border-bottom: 3px solid var(--gold);
-    }
-    .score-label {
-      text-align: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.4em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-    }
-    .scoreboard {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .team-score-block {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
-    }
-    .team-score-block.leading {
-      background: linear-gradient(135deg, rgba(240,165,0,0.07), transparent);
-    }
-    .team-name-score {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(1.1rem, 3vw, 1.6rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text);
-      text-align: center;
-      line-height: 1.1;
-    }
-    .leading .team-name-score { color: var(--gold); }
-    .score-number {
-      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
-      font-size: clamp(5rem, 15vw, 9rem);
-      font-weight: 400;
-      line-height: 0.9;
-      letter-spacing: -0.01em;
-      margin-top: 0.2rem;
-    }
-    .leading .score-number { color: var(--gold); }
-    .trailing .score-number { color: #fff; }
-    .score-divider {
-      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
-      font-size: clamp(3rem, 9vw, 5rem);
-      font-weight: 400;
-      color: var(--border);
-      padding: 0 0.5rem;
-      align-self: center;
-    }
-    .leading-badge {
-      margin-top: 0.5rem;
-      font-size: 0.6rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--gold);
-      padding: 0.25rem 0.6rem;
-      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-    }
-    .prev-match-note {
-      text-align: center;
-      margin-top: 1.8rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      padding-top: 1.2rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .prev-match-note strong { color: var(--text); }
-    .prev-match-note .mvp-highlight { color: var(--gold); }
-
-    /* ── MAIN ── */
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 3.5rem;
-    }
-    .section-block { display: flex; flex-direction: column; gap: 1.5rem; }
-    .section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.45em;
-      color: var(--gold);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, var(--border), transparent);
-    }
-
-    /* ── TEAMS ── */
-    .teams-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .team-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 1.8rem;
-      position: relative;
-      transition: border-color 0.3s;
-    }
-    .team-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--border);
-      transition: background 0.3s;
-    }
-    .team-card.leading-team::before { background: var(--gold); }
-    .team-card:hover { border-color: #333; }
-    .team-card-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 1.3rem;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .leading-team .team-card-name { color: var(--gold); }
-    .player-list { list-style: none; display: flex; flex-direction: column; }
-    .player-list li {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      font-size: 0.95rem;
-      color: var(--text);
-      padding: 0.55rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .player-list li:last-child { border-bottom: none; }
-    .player-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.7rem;
-      color: var(--muted);
-      min-width: 1.4rem;
-      text-align: right;
-    }
-    .leading-team .player-num { color: var(--gold-dim); }
-    .badge {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-      white-space: nowrap;
-    }
-    .badge-mvp { background: var(--gold); color: #000; }
-    .badge-injured { background: var(--red); color: #fff; }
-    .badge-healthy { background: var(--green); color: #fff; }
-    .badge-champ { background: var(--champion); color: #000; }
-    .player-note { font-size: 0.75rem; color: var(--muted); font-style: italic; }
-    .player-note.good { color: var(--green); font-style: normal; font-weight: 600; }
-
-    /* ── INFO CARDS ── */
-    .info-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-    }
-    .info-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 1.5rem 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .info-card-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .info-card-value {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      line-height: 1.1;
-    }
-    .info-card-icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
-
-    /* ── STAKES ── */
-    .stakes-banner {
-      border: 1px solid var(--gold-dim);
-      background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(224,92,0,0.04));
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .stakes-banner::after {
-      content: '🦞';
-      position: absolute;
-      right: 1.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 4rem;
-      opacity: 0.15;
-      pointer-events: none;
-    }
-    .stakes-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.6rem;
-    }
-    .stakes-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text);
-      letter-spacing: 0.03em;
-      line-height: 1.3;
-      max-width: 80%;
-    }
-    .stakes-text strong { color: var(--gold); }
-
-    /* ── FRIENDLIES ── */
-    .friendlies-section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--green);
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .friendlies-section::before {
-      content: '⚡';
-      position: absolute;
-      right: 1.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 5rem;
-      opacity: 0.06;
-      pointer-events: none;
-    }
-    .friendlies-header {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 1.4rem;
-      flex-wrap: wrap;
-    }
-    .friendlies-live-dot {
-      width: 9px;
-      height: 9px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: blink 1.4s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(39,174,96,0.5); }
-      50% { opacity: 0.5; box-shadow: 0 0 0 5px rgba(39,174,96,0); }
-    }
-    .friendlies-heading {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #fff;
-    }
-    .friendlies-status-pill {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      background: rgba(39,174,96,0.12);
-      color: var(--green);
-      border: 1px solid rgba(39,174,96,0.3);
-      padding: 0.2rem 0.7rem;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-    }
-    .friendlies-matches { display: flex; flex-direction: column; gap: 1rem; }
-    .friendly-match {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      padding: 1.2rem 1.4rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .friendly-match-teams {
-      flex: 1;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text);
-    }
-    .friendly-match-teams .vs { color: var(--muted); font-size: 0.85rem; margin: 0 0.4rem; }
-    .friendly-match-result {
-      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 400;
-      color: #fff;
-    }
-    .friendly-match-result.winner { color: var(--green); }
-    .friendly-match-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-style: italic;
-      width: 100%;
-      margin-top: -0.2rem;
-      line-height: 1.5;
-    }
-    .friendly-winner-badge {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      background: var(--green);
-      color: #fff;
-      padding: 0.2rem 0.6rem;
-      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-    }
-
-    /* ── VIDEOS ── */
-    .videos-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .video-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      transition: border-color 0.3s;
-    }
-    .video-card:hover { border-color: #444; }
-    .video-card video {
-      width: 100%;
-      height: auto;
-      display: block;
-      background: #000;
-      max-height: 300px;
-      object-fit: contain;
-    }
-    .video-card-label {
-      padding: 0.9rem 1.2rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .video-card-label::before { content: '▸'; color: var(--gold); }
-
-    /* ── BLOG ── */
-    .blog-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .blog-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      position: relative;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .blog-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--border);
-      transition: background 0.3s;
-      z-index: 1;
-    }
-    .blog-card:hover { border-color: #444; transform: translateY(-2px); }
-    .blog-card:hover::before { background: var(--gold); }
-    .blog-card-video {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      display: block;
-      background: #000;
-      object-fit: cover;
-    }
-    .blog-card-pic {
-      width: 100%;
-      display: block;
-      object-fit: cover;
-      border-top: 1px solid var(--border);
-    }
-    .blog-card-body {
-      padding: 1.4rem 1.6rem 1.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .blog-card-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .blog-card-meta .blog-tag {
-      color: var(--gold);
-      border: 1px solid var(--gold-dim);
-      padding: 0.15rem 0.5rem;
-      clip-path: polygon(3px 0%, 100% 0%, calc(100% - 3px) 100%, 0% 100%);
-    }
-    .blog-card-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: #fff;
-      line-height: 1.15;
-    }
-    .blog-card-excerpt {
-      font-size: 0.85rem;
-      color: var(--muted);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 1rem;
       line-height: 1.55;
-      font-weight: 300;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
     }
-    .blog-card-read-more {
-      margin-top: 0.4rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
-      width: fit-content;
-    }
-    .blog-card-read-more::after { content: '→'; transition: transform 0.2s; }
-    .blog-card:hover .blog-card-read-more::after { transform: translateX(4px); }
+    img, video { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    ::selection { background: var(--pat); color: #000; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-    /* ── GALLERY ── */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+    /* grain overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-    .gallery-item {
+
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+    /* ───────── NAV ───────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background .3s, border-color .3s, backdrop-filter .3s;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(7,8,11,0.78);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border-color: var(--line);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; gap: 1rem;
+    }
+    .brand { display: flex; align-items: center; gap: .6rem; font-family: var(--display); font-weight: 900; font-size: 1.5rem; letter-spacing: .04em; text-transform: uppercase; line-height: 1; }
+    .brand-ball { width: 28px; height: 28px; flex: none; animation: spin 8s linear infinite; }
+    .brand em { font-style: normal; color: var(--pat); }
+    .nav-links { display: flex; gap: .25rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--cond); font-weight: 700; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase;
+      padding: .55rem .8rem; color: var(--ink-2); border-radius: 999px; transition: color .2s, background .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--cond); font-weight: 800; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
+      padding: .55rem .95rem; border-radius: 999px; background: var(--ink); color: #000; white-space: nowrap;
+    }
+    .nav-cta .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--live); box-shadow: 0 0 0 0 var(--live); animation: ping 1.6s infinite; }
+    .menu-btn { display: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line-2); align-items: center; justify-content: center; }
+    .menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 18px; height: 2px; background: var(--ink); position: relative; transition: transform .3s var(--ease), background .2s; }
+    .menu-btn span::before, .menu-btn span::after { content: ''; position: absolute; left: 0; }
+    .menu-btn span::before { top: -6px; } .menu-btn span::after { top: 6px; }
+    .nav.open .menu-btn span { background: transparent; }
+    .nav.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+    .nav.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ───────── HERO ───────── */
+    .hero {
       position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 110px 0 70px;
       overflow: hidden;
-      background: var(--card);
-      border: 1px solid var(--border);
-      aspect-ratio: 4/3;
-      transition: border-color 0.3s, transform 0.3s;
+      isolation: isolate;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: -2; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; filter: grayscale(.35) contrast(1.1) brightness(.5); transform: scale(1.08); }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(60% 60% at 0% 60%, rgba(255,122,26,0.42), transparent 70%),
+        radial-gradient(60% 60% at 100% 60%, rgba(43,184,255,0.40), transparent 70%),
+        linear-gradient(180deg, rgba(7,8,11,0.7) 0%, rgba(7,8,11,0.5) 45%, var(--bg) 100%);
+    }
+    .court-lines { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; opacity: .5; pointer-events: none; }
+    .hero-inner { position: relative; text-align: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--cond); font-weight: 700; font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--ink-2);
+      padding: .45rem .9rem; border: 1px solid var(--line-2); border-radius: 999px; background: rgba(0,0,0,.25); backdrop-filter: blur(6px);
+    }
+    .eyebrow b { color: var(--gold); font-weight: 800; }
+    .hero-title {
+      font-family: var(--display);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: .8;
+      letter-spacing: -.01em;
+      margin: 1.4rem 0 .4rem;
+      font-size: clamp(5.2rem, min(21vw, 25vh), 15rem);
+    }
+    .hero-title .outline {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(245,242,234,0.85);
+      display: block;
+    }
+    .hero-title .solid {
+      display: block;
+      background: linear-gradient(90deg, var(--pat) 0%, var(--pat-2) 35%, var(--gly-2) 65%, var(--gly) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 10px 40px rgba(0,0,0,.5));
+    }
+    .hero-sub {
+      font-family: var(--cond); font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
+      font-size: clamp(1.05rem, 2.6vw, 1.6rem); color: var(--ink);
+    }
+    .hero-sub span { color: var(--muted); }
+
+    .faceoff {
+      margin: clamp(2rem, 5vw, 3.2rem) auto 0;
+      max-width: 880px;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: clamp(.5rem, 3vw, 2rem);
+    }
+    .fo-team { display: flex; flex-direction: column; align-items: center; gap: .6rem; }
+    .fo-logo { width: clamp(96px, 20vw, 170px); aspect-ratio: 1; object-fit: contain; transition: transform .5s var(--ease); }
+    .fo-team.pat .fo-logo { filter: drop-shadow(0 0 40px var(--pat-glow)); animation: floatL 5s ease-in-out infinite; }
+    .fo-team.gly .fo-logo { filter: drop-shadow(0 0 40px var(--gly-glow)); animation: floatR 5s ease-in-out infinite; }
+    .fo-team:hover .fo-logo { transform: scale(1.08) rotate(-3deg); }
+    .fo-name { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.4rem, 4.2vw, 2.4rem); line-height: .9; letter-spacing: .02em; }
+    .pat .fo-name { color: var(--pat); } .gly .fo-name { color: var(--gly); }
+    .fo-tag { font-family: var(--cond); font-weight: 700; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .fo-vs {
+      font-family: var(--display); font-weight: 900; font-style: italic;
+      font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1;
+      color: #fff; position: relative;
+      text-shadow: 0 0 30px rgba(255,255,255,.25);
+    }
+    .fo-vs::before, .fo-vs::after { content: ''; position: absolute; left: 50%; width: 1px; height: clamp(30px, 6vw, 60px); background: linear-gradient(var(--line-2), transparent); transform: translateX(-50%); }
+    .fo-vs::before { bottom: 105%; transform: translateX(-50%) rotate(180deg); }
+    .fo-vs::after { top: 105%; }
+
+    .countdown-wrap { margin: clamp(2rem, 5vw, 3rem) auto 0; display: flex; flex-direction: column; align-items: center; gap: .9rem; }
+    .cd-label { font-family: var(--cond); font-weight: 800; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-2); display: flex; align-items: center; gap: .55rem; }
+    .cd-label .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); animation: ping 1.6s infinite; }
+    .countdown { display: flex; gap: clamp(.4rem, 1.5vw, .8rem); }
+    .cd-box {
+      min-width: clamp(64px, 16vw, 96px);
+      padding: .7rem .5rem .55rem;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--line-2);
+      backdrop-filter: blur(8px);
+      text-align: center;
+    }
+    .cd-num { font-family: var(--display); font-weight: 900; font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: .9; font-variant-numeric: tabular-nums; display: block; }
+    .cd-unit { font-family: var(--cond); font-weight: 700; font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .countdown.is-live .cd-box { border-color: var(--live); box-shadow: 0 0 30px rgba(255,59,78,.35); }
+
+    .hero-ctas { margin-top: 2rem; display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-family: var(--cond); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; font-size: .88rem;
+      padding: .95rem 1.4rem; border-radius: 999px;
+      transition: transform .25s var(--ease), box-shadow .25s, background .25s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--pat); color: #120700; box-shadow: 0 10px 30px -10px var(--pat-glow); }
+    .btn-primary:hover { box-shadow: 0 16px 40px -10px var(--pat); }
+    .btn-ghost { border: 1px solid var(--line-2); background: rgba(255,255,255,.04); }
+    .btn-ghost:hover { background: rgba(255,255,255,.1); }
+    .btn svg { width: 16px; height: 16px; }
+
+    .scroll-hint { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); width: 24px; height: 38px; border: 2px solid var(--line-2); border-radius: 14px; }
+    .scroll-hint::after { content: ''; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--ink-2); animation: scrollDot 1.8s infinite; }
+
+    /* ───────── TICKER ───────── */
+    .ticker-zone { position: relative; z-index: 2; overflow: hidden; padding: 24px 0; margin: -34px 0 -24px; }
+    .ticker {
+      position: relative; z-index: 2;
+      background: var(--gold);
+      color: #0b0b0b;
+      overflow: hidden;
+      transform: rotate(-1.2deg);
+      margin: 0 -20px;
+      box-shadow: 0 20px 50px -20px rgba(255,204,61,.5);
+      border-top: 2px solid #000; border-bottom: 2px solid #000;
+    }
+    .ticker-track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+    .ticker-item {
+      display: flex; align-items: center; gap: .9rem;
+      padding: .85rem 1.4rem;
+      font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.1rem, 2.4vw, 1.45rem); letter-spacing: .03em; white-space: nowrap;
+    }
+    .ticker-item .k { background: #0b0b0b; color: var(--gold); padding: .1rem .5rem; border-radius: 4px; font-size: .8em; letter-spacing: .08em; }
+    .ticker-item .sep { font-size: .9em; opacity: .7; }
+
+    /* ───────── SECTIONS ───────── */
+    section { position: relative; padding: clamp(4rem, 8vw, 6.5rem) 0; }
+    .sec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.2rem 2rem; margin-bottom: clamp(2.2rem, 5vw, 3.6rem); }
+    .sec-kicker { display: flex; align-items: center; gap: .7rem; font-family: var(--cond); font-weight: 800; font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; }
+    .sec-kicker .n { font-family: var(--display); font-size: 1rem; color: var(--muted); letter-spacing: .1em; }
+    .sec-kicker::after { content: ''; width: 46px; height: 2px; background: var(--gold); }
+    .sec-title { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(3rem, 9vw, 6.5rem); line-height: .82; letter-spacing: -.005em; }
+    .sec-title .o { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+    .sec-lede { max-width: 420px; color: var(--ink-2); font-size: 1.02rem; }
+
+    /* ───────── ROSTERS ───────── */
+    .rosters { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2.5vw, 1.8rem); }
+    .team {
+      --c: var(--pat); --c2: var(--pat-2); --glow: var(--pat-glow);
+      position: relative; overflow: hidden;
+      border-radius: 26px;
+      background:
+        radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, var(--c) 22%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--card-2), var(--card));
+      border: 1px solid var(--line);
+      padding: clamp(1.2rem, 3vw, 2rem);
+    }
+    .team.gly { --c: var(--gly); --c2: var(--gly-2); --glow: var(--gly-glow); }
+    .team::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, var(--c), var(--c2)); }
+    .team-wm {
+      position: absolute; right: -6%; bottom: -10%; width: 62%; opacity: .06; pointer-events: none; transform: rotate(-12deg);
+    }
+    .team-head { position: relative; display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .team-head img { width: clamp(64px, 9vw, 88px); aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 6px 22px var(--glow)); }
+    .team-name { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: .85; }
+    .team-name small { display: block; font-size: .5em; color: var(--c); letter-spacing: .06em; }
+    .team-chip {
+      display: inline-flex; align-items: center; gap: .4rem; margin-top: .55rem;
+      font-family: var(--cond); font-weight: 800; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+      padding: .3rem .65rem; border-radius: 999px; background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--c2); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+    }
+    .players { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; list-style: none; }
+    .player {
+      position: relative;
+      border-radius: 18px;
+      padding: 1rem 1rem 1.05rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform .35s var(--ease), border-color .3s, background .3s;
+      will-change: transform;
+      min-height: 170px;
+      display: flex; flex-direction: column;
+    }
+    .player:hover { border-color: color-mix(in srgb, var(--c) 55%, transparent); background: rgba(255,255,255,0.05); }
+    .player::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+      background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--c) 22%, transparent), transparent 60%);
+    }
+    .player:hover::after { opacity: 1; }
+    .player-slot { position: absolute; top: .4rem; right: .7rem; font-family: var(--display); font-weight: 900; font-size: 3.2rem; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.12); }
+    .mono {
+      width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+      font-family: var(--display); font-weight: 900; font-size: 1.35rem; letter-spacing: .02em; color: #0a0a0a;
+      background: linear-gradient(135deg, var(--c2), var(--c));
+      box-shadow: 0 8px 22px -8px var(--glow);
+      margin-bottom: .9rem;
+    }
+    .p-first { font-family: var(--cond); font-weight: 700; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .p-last { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.45rem, 2.6vw, 1.9rem); line-height: .92; overflow-wrap: anywhere; }
+    .tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: auto; padding-top: .7rem; }
+    .tag {
+      font-family: var(--cond); font-weight: 800; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+      padding: .22rem .5rem; border-radius: 6px; white-space: nowrap;
+      background: rgba(255,255,255,.07); color: var(--ink-2);
+    }
+    .tag-mvp { background: var(--gold); color: #1a1200; }
+    .tag-champ { background: linear-gradient(90deg, #b8860b, var(--gold)); color: #1a1200; }
+    .tag-new { background: var(--ok); color: #03140a; }
+    .tag-transfer { background: #fff; color: #000; }
+
+    .h2h {
+      margin-top: clamp(1rem, 2.5vw, 1.8rem);
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem;
+      padding: 1.2rem clamp(1rem, 3vw, 2rem);
+      border-radius: 22px; border: 1px solid var(--line); background: var(--bg-2);
+    }
+    .h2h-side { display: flex; align-items: center; gap: .9rem; }
+    .h2h-side.r { justify-content: flex-end; text-align: right; }
+    .h2h-side img { width: 44px; height: 44px; object-fit: contain; }
+    .h2h-num { font-family: var(--display); font-weight: 900; font-size: clamp(2.4rem, 6vw, 3.6rem); line-height: 1; }
+    .h2h-side.l .h2h-num { color: var(--pat); } .h2h-side.r .h2h-num { color: var(--gly); }
+    .h2h-mid { text-align: center; }
+    .h2h-mid b { display: block; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.1rem, 2.5vw, 1.5rem); line-height: 1; }
+    .h2h-mid span { font-family: var(--cond); font-weight: 700; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+
+    /* ───────── TRANSFERS ───────── */
+    #transfers { background: linear-gradient(180deg, transparent, var(--bg-2) 20%, var(--bg-2) 80%, transparent); }
+    .transfers { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: clamp(1rem, 2vw, 1.4rem); }
+    .tx {
+      --from: var(--pat); --to: var(--gly);
+      position: relative; overflow: hidden;
+      border-radius: 24px; padding: clamp(1.3rem, 3vw, 2rem);
+      background: var(--card); border: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: 1.2rem;
+      min-height: 330px;
+      transition: transform .35s var(--ease), border-color .3s;
+    }
+    .tx:hover { transform: translateY(-4px); border-color: var(--line-2); }
+    .tx.to-pat { --from: var(--gly); --to: var(--pat); }
+    .tx.new { --from: var(--ok); --to: var(--pat); }
+    .tx::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--from) 18%, transparent), transparent 45%, color-mix(in srgb, var(--to) 22%, transparent));
+    }
+    .tx-badge {
+      position: relative; align-self: flex-start;
+      font-family: var(--cond); font-weight: 800; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+      padding: .35rem .7rem; border-radius: 999px; background: #fff; color: #000;
+    }
+    .tx.feature .tx-badge { background: var(--live); color: #fff; animation: shake 4s ease-in-out infinite; }
+    .tx.new .tx-badge { background: var(--ok); color: #03140a; }
+    .tx-name { position: relative; font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .85; font-size: clamp(2.4rem, 5vw, 3.6rem); }
+    .tx.feature .tx-name { font-size: clamp(2.8rem, 6.4vw, 4.8rem); }
+    .tx-name small { display: block; font-size: .42em; color: var(--ink-2); letter-spacing: .04em; margin-bottom: .2rem; }
+    .tx-move { position: relative; margin-top: auto; display: flex; align-items: center; gap: .8rem; }
+    .tx-club { display: flex; flex-direction: column; align-items: center; gap: .35rem; min-width: 64px; }
+    .tx-club img { width: 58px; height: 58px; object-fit: contain; }
+    .tx-club span { font-family: var(--cond); font-weight: 800; font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); text-align: center; }
+    .tx-club .free { width: 58px; height: 58px; border-radius: 50%; border: 2px dashed var(--line-2); display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 1.6rem; color: var(--ok); }
+    .tx-arrow { flex: 1; height: 2px; position: relative; background: linear-gradient(90deg, var(--from), var(--to)); border-radius: 2px; overflow: visible; }
+    .tx-arrow::after { content: ''; position: absolute; right: -2px; top: 50%; width: 10px; height: 10px; border-top: 2px solid var(--to); border-right: 2px solid var(--to); transform: translateY(-50%) rotate(45deg); }
+    .tx-arrow i { position: absolute; top: 50%; left: 0; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px #fff; animation: travel 2.4s var(--ease) infinite; }
+    .tx-note { position: relative; color: var(--ink-2); font-size: .95rem; }
+
+    /* ───────── CHAMPIONS ───────── */
+    #champions { overflow: hidden; }
+    #champions::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(50% 50% at 70% 40%, rgba(255,204,61,0.14), transparent 70%);
+    }
+    .champ-grid { position: relative; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+    .poster {
+      position: relative; border-radius: 22px; overflow: hidden;
+      border: 1px solid rgba(255,204,61,.35);
+      box-shadow: 0 40px 80px -30px rgba(255,204,61,.35), 0 0 0 8px rgba(255,204,61,.05);
+      transform: rotate(-2.5deg);
+      transition: transform .5s var(--ease);
       cursor: zoom-in;
     }
-    .gallery-item:hover {
-      border-color: var(--gold);
-      transform: scale(1.02);
-      z-index: 2;
+    .poster:hover { transform: rotate(0deg) scale(1.02); }
+    .poster img { width: 100%; height: auto; }
+    .poster::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.25) 50%, transparent 60%); background-size: 250% 100%; animation: shine 5s ease-in-out infinite; pointer-events: none; }
+    .champ-title {
+      font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .8;
+      font-size: clamp(3.4rem, 9vw, 6.2rem);
+      background: linear-gradient(180deg, var(--gold-2), var(--gold) 45%, #b8860b);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 8px 30px rgba(255,204,61,.25));
     }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s;
+    .champ-team { display: flex; align-items: center; gap: .8rem; margin: 1rem 0 1.6rem; }
+    .champ-team img { width: 56px; height: 56px; object-fit: contain; }
+    .champ-team b { font-family: var(--display); font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.6rem); text-transform: uppercase; line-height: .9; }
+    .champ-team span { display: block; font-family: var(--cond); font-weight: 700; font-size: .75rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+    .stat {
+      border-radius: 18px; padding: 1.1rem 1.2rem; background: var(--card); border: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: .2rem;
     }
-    .gallery-item:hover img { transform: scale(1.06); }
-    .gallery-item-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      display: flex;
-      align-items: flex-end;
-      padding: 1rem;
-    }
-    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
-    .gallery-item-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
+    .stat-k { font-family: var(--cond); font-weight: 800; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .stat-v { font-family: var(--display); font-weight: 900; font-size: clamp(2.2rem, 4.2vw, 3.3rem); line-height: .9; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .stat-v.gold { color: var(--gold); }
+    .stat-v small { font-size: .45em; color: var(--muted); }
+    .stat.wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 1rem; }
+    .stat.wide .mono { margin: 0; --c: var(--pat); --c2: var(--pat-2); --glow: var(--pat-glow); }
+    .stat.wide .stat-v { font-size: clamp(1.7rem, 4vw, 2.3rem); text-transform: uppercase; }
+    .champ-roster { margin-top: 1.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+    .champ-roster > span:first-child { font-family: var(--cond); font-weight: 800; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-right: .3rem; }
+    .chip { font-family: var(--cond); font-weight: 700; font-size: .85rem; letter-spacing: .04em; padding: .4rem .75rem; border-radius: 999px; border: 1px solid rgba(255,204,61,.3); color: var(--gold-2); background: rgba(255,204,61,.06); }
+    .confetti-btn { margin-top: 1.4rem; }
+    .btn-gold { background: var(--gold); color: #1a1200; box-shadow: 0 10px 30px -10px rgba(255,204,61,.6); }
+    #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 500; width: 100%; height: 100%; }
 
-    /* ── LIGHTBOX ── */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.93);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
+    .friendly {
+      position: relative; margin-top: clamp(2.5rem, 6vw, 4rem);
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.2rem;
+      padding: 1.3rem clamp(1.2rem, 3vw, 2rem); border-radius: 22px;
+      background: linear-gradient(90deg, rgba(43,184,255,.12), rgba(43,184,255,.02)); border: 1px solid rgba(43,184,255,.25);
     }
-    .lightbox.open { display: flex; }
-    .lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border: 1px solid var(--border);
-      cursor: default;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .lightbox-close:hover { color: #fff; }
+    .friendly img { width: 54px; height: 54px; object-fit: contain; }
+    .friendly h3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: .95; }
+    .friendly p { color: var(--ink-2); font-size: .95rem; margin-top: .25rem; }
+    .friendly .w { font-family: var(--display); font-weight: 900; font-size: 2.4rem; color: var(--gly); line-height: 1; }
 
-    /* ── FOOTER ── */
-    footer {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    /* ───────── STAKES ───────── */
+    .stakes {
+      position: relative; overflow: hidden;
+      border-radius: 30px;
+      padding: clamp(2rem, 6vw, 4.5rem);
+      background:
+        radial-gradient(80% 120% at 100% 100%, rgba(255,59,78,.35), transparent 60%),
+        radial-gradient(70% 100% at 0% 0%, rgba(255,122,26,.3), transparent 60%),
+        #140a07;
+      border: 1px solid rgba(255,122,26,.3);
     }
-    .champion-footer-note {
-      color: var(--champion);
-      margin-top: 0.4rem;
-      font-size: 0.7rem;
-    }
+    .stakes-emoji { position: absolute; right: clamp(-10px, 2vw, 40px); bottom: -20px; font-size: clamp(7rem, 22vw, 15rem); line-height: 1; opacity: .9; transform: rotate(-14deg); filter: drop-shadow(0 20px 40px rgba(0,0,0,.5)); animation: bob 4s ease-in-out infinite; pointer-events: none; }
+    .stakes-k { font-family: var(--cond); font-weight: 800; font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; color: var(--pat-2); }
+    .stakes h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .82; font-size: clamp(3rem, 9.5vw, 7rem); margin: .8rem 0 1.2rem; max-width: 11ch; position: relative; }
+    .stakes h2 em { font-style: normal; color: var(--pat); }
+    .stakes p { position: relative; max-width: 520px; color: var(--ink-2); font-size: clamp(1rem, 2vw, 1.15rem); }
+    .stakes p strong { color: #fff; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .teams-grid { grid-template-columns: 1fr; }
-      .videos-grid { grid-template-columns: 1fr; }
-      .blog-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
+    /* ───────── MEDIA ───────── */
+    .tabs { display: inline-flex; gap: .3rem; padding: .3rem; border-radius: 999px; border: 1px solid var(--line-2); background: var(--bg-2); }
+    .tab { font-family: var(--cond); font-weight: 800; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; padding: .6rem 1.05rem; border-radius: 999px; color: var(--ink-2); transition: background .25s, color .25s; }
+    .tab[aria-selected="true"] { background: var(--ink); color: #000; }
+    .panel[hidden] { display: none; }
+    .panel { animation: fadeIn .45s var(--ease); }
+
+    .interviews { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2vw, 1.4rem); }
+    .vcard { border-radius: 22px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+    .vcard video { width: 100%; aspect-ratio: 16/9; background: #000; object-fit: cover; }
+    .vcard-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; }
+    .vcard-meta b { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: 1.4rem; line-height: 1; }
+    .vcard-meta span { font-family: var(--cond); font-weight: 700; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+
+    .reels { display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); gap: clamp(1rem, 2vw, 1.4rem); justify-content: center; }
+    .reel { position: relative; border-radius: 26px; overflow: hidden; background: #000; border: 1px solid var(--line); aspect-ratio: 9/16; }
+    .reel video { width: 100%; height: 100%; object-fit: cover; }
+    .reel-ui { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.2rem; display: flex; align-items: flex-end; justify-content: space-between; gap: .8rem; background: linear-gradient(transparent, rgba(0,0,0,.75)); pointer-events: none; }
+    .reel-ui b { font-family: var(--display); font-weight: 900; font-size: 1.6rem; text-transform: uppercase; line-height: .9; }
+    .reel-ui small { display: block; font-family: var(--cond); font-weight: 700; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .sound { pointer-events: auto; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.15); backdrop-filter: blur(8px); display: grid; place-items: center; flex: none; border: 1px solid rgba(255,255,255,.25); transition: background .2s; }
+    .sound:hover { background: rgba(255,255,255,.3); }
+    .sound svg { width: 20px; height: 20px; }
+    .reel-live { position: absolute; top: 1rem; left: 1rem; font-family: var(--cond); font-weight: 800; font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; padding: .3rem .6rem; border-radius: 6px; background: var(--live); color: #fff; }
+
+    .gallery { columns: 3 260px; column-gap: clamp(.8rem, 1.6vw, 1.1rem); }
+    .gitem { position: relative; display: block; width: 100%; margin-bottom: clamp(.8rem, 1.6vw, 1.1rem); border-radius: 20px; overflow: hidden; break-inside: avoid; background: var(--card); cursor: zoom-in; }
+    .gitem img { width: 100%; height: auto; transition: transform .7s var(--ease), filter .4s; filter: saturate(.9); }
+    .gitem:hover img { transform: scale(1.05); filter: saturate(1.15); }
+    .gitem figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem 1.1rem; font-family: var(--cond); font-weight: 800; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; background: linear-gradient(transparent, rgba(0,0,0,.7)); opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s; text-align: left; }
+    .gitem:hover figcaption, .gitem:focus-visible figcaption { opacity: 1; transform: none; }
+
+    /* ───────── LIGHTBOX ───────── */
+    .lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; background: rgba(4,5,7,.94); backdrop-filter: blur(10px); padding: 60px 16px; }
+    .lightbox.open { display: flex; animation: fadeIn .25s ease; }
+    .lightbox img { max-width: min(92vw, 1000px); max-height: 82vh; border-radius: 14px; object-fit: contain; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+    .lb-btn { position: absolute; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.08); border: 1px solid var(--line-2); transition: background .2s; }
+    .lb-btn:hover { background: rgba(255,255,255,.2); }
+    .lb-btn svg { width: 20px; height: 20px; }
+    .lb-close { top: 16px; right: 16px; }
+    .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+    .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
+    .lb-count { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-family: var(--cond); font-weight: 800; letter-spacing: .2em; font-size: .8rem; color: var(--muted); }
+
+    /* ───────── INFO ───────── */
+    .info { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.8rem, 2vw, 1.2rem); }
+    .info-card { position: relative; overflow: hidden; border-radius: 22px; padding: clamp(1.4rem, 3vw, 2rem); background: var(--card); border: 1px solid var(--line); }
+    .info-card svg { width: 30px; height: 30px; color: var(--gold); margin-bottom: 1.4rem; }
+    .info-k { font-family: var(--cond); font-weight: 800; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .info-v { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: .9; margin-top: .3rem; }
+    .info-card .big { position: absolute; right: -10px; bottom: -30px; font-family: var(--display); font-weight: 900; font-size: 9rem; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.06); pointer-events: none; }
+
+    /* ───────── FOOTER ───────── */
+    footer { position: relative; border-top: 1px solid var(--line); padding: clamp(3rem, 8vw, 5rem) 0 2rem; overflow: hidden; }
+    .foot-wm { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .8; font-size: clamp(2.6rem, 13.5vw, 15rem); letter-spacing: -.01em; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.12); white-space: nowrap; text-align: center; user-select: none; }
+    .foot-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2rem; font-family: var(--cond); font-weight: 700; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .foot-row .champ { color: var(--gold); }
+    .foot-logos { display: flex; gap: .8rem; }
+    .foot-logos img { width: 40px; height: 40px; object-fit: contain; opacity: .85; }
+
+    /* ───────── REVEAL ───────── */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
+    .reveal.in { opacity: 1; transform: none; }
+    .hero .rise { opacity: 0; transform: translateY(40px); animation: rise 1s var(--ease) forwards; animation-delay: var(--d, 0s); }
+
+    /* ───────── KEYFRAMES ───────── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(255,59,78,.7); } 80%, 100% { box-shadow: 0 0 0 9px rgba(255,59,78,0); } }
+    @keyframes floatL { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+    @keyframes floatR { 0%,100% { transform: translateY(-10px) rotate(2deg); } 50% { transform: translateY(0) rotate(-2deg); } }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @keyframes scrollDot { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes travel { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+    @keyframes shine { 0%, 60% { background-position: 150% 0; } 100% { background-position: -100% 0; } }
+    @keyframes bob { 0%,100% { transform: rotate(-14deg) translateY(0); } 50% { transform: rotate(-8deg) translateY(-14px); } }
+    @keyframes shake { 0%, 88%, 100% { transform: rotate(0); } 90% { transform: rotate(-4deg); } 92% { transform: rotate(4deg); } 94% { transform: rotate(-3deg); } 96% { transform: rotate(2deg); } }
+
+    /* ───────── RESPONSIVE ───────── */
+    @media (max-width: 1000px) {
+      .transfers { grid-template-columns: 1fr 1fr; }
+      .tx.feature { grid-column: 1 / -1; min-height: 0; }
+    }
+    @media (max-width: 900px) {
+      .rosters { grid-template-columns: 1fr; }
+      .champ-grid { grid-template-columns: 1fr; }
+      .poster { max-width: 420px; margin: 0 auto; }
+      .nav-links { position: fixed; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0; padding: .5rem var(--gutter) 1.2rem; background: rgba(7,8,11,.96); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s var(--ease); }
+      .nav-links a { display: block; padding: .95rem .4rem; font-size: 1rem; border-radius: 10px; }
+      .nav.open { background: rgba(7,8,11,.96); }
+      .nav.open .nav-links { transform: none; opacity: 1; pointer-events: auto; }
+      .menu-btn { display: inline-flex; }
+    }
+    @media (max-width: 680px) {
+      .nav-cta { display: none; }
+      .transfers { grid-template-columns: 1fr; }
+      .tx { min-height: 0; }
+      .interviews { grid-template-columns: 1fr; }
+      .reels { grid-template-columns: 1fr 1fr; gap: .7rem; }
+      .reel { border-radius: 18px; }
+      .reel-ui { padding: .8rem; }
+      .reel-ui b { font-size: 1.15rem; }
+      .info { grid-template-columns: 1fr; }
+      .friendly { grid-template-columns: auto 1fr; }
+      .friendly .w { display: none; }
+      .hero-title .outline { -webkit-text-stroke-width: 1.5px; }
+      .h2h-side img { display: none; }
+      .scroll-hint { display: none; }
+      .gallery { columns: 2; }
+      .gitem { border-radius: 14px; }
+      .gitem figcaption { opacity: 1; transform: none; font-size: .64rem; padding: .7rem; }
+      .stakes-emoji { font-size: 8rem; right: -18px; bottom: -24px; opacity: .3; }
     }
     @media (max-width: 420px) {
-      .gallery-grid { grid-template-columns: 1fr; }
+      .players { grid-template-columns: 1fr 1fr; gap: .55rem; }
+      .player { padding: .85rem .8rem .9rem; min-height: 158px; }
+      .player-slot { font-size: 2.4rem; }
+      .mono { width: 40px; height: 40px; font-size: 1.15rem; border-radius: 12px; }
+      .p-last { font-size: 1.3rem; }
+      .tag { font-size: .56rem; letter-spacing: .1em; }
+      .cd-box { min-width: 0; flex: 1; }
+      .countdown { width: 100%; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stats .stat:nth-child(3) { grid-column: 1 / -1; }
     }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (hover: none) { .player::after { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+      .reveal, .hero .rise { opacity: 1; transform: none; }
+      .ticker-track { animation: none; }
     }
-    .champion-banner { animation: fadeUp 0.6s ease both 0s; }
-    header { animation: fadeUp 0.5s ease both 0.15s; }
-    .score-section { animation: fadeUp 0.5s ease both 0.25s; }
-    .section-block { animation: fadeUp 0.5s ease both 0.35s; }
   </style>
 </head>
 <body>
 
-  <!-- ── CHAMPIONS BANNER ── -->
-  <div class="champion-banner">
-    <div class="champion-confetti" id="confetti"></div>
-    <div class="champion-inner">
-      <div class="champion-eyebrow">Playoffs Καλοκαιριού · Estia · 2026</div>
-      <div class="champion-trophy">🏆</div>
-      <div class="champion-title">Πρωταθλητές</div>
-      <img src="LogoA.png" alt="Άνω Πατήσια" class="champion-logo" onerror="this.style.display='none'" />
-      <div class="champion-team">Άνω Πατήσια</div>
-      <div class="champion-season">Σεζόν 2026 · Estia Summer League</div>
+  <!-- ───────── NAV ───────── -->
+  <nav class="nav" id="nav" aria-label="Κύρια πλοήγηση">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand" aria-label="Playoffs Estia — αρχή">
+        <svg class="brand-ball" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="#ff7a1a"/><g fill="none" stroke="#07080b" stroke-width="3.5"><path d="M3 32h58M32 3v58"/><path d="M12 11c8 7 8 35 0 42M52 11c-8 7-8 35 0 42"/></g></svg>
+        <span>Playoffs <em>Estia</em></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#rosters">Ρόστερ</a></li>
+        <li><a href="#transfers">Μεταγραφές</a></li>
+        <li><a href="#champions">Πρωταθλητές</a></li>
+        <li><a href="#stakes">Στοίχημα</a></li>
+        <li><a href="#media">Media</a></li>
+        <li><a href="#info">Πρόγραμμα</a></li>
+      </ul>
+      <a href="#top" class="nav-cta" id="navCta"><span class="dot"></span><span id="navCtaText">Πέμπτη 19:15</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Μενού" aria-expanded="false" aria-controls="navLinks"><span></span></button>
     </div>
-  </div>
+  </nav>
 
-  <!-- ── HEADER ── -->
-  <header>
-    <div class="league-label">Playoffs Καλοκαιριού · Estia</div>
-    <h1>Φετινός <span>Τελικός</span></h1>
-    <div class="header-meta">
-      <span>Κάθε Πέμπτη 19:15</span>
-      <span>Παρκο Estia</span>
+  <!-- ───────── HERO ───────── -->
+  <header class="hero" id="top">
+    <div class="hero-bg"><img src="media/court-duo.jpg" alt="" /></div>
+    <svg class="court-lines" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="2">
+        <line x1="720" y1="0" x2="720" y2="900"/>
+        <circle cx="720" cy="450" r="110"/>
+        <circle cx="720" cy="450" r="34"/>
+        <rect x="0" y="300" width="240" height="300"/>
+        <rect x="1200" y="300" width="240" height="300"/>
+        <path d="M240 340 a110 110 0 0 1 0 220"/>
+        <path d="M1200 340 a110 110 0 0 0 0 220"/>
+        <path d="M0 80 h120 a420 420 0 0 1 0 740 h-120"/>
+        <path d="M1440 80 h-120 a420 420 0 0 0 0 740 h120"/>
+      </g>
+    </svg>
+
+    <div class="wrap hero-inner">
+      <span class="eyebrow rise" style="--d:.05s"><b>Σεζόν 2026–27</b> · Πάρκο Estia · Αθήνα</span>
+      <h1 class="hero-title">
+        <span class="outline rise" style="--d:.15s">Playoffs</span>
+        <span class="solid rise" style="--d:.28s">Estia</span>
+      </h1>
+      <p class="hero-sub rise" style="--d:.4s">Νέα σεζόν. Νέα ρόστερ. <span>Ίδιο γήπεδο.</span></p>
+
+      <div class="faceoff rise" style="--d:.55s">
+        <a href="#team-pat" class="fo-team pat">
+          <img class="fo-logo" src="media/logo-patisia.webp" alt="Λογότυπο Άνω Πατήσια" width="392" height="376" />
+          <span class="fo-name">Άνω Πατήσια</span>
+          <span class="fo-tag">🏆 Πρωταθλητές</span>
+        </a>
+        <span class="fo-vs">VS</span>
+        <a href="#team-gly" class="fo-team gly">
+          <img class="fo-logo" src="media/logo-glyfada.webp" alt="Λογότυπο Άνω Γλυφάδα" width="384" height="400" />
+          <span class="fo-name">Άνω Γλυφάδα</span>
+          <span class="fo-tag">⚡ Διεκδικητές</span>
+        </a>
+      </div>
+
+      <div class="countdown-wrap rise" style="--d:.7s">
+        <div class="cd-label"><span class="dot"></span><span id="cdLabel">Επόμενο τζάμπολ · Πέμπτη 19:15</span></div>
+        <div class="countdown" id="countdown" role="timer" aria-live="off">
+          <div class="cd-box"><span class="cd-num" id="cdD">0</span><span class="cd-unit">Μέρες</span></div>
+          <div class="cd-box"><span class="cd-num" id="cdH">00</span><span class="cd-unit">Ώρες</span></div>
+          <div class="cd-box"><span class="cd-num" id="cdM">00</span><span class="cd-unit">Λεπτά</span></div>
+          <div class="cd-box"><span class="cd-num" id="cdS">00</span><span class="cd-unit">Δευτ.</span></div>
+        </div>
+      </div>
+
+      <div class="hero-ctas rise" style="--d:.85s">
+        <a href="#rosters" class="btn btn-primary">Δες τα ρόστερ
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#transfers" class="btn btn-ghost">🔥 Μεταγραφές</a>
+      </div>
     </div>
+    <div class="scroll-hint" aria-hidden="true"></div>
   </header>
 
-  <!-- ── SCOREBOARD ── -->
-  <section class="score-section">
-    <div class="score-label">Τελική Βαθμολογία Σειράς</div>
-    <div class="scoreboard">
-      <div class="team-score-block leading">
-        <img src="LogoA.png" alt="Άνω Πατήσια" style="height:90px;width:auto;margin-bottom:0.6rem;object-fit:contain;" onerror="this.style.display='none'" />
-        <div class="team-name-score">Άνω<br>Πατήσια</div>
-        <div class="score-number">8</div>
-        <div class="leading-badge">🏆 Πρωταθλητές</div>
-      </div>
-      <div class="score-divider">–</div>
-      <div class="team-score-block trailing">
-        <img src="LogoB.png" alt="Άνω Γλυφάδα" style="height:90px;width:auto;margin-bottom:0.6rem;object-fit:contain;" onerror="this.style.display='none'" />
-        <div class="team-name-score">Άνω<br>Γλυφάδα</div>
-        <div class="score-number">6</div>
-      </div>
+  <!-- ───────── TICKER ───────── -->
+  <div class="ticker-zone">
+  <div class="ticker" aria-label="Τελευταία νέα">
+    <div class="ticker-track" id="tickerTrack">
+      <div class="ticker-item"><span class="k">Breaking</span> Ορφέας Πετρόπουλος → Άνω Γλυφάδα <span class="sep">🏀</span></div>
+      <div class="ticker-item"><span class="k">Μεταγραφή</span> Δημήτριος Κοσμάς → Άνω Πατήσια <span class="sep">🏀</span></div>
+      <div class="ticker-item"><span class="k">Νέος</span> Ο Ζαλιάρης φοράει τα χρώματα της Πατήσια <span class="sep">🏀</span></div>
+      <div class="ticker-item"><span class="k">Πρωταθλητές</span> Άνω Πατήσια 2025–26 <span class="sep">🏆</span></div>
+      <div class="ticker-item"><span class="k">Στοίχημα</span> Ο χαμένος κερνάει αστακομακαρονάδα 🦞 <span class="sep">🏀</span></div>
+      <div class="ticker-item"><span class="k">Ραντεβού</span> Κάθε Πέμπτη 19:15 · Estia <span class="sep">🏀</span></div>
     </div>
-    <div class="prev-match-note">
-      Τελευταίος αγώνας: <strong>Νίκη Άνω Πατήσια 108–94</strong> &nbsp;·&nbsp; MVP: <span class="mvp-highlight">Πέτρος Λινιαρδής</span>
-    </div>
-  </section>
+  </div>
+  </div>
 
   <main>
 
-    <!-- ── TEAMS ── -->
-    <div class="section-block">
-      <div class="section-title">Ομάδες &amp; Παίκτες</div>
-      <div class="teams-grid">
-        <div class="team-card leading-team">
-          <div class="team-card-name">👑 Άνω Πατήσια</div>
-          <ul class="player-list">
-            <li>
-              <span class="player-num">#1</span>
-              Ορφέας Πετρόπουλος
-              <span class="badge badge-champ">Πρωταθλητής</span>
-            </li>
-            <li>
-              <span class="player-num">#2</span>
-              Πέτρος Λινιαρδής
-              <span class="badge badge-mvp">MVP</span>
-              <span class="badge badge-champ">Πρωταθλητής</span>
-            </li>
-            <li>
-              <span class="player-num">#3</span>
-              Μάρκος Λάνης
-              <span class="badge badge-champ">Πρωταθλητής</span>
-            </li>
-          </ul>
+    <!-- ───────── ROSTERS ───────── -->
+    <section id="rosters">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="reveal">
+            <div class="sec-kicker"><span class="n">01</span> Οι Ομάδες</div>
+            <h2 class="sec-title">Τα Νέα <span class="o">Ρόστερ</span></h2>
+          </div>
+          <p class="sec-lede reveal" style="--d:.1s">Τέσσερις εναντίον τεσσάρων. Το καλοκαίρι άλλαξαν φανέλες, ήρθαν νέα πρόσωπα — και ο τίτλος μπαίνει ξανά στο τραπέζι.</p>
         </div>
-        <div class="team-card">
-          <div class="team-card-name">Άνω Γλυφάδα</div>
-          <ul class="player-list">
-            <li>
-              <span class="player-num">#1</span>
-              Χρήστος Ηγούμενος
-              <span class="badge badge-mvp">MVP</span>
-            </li>
-            <li><span class="player-num">#2</span> Άρης Δαμίγος</li>
-            <li><span class="player-num">#3</span> Μαρίνος Σμαραγδάκης</li>
-            <li>
-              <span class="player-num">#4</span>
-              Δημήτριος Κοσμάς
-              <span class="badge badge-healthy">Επέστρεψε! 💪</span>
-              <span class="player-note good">Γίνεται καλά – Παίζει ξανά!</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-    <!-- ── GAME INFO ── -->
-    <div class="section-block">
-      <div class="section-title">Πληροφορίες Αγώνων</div>
-      <div class="info-row">
-        <div class="info-card">
-          <div class="info-card-icon">📅</div>
-          <div class="info-card-label">Ημέρα</div>
-          <div class="info-card-value">Κάθε Πέμπτη</div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-icon">🕖</div>
-          <div class="info-card-label">Ώρα Έναρξης</div>
-          <div class="info-card-value">19:15</div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-icon">📍</div>
-          <div class="info-card-label">Γήπεδο</div>
-          <div class="info-card-value">Estia</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── FRIENDLIES ── -->
-    <div class="section-block">
-      <div class="section-title">Φιλικοί Αγώνες</div>
-      <div class="friendlies-section">
-        <div class="friendlies-header">
-          <div class="friendlies-live-dot"></div>
-          <div class="friendlies-heading">Ξεκίνησαν τα Φιλικά!</div>
-          <div class="friendlies-status-pill">Off-Season</div>
-        </div>
-        <div class="friendlies-matches">
-          <div class="friendly-match">
-            <div class="friendly-match-teams">
-              Άνω Γλυφάδα
-              <span class="vs">VS</span>
-              Άνω Πατήσια
+        <div class="rosters">
+          <!-- Άνω Πατήσια -->
+          <article class="team pat reveal" id="team-pat">
+            <img class="team-wm" src="media/logo-patisia.webp" alt="" aria-hidden="true" />
+            <div class="team-head">
+              <img src="media/logo-patisia.webp" alt="Άνω Πατήσια" width="392" height="376" />
+              <div>
+                <h3 class="team-name"><small>Άνω</small>Πατήσια</h3>
+                <span class="team-chip">🏆 Πρωταθλητές 2025–26</span>
+              </div>
             </div>
-            <div class="friendly-match-result winner">Νίκη Γλυφάδα ✅</div>
-            <div class="friendly-winner-badge">Φιλικό #1</div>
-            <div class="friendly-match-note">
-              🔥 Η Άνω Γλυφάδα επέστρεψε δυνατά! Ο Κοσμάς και οι υπόλοιποι τραυματίες είναι καλά, έπαιξαν κανονικά και οδήγησαν την ομάδα στη νίκη. Μπράβο τους 💪
+            <ul class="players">
+              <li class="player" data-tilt>
+                <span class="player-slot">01</span>
+                <span class="mono">ΠΛ</span>
+                <span class="p-first">Πέτρος</span>
+                <span class="p-last">Λινιαρδής</span>
+                <span class="tags"><span class="tag tag-mvp">★ MVP</span><span class="tag tag-champ">Πρωταθλητής</span></span>
+              </li>
+              <li class="player" data-tilt>
+                <span class="player-slot">02</span>
+                <span class="mono">ΔΚ</span>
+                <span class="p-first">Δημήτριος</span>
+                <span class="p-last">Κοσμάς</span>
+                <span class="tags"><span class="tag tag-transfer">⇄ Από Γλυφάδα</span></span>
+              </li>
+              <li class="player" data-tilt>
+                <span class="player-slot">03</span>
+                <span class="mono">ΜΛ</span>
+                <span class="p-first">Μάρκος</span>
+                <span class="p-last">Λάνης</span>
+                <span class="tags"><span class="tag tag-champ">Πρωταθλητής</span></span>
+              </li>
+              <li class="player" data-tilt>
+                <span class="player-slot">04</span>
+                <span class="mono">Ζ</span>
+                <span class="p-first">Ο νέος</span>
+                <span class="p-last">Ζαλιάρης</span>
+                <span class="tags"><span class="tag tag-new">✦ Νέο απόκτημα</span></span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- Άνω Γλυφάδα -->
+          <article class="team gly reveal" style="--d:.12s" id="team-gly">
+            <img class="team-wm" src="media/logo-glyfada.webp" alt="" aria-hidden="true" />
+            <div class="team-head">
+              <img src="media/logo-glyfada.webp" alt="Άνω Γλυφάδα" width="384" height="400" />
+              <div>
+                <h3 class="team-name"><small>Άνω</small>Γλυφάδα</h3>
+                <span class="team-chip">⚡ Νικητές Φιλικού #1</span>
+              </div>
+            </div>
+            <ul class="players">
+              <li class="player" data-tilt>
+                <span class="player-slot">01</span>
+                <span class="mono">ΧΗ</span>
+                <span class="p-first">Χρήστος</span>
+                <span class="p-last">Ηγούμενος</span>
+                <span class="tags"><span class="tag tag-mvp">★ MVP</span></span>
+              </li>
+              <li class="player" data-tilt>
+                <span class="player-slot">02</span>
+                <span class="mono">ΑΔ</span>
+                <span class="p-first">Άρης</span>
+                <span class="p-last">Δαμίγος</span>
+                <span class="tags"><span class="tag">Παραμένει</span></span>
+              </li>
+              <li class="player" data-tilt>
+                <span class="player-slot">03</span>
+                <span class="mono">ΟΠ</span>
+                <span class="p-first">Ορφέας</span>
+                <span class="p-last">Πετρόπουλος</span>
+                <span class="tags"><span class="tag tag-transfer">⇄ Από Πατήσια</span><span class="tag tag-champ">Πρωταθλητής</span></span>
+              </li>
+              <li class="player" data-tilt>
+                <span class="player-slot">04</span>
+                <span class="mono">ΜΣ</span>
+                <span class="p-first">Μαρίνος</span>
+                <span class="p-last">Σμαραγδάκης</span>
+                <span class="tags"><span class="tag">Παραμένει</span></span>
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="h2h reveal">
+          <div class="h2h-side l"><img src="media/logo-patisia.webp" alt="" /><span class="h2h-num">0</span></div>
+          <div class="h2h-mid"><b>Σεζόν 2026–27</b><span>Όλα ξεκινούν από το μηδέν</span></div>
+          <div class="h2h-side r"><span class="h2h-num">0</span><img src="media/logo-glyfada.webp" alt="" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── TRANSFERS ───────── -->
+    <section id="transfers">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="reveal">
+            <div class="sec-kicker"><span class="n">02</span> Μεταγραφική Αγορά</div>
+            <h2 class="sec-title">Το Καλοκαίρι <span class="o">των</span> Βομβών</h2>
+          </div>
+          <p class="sec-lede reveal" style="--d:.1s">Τρεις κινήσεις που αλλάζουν τα πάντα. Ένας πρωταθλητής άλλαξε στρατόπεδο και η Πατήσια απάντησε με διπλή ενίσχυση.</p>
+        </div>
+
+        <div class="transfers">
+          <article class="tx feature reveal">
+            <span class="tx-badge">💣 Βόμβα</span>
+            <h3 class="tx-name"><small>Ορφέας</small>Πετρόπουλος</h3>
+            <p class="tx-note">Πρωταθλητής με την Πατήσια, τώρα φοράει τα μπλε. Ο πρωταθλητής πάει στην απέναντι πλευρά — και έρχεται για το δεύτερο δαχτυλίδι.</p>
+            <div class="tx-move">
+              <div class="tx-club"><img src="media/logo-patisia.webp" alt="" /><span>Πατήσια</span></div>
+              <div class="tx-arrow"><i></i></div>
+              <div class="tx-club"><img src="media/logo-glyfada.webp" alt="" /><span>Γλυφάδα</span></div>
+            </div>
+          </article>
+          <article class="tx to-pat reveal" style="--d:.1s">
+            <span class="tx-badge">⇄ Μεταγραφή</span>
+            <h3 class="tx-name"><small>Δημήτριος</small>Κοσμάς</h3>
+            <p class="tx-note">Γύρισε δυνατός από τον τραυματισμό και τώρα ενισχύει τους πρωταθλητές.</p>
+            <div class="tx-move">
+              <div class="tx-club"><img src="media/logo-glyfada.webp" alt="" /><span>Γλυφάδα</span></div>
+              <div class="tx-arrow"><i></i></div>
+              <div class="tx-club"><img src="media/logo-patisia.webp" alt="" /><span>Πατήσια</span></div>
+            </div>
+          </article>
+          <article class="tx new reveal" style="--d:.2s">
+            <span class="tx-badge">✦ Νέο Απόκτημα</span>
+            <h3 class="tx-name"><small>Πρώτη σεζόν</small>Ζαλιάρης</h3>
+            <p class="tx-note">Νέο πρόσωπο στο Estia. Ο Ζαλιάρης κάνει το ντεμπούτο του με τα χρώματα της Πατήσια.</p>
+            <div class="tx-move">
+              <div class="tx-club"><span class="free">+</span><span>Νέος</span></div>
+              <div class="tx-arrow"><i></i></div>
+              <div class="tx-club"><img src="media/logo-patisia.webp" alt="" /><span>Πατήσια</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── CHAMPIONS ───────── -->
+    <section id="champions">
+      <div class="wrap">
+        <div class="champ-grid">
+          <figure class="poster reveal" data-lightbox="media/champions-poster.jpg" tabindex="0" role="button" aria-label="Μεγέθυνση αφίσας πρωταθλητών">
+            <img src="media/champions-poster.jpg" alt="Αφίσα: Champion Άνω Πατήσια 2025–2026, Τελικοί 4–0, Κανονική περίοδος 9–6" loading="lazy" width="1000" height="1333" />
+          </figure>
+          <div>
+            <div class="sec-kicker reveal"><span class="n">03</span> Hall of Fame · 2025–26</div>
+            <h2 class="champ-title reveal" style="--d:.05s">Πρωτα&shy;θλητές</h2>
+            <div class="champ-team reveal" style="--d:.1s">
+              <img src="media/logo-patisia.webp" alt="" />
+              <div><b>Άνω Πατήσια</b><span>Road to Mezeclick · Ολοκληρώθηκε</span></div>
+            </div>
+            <div class="stats reveal" style="--d:.15s">
+              <div class="stat"><span class="stat-k">Τελικοί</span><span class="stat-v gold"><span data-count="4">0</span>–<span data-count="0">0</span></span></div>
+              <div class="stat"><span class="stat-k">Κανονική περίοδος</span><span class="stat-v"><span data-count="9">0</span>–<span data-count="6">0</span></span></div>
+              <div class="stat"><span class="stat-k">Τελευταίος αγώνας</span><span class="stat-v"><span data-count="108">0</span>–<span data-count="94">0</span></span></div>
+              <div class="stat wide"><span class="mono">ΠΛ</span><div><span class="stat-k">MVP</span><div class="stat-v">Πέτρος Λινιαρδής</div></div></div>
+            </div>
+            <div class="champ-roster reveal" style="--d:.2s">
+              <span>Πρωταθλητική σύνθεση</span>
+              <span class="chip">Ορφέας Πετρόπουλος</span>
+              <span class="chip">Πέτρος Λινιαρδής</span>
+              <span class="chip">Μάρκος Λάνης</span>
+            </div>
+            <button class="btn btn-gold confetti-btn reveal" style="--d:.25s" id="celebrate">🎉 Γιόρτασε τον τίτλο</button>
+          </div>
+        </div>
+
+        <div class="friendly reveal">
+          <img src="media/logo-glyfada.webp" alt="" />
+          <div>
+            <h3>Φιλικό #1 · Η Γλυφάδα απάντησε</h3>
+            <p>Μετά τον τελικό, η Άνω Γλυφάδα πήρε τη ρεβάνς στο πρώτο φιλικό. Οι τραυματίες επέστρεψαν και η ομάδα έδειξε ότι έρχεται για τα καλά.</p>
+          </div>
+          <span class="w">W</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── STAKES ───────── -->
+    <section id="stakes">
+      <div class="wrap">
+        <div class="stakes reveal">
+          <span class="stakes-emoji" aria-hidden="true">🦞</span>
+          <div class="stakes-k">04 · Τι παίζεται στο τέλος</div>
+          <h2>Ο χαμένος <em>κερνάει.</em></h2>
+          <p>Ο <strong>χαμένος</strong> των playoffs κερνάει τη νικήτρια ομάδα <strong>αστακομακαρονάδα από το Mezeclick</strong> 🦞🍝. Πέρσι η Πατήσια έφαγε. Φέτος;</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── MEDIA ───────── -->
+    <section id="media">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="reveal">
+            <div class="sec-kicker"><span class="n">05</span> Media Day</div>
+            <h2 class="sec-title">Πίσω από <span class="o">τις Κάμερες</span></h2>
+          </div>
+          <div class="tabs reveal" role="tablist" aria-label="Κατηγορίες media" style="--d:.1s">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="p-photos" id="t-photos">Φωτογραφίες</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="p-interviews" id="t-interviews">Συνεντεύξεις</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="p-reels" id="t-reels">Clips</button>
+          </div>
+        </div>
+
+        <div class="panel" id="p-photos" role="tabpanel" aria-labelledby="t-photos">
+          <div class="gallery" id="gallery">
+            <figure class="gitem reveal" tabindex="0" role="button" data-lightbox="media/trophy-crew.jpg"><img src="media/trophy-crew.jpg" alt="Η ομάδα με το τρόπαιο" loading="lazy" width="1000" height="1333" /><figcaption>Το τρόπαιο ανεβαίνει</figcaption></figure>
+            <figure class="gitem reveal" style="--d:.08s" tabindex="0" role="button" data-lightbox="media/squad.jpg"><img src="media/squad.jpg" alt="Παίκτες κάνουν το σήμα W" loading="lazy" width="1000" height="1333" /><figcaption>Το σήμα της νίκης</figcaption></figure>
+            <figure class="gitem reveal" style="--d:.16s" tabindex="0" role="button" data-lightbox="media/court-shot.jpg"><img src="media/court-shot.jpg" alt="Παίκτης με την μπάλα στο γήπεδο το βράδυ" loading="lazy" width="1000" height="1333" /><figcaption>Βραδινό σουτ</figcaption></figure>
+            <figure class="gitem reveal" tabindex="0" role="button" data-lightbox="media/selfie.jpg"><img src="media/selfie.jpg" alt="Selfie δύο παικτών κάτω από τους προβολείς" loading="lazy" width="1000" height="1333" /><figcaption>Κάτω από τους προβολείς</figcaption></figure>
+            <figure class="gitem reveal" style="--d:.08s" tabindex="0" role="button" data-lightbox="media/court-duo.jpg"><img src="media/court-duo.jpg" alt="Δύο παίκτες στο γήπεδο Estia" loading="lazy" width="1000" height="1333" /><figcaption>Πάρκο Estia</figcaption></figure>
+            <figure class="gitem reveal" style="--d:.16s" tabindex="0" role="button" data-lightbox="media/champions-poster.jpg"><img src="media/champions-poster.jpg" alt="Αφίσα πρωταθλητών Άνω Πατήσια" loading="lazy" width="1000" height="1333" /><figcaption>Champions 2025–26</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="panel" id="p-interviews" role="tabpanel" aria-labelledby="t-interviews" hidden>
+          <div class="interviews">
+            <div class="vcard">
+              <video controls preload="none" playsinline poster="media/interview1-poster.jpg"><source src="Interview1.mp4" type="video/mp4" /></video>
+              <div class="vcard-meta"><b>Συνέντευξη #1</b><span>0:40</span></div>
+            </div>
+            <div class="vcard">
+              <video controls preload="none" playsinline poster="media/interview2-poster.jpg"><source src="Interview2.mp4" type="video/mp4" /></video>
+              <div class="vcard-meta"><b>Συνέντευξη #2</b><span>0:58</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="p-reels" role="tabpanel" aria-labelledby="t-reels" hidden>
+          <div class="reels">
+            <div class="reel">
+              <span class="reel-live">Clip</span>
+              <video muted loop playsinline preload="none" poster="media/blog_1-poster.jpg"><source src="media/blog_1.mp4" type="video/mp4" /></video>
+              <div class="reel-ui"><div><small>Ανάλυση</small><b>Ο δρόμος προς τον τελικό</b></div><button class="sound" aria-label="Ήχος on/off"></button></div>
+            </div>
+            <div class="reel">
+              <span class="reel-live">Clip</span>
+              <video muted loop playsinline preload="none" poster="media/blog_2-poster.jpg"><source src="media/blog_2.mp4" type="video/mp4" /></video>
+              <div class="reel-ui"><div><small>Αφιέρωμα</small><b>Οι πρωταγωνιστές</b></div><button class="sound" aria-label="Ήχος on/off"></button></div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- ── STAKES ── -->
-    <div class="section-block">
-      <div class="section-title">Το Στοίχημα</div>
-      <div class="stakes-banner">
-        <div class="stakes-title">Τι παίζεται στο τέλος</div>
-        <div class="stakes-text">
-          Ο <strong>χαμένος</strong> των playoffs κερνάει την νικήτρια ομάδα
-          <strong>αστακομακαρονάδα</strong> από το Mezeclick 🦞🍝
-        </div>
-      </div>
-    </div>
-
-    <!-- ── INTERVIEWS ── -->
-    <div class="section-block">
-      <div class="section-title">Συνεντεύξεις</div>
-      <div class="videos-grid">
-        <div class="video-card">
-          <video controls preload="metadata">
-            <source src="Interview1.mp4" type="video/mp4" />
-            Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
-          </video>
-          <div class="video-card-label">Συνέντευξη 1</div>
-        </div>
-        <div class="video-card">
-          <video controls preload="metadata">
-            <source src="Interview2.mp4" type="video/mp4" />
-            Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
-          </video>
-          <div class="video-card-label">Συνέντευξη 2</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── BLOG ── -->
-    <div class="section-block">
-      <div class="section-title">Blog</div>
-      <div class="blog-grid">
-        <div class="blog-card">
-          <video class="blog-card-video" controls preload="metadata">
-            <source src="Blog_1.mov" type="video/quicktime" />
-            <source src="Blog_1.mov" type="video/mp4" />
-            Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
-          </video>
-          <img class="blog-card-pic" src="Pic_1.jpg" alt="Blog Post 1" onerror="this.style.display='none'" />
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-tag">Ανάλυση</span>
-              <span>Playoffs 2026</span>
-            </div>
-            <div class="blog-card-title">Ο Δρόμος προς τον Τελικό</div>
-            <p class="blog-card-excerpt">
-              Πώς έφτασαν οι δύο ομάδες στον μεγάλο τελικό!
-            </p>
-            <a href="#" class="blog-card-read-more">Διαβάστε Περισσότερα</a>
+    <!-- ───────── INFO ───────── -->
+    <section id="info">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="reveal">
+            <div class="sec-kicker"><span class="n">06</span> Το Ραντεβού</div>
+            <h2 class="sec-title">Πού <span class="o">&amp;</span> Πότε</h2>
           </div>
         </div>
-        <div class="blog-card">
-          <video class="blog-card-video" controls preload="metadata">
-            <source src="Blog_2.mov" type="video/quicktime" />
-            <source src="Blog_2.mov" type="video/mp4" />
-            Το πρόγραμμά σας δεν υποστηρίζει αναπαραγωγή βίντεο.
-          </video>
-          <img class="blog-card-pic" src="Pic_1.png" alt="Blog Post 2" onerror="this.style.display='none'" />
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-tag">Αφιέρωμα</span>
-              <span>Παίκτες</span>
-            </div>
-            <div class="blog-card-title">Οι Πρωταγωνιστές του Καλοκαιριού</div>
-            <p class="blog-card-excerpt">
-              Αφιέρωμα στους παίκτες που ξεχώρισαν φέτος — ο Κοσμάς επέστρεψε πιο δυνατός από ποτέ! 💪
-            </p>
-            <a href="#" class="blog-card-read-more">Διαβάστε Περισσότερα</a>
+        <div class="info">
+          <div class="info-card reveal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <div class="info-k">Ημέρα</div>
+            <div class="info-v">Κάθε Πέμπτη</div>
+            <span class="big" aria-hidden="true">ΠΕ</span>
+          </div>
+          <div class="info-card reveal" style="--d:.08s">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div class="info-k">Τζάμπολ</div>
+            <div class="info-v">19:15</div>
+            <span class="big" aria-hidden="true">19</span>
+          </div>
+          <div class="info-card reveal" style="--d:.16s">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <div class="info-k">Γήπεδο</div>
+            <div class="info-v">Πάρκο Estia</div>
+            <span class="big" aria-hidden="true">ES</span>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- ── GALLERY ── -->
-    <div class="section-block">
-      <div class="section-title">Φωτογραφίες</div>
-      <div class="gallery-grid">
-        <div class="gallery-item" onclick="openLightbox('IMG_0960.jpeg')">
-          <img src="67.png" alt="Φωτογραφία 67" loading="lazy" />
-          <div class="gallery-item-overlay">
-            <div class="gallery-item-label">Φωτο #67</div>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG_0962.jpeg')">
-          <img src="68.png" alt="Φωτογραφία 68" loading="lazy" />
-          <div class="gallery-item-overlay">
-            <div class="gallery-item-label">Φωτο #68</div>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG_0963.jpeg')">
-          <img src="69.png" alt="Φωτογραφία 69" loading="lazy" />
-          <div class="gallery-item-overlay">
-            <div class="gallery-item-label">Φωτο #69</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </section>
 
   </main>
 
-  <!-- ── LIGHTBOX ── -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <div class="lightbox-close">✕ Κλείσιμο</div>
-    <img id="lightbox-img" src="" alt="Φωτογραφία" onclick="event.stopPropagation()" />
-  </div>
-
+  <!-- ───────── FOOTER ───────── -->
   <footer>
-    Playoffs Καλοκαιριού · Estia · Αθήνα
-    <div class="champion-footer-note">🏆 Πρωταθλητές: Άνω Πατήσια · Σεζόν 2026</div>
+    <div class="foot-wm" aria-hidden="true">Playoffs Estia</div>
+    <div class="wrap foot-row">
+      <span>Playoffs Estia · Αθήνα · Σεζόν 2026–27</span>
+      <span class="champ">🏆 Πρωταθλητές 2025–26: Άνω Πατήσια</span>
+      <span class="foot-logos"><img src="media/logo-patisia.webp" alt="Άνω Πατήσια" /><img src="media/logo-glyfada.webp" alt="Άνω Γλυφάδα" /></span>
+    </div>
   </footer>
 
+  <!-- ───────── LIGHTBOX ───────── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Προβολή φωτογραφίας">
+    <img id="lbImg" src="" alt="" />
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Κλείσιμο"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Προηγούμενη"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Επόμενη"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="lb-count" id="lbCount"></div>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
   <script>
-    // Falling confetti emojis
-    (function() {
-      const emojis = ['🏆','🥇','🎉','⭐','🏀','✨','🎊','👑','🔥'];
-      const container = document.getElementById('confetti');
-      for (let i = 0; i < 20; i++) {
-        const span = document.createElement('span');
-        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        span.style.left = Math.random() * 100 + '%';
-        span.style.animationDuration = (4 + Math.random() * 6) + 's';
-        span.style.animationDelay = (Math.random() * 6) + 's';
-        span.style.fontSize = (0.7 + Math.random() * 0.9) + 'rem';
-        container.appendChild(span);
-      }
-    })();
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var $ = function (s, c) { return (c || document).querySelector(s); };
+    var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-    function openLightbox(src) {
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox').classList.add('open');
-    }
-
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.getElementById('lightbox-img').src = '';
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeLightbox();
+    /* ── Nav: scrolled state, mobile menu, active link ── */
+    var nav = $('#nav'), menuBtn = $('#menuBtn');
+    function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 30); }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    menuBtn.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open);
     });
+    $$('.nav-links a').forEach(function (a) {
+      a.addEventListener('click', function () { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
+    });
+    if ('IntersectionObserver' in window) {
+      var linkFor = {};
+      $$('.nav-links a').forEach(function (a) { linkFor[a.getAttribute('href').slice(1)] = a; });
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && linkFor[e.target.id]) {
+            $$('.nav-links a').forEach(function (a) { a.classList.remove('active'); });
+            linkFor[e.target.id].classList.add('active');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      $$('main section[id]').forEach(function (s) { spy.observe(s); });
+    }
+
+    /* ── Ticker: duplicate content for a seamless loop ── */
+    var track = $('#tickerTrack');
+    track.innerHTML += track.innerHTML;
+    $$('.ticker-item', track).slice(track.children.length / 2).forEach(function (el) { el.setAttribute('aria-hidden', 'true'); });
+
+    /* ── Countdown to next Thursday 19:15 (Athens time) ── */
+    var GAME_DAY = 4, GAME_H = 19, GAME_M = 15, GAME_LEN_MIN = 120;
+    var athensFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Athens', weekday: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+    var dayIdx = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    function athensNow() {
+      var p = {};
+      athensFmt.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      return { d: dayIdx[p.weekday], s: (+p.hour) * 3600 + (+p.minute) * 60 + (+p.second) };
+    }
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var cd = $('#countdown'), cdLabel = $('#cdLabel'), navCtaText = $('#navCtaText');
+    function tick() {
+      var now = athensNow();
+      var weekSec = 7 * 86400;
+      var nowW = now.d * 86400 + now.s;
+      var gameW = GAME_DAY * 86400 + GAME_H * 3600 + GAME_M * 60;
+      var since = (nowW - gameW + weekSec) % weekSec;
+      if (since < GAME_LEN_MIN * 60) {
+        cd.classList.add('is-live');
+        cdLabel.textContent = 'LIVE τώρα στο Estia';
+        navCtaText.textContent = 'LIVE τώρα';
+        ['#cdD', '#cdH', '#cdM', '#cdS'].forEach(function (id, i) { $(id).textContent = i ? '00' : '0'; });
+        return;
+      }
+      cd.classList.remove('is-live');
+      var left = weekSec - since;
+      var d = Math.floor(left / 86400), h = Math.floor(left % 86400 / 3600), m = Math.floor(left % 3600 / 60), s = left % 60;
+      $('#cdD').textContent = d; $('#cdH').textContent = pad(h); $('#cdM').textContent = pad(m); $('#cdS').textContent = pad(s);
+      cdLabel.textContent = d === 0 ? 'Σήμερα στις 19:15 · Estia' : 'Επόμενο τζάμπολ · Πέμπτη 19:15';
+      navCtaText.textContent = d === 0 ? 'Σήμερα 19:15' : 'Σε ' + d + (d === 1 ? ' μέρα' : ' μέρες');
+    }
+    tick(); setInterval(tick, 1000);
+
+    /* ── Reveal on scroll + count-up ── */
+    function countUp(el) {
+      var to = +el.getAttribute('data-count');
+      if (reduce || to === 0) { el.textContent = to; return; }
+      var start = null, dur = 1400;
+      function step(t) {
+        if (!start) start = t;
+        var p = Math.min((t - start) / dur, 1);
+        el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in');
+          $$('[data-count]', e.target).forEach(countUp);
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      $$('.reveal').forEach(function (el) { io.observe(el); });
+    } else {
+      $$('.reveal').forEach(function (el) { el.classList.add('in'); });
+      $$('[data-count]').forEach(countUp);
+    }
+
+    /* ── Player card tilt + spotlight ── */
+    if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      $$('[data-tilt]').forEach(function (card) {
+        card.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--mx', x * 100 + '%');
+          card.style.setProperty('--my', y * 100 + '%');
+          card.style.transform = 'perspective(700px) rotateX(' + ((0.5 - y) * 10) + 'deg) rotateY(' + ((x - 0.5) * 12) + 'deg) translateZ(0)';
+        });
+        card.addEventListener('pointerleave', function () { card.style.transform = ''; });
+      });
+    }
+
+    /* ── Media tabs ── */
+    var tabs = $$('.tab');
+    function selectTab(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        panel.hidden = !on;
+        if (on) $$('.reveal', panel).forEach(function (el) { el.classList.add('in'); });
+        if (!on) $$('video', panel).forEach(function (v) { v.pause(); });
+      });
+      if (tab.id === 't-reels') playVisibleReels();
+    }
+    tabs.forEach(function (t, i) {
+      t.tabIndex = i === 0 ? 0 : -1;
+      t.addEventListener('click', function () { selectTab(t); });
+      t.addEventListener('keydown', function (e) {
+        var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!dir) return;
+        var next = tabs[(i + dir + tabs.length) % tabs.length];
+        next.focus(); selectTab(next);
+      });
+    });
+
+    /* ── Reels: autoplay muted when visible, tap for sound ── */
+    var ICON_MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>';
+    var ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+    var reels = $$('.reel');
+    reels.forEach(function (reel) {
+      var v = $('video', reel), b = $('.sound', reel);
+      b.innerHTML = ICON_MUTED;
+      b.addEventListener('click', function () {
+        reels.forEach(function (o) { if (o !== reel) { var ov = $('video', o); ov.muted = true; $('.sound', o).innerHTML = ICON_MUTED; } });
+        v.muted = !v.muted;
+        b.innerHTML = v.muted ? ICON_MUTED : ICON_SOUND;
+        if (v.paused) v.play().catch(function () {});
+      });
+      reel.addEventListener('click', function (e) {
+        if (e.target.closest('.sound')) return;
+        if (v.paused) v.play().catch(function () {}); else v.pause();
+      });
+    });
+    var reelIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = $('video', e.target);
+        if (e.isIntersecting && !reduce) v.play().catch(function () {}); else v.pause();
+      });
+    }, { threshold: 0.5 }) : null;
+    function playVisibleReels() { if (reelIO) reels.forEach(function (r) { reelIO.unobserve(r); reelIO.observe(r); }); }
+
+    /* ── Lightbox ── */
+    var lb = $('#lightbox'), lbImg = $('#lbImg'), lbCount = $('#lbCount');
+    var gallery = $$('#gallery [data-lightbox]');
+    var list = [], idx = 0, lastFocus = null;
+    function show(i) {
+      idx = (i + list.length) % list.length;
+      var el = list[idx];
+      lbImg.src = el.getAttribute('data-lightbox');
+      lbImg.alt = ($('img', el) || {}).alt || '';
+      lbCount.textContent = list.length > 1 ? (idx + 1) + ' / ' + list.length : '';
+      $('#lbPrev').style.display = $('#lbNext').style.display = list.length > 1 ? '' : 'none';
+    }
+    function openLb(el) {
+      list = gallery.indexOf(el) > -1 ? gallery : [el];
+      lastFocus = document.activeElement;
+      show(list.indexOf(el));
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      $('#lbClose').focus();
+    }
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+      if (lastFocus) lastFocus.focus();
+    }
+    $$('[data-lightbox]').forEach(function (el) {
+      el.addEventListener('click', function () { openLb(el); });
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(el); } });
+    });
+    $('#lbClose').addEventListener('click', closeLb);
+    $('#lbPrev').addEventListener('click', function (e) { e.stopPropagation(); show(idx - 1); });
+    $('#lbNext').addEventListener('click', function (e) { e.stopPropagation(); show(idx + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowRight') show(idx + 1);
+      if (e.key === 'ArrowLeft') show(idx - 1);
+    });
+    var touchX = null;
+    lb.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50 && list.length > 1) show(idx + (dx < 0 ? 1 : -1));
+      touchX = null;
+    });
+
+    /* ── Confetti ── */
+    var canvas = $('#confetti'), ctx = canvas.getContext('2d'), parts = [], running = false;
+    var COLORS = ['#ffcc3d', '#fff0a8', '#ff7a1a', '#ffb347', '#ffffff', '#2bb8ff'];
+    function resize() { var dpr = Math.min(window.devicePixelRatio || 1, 2); canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    window.addEventListener('resize', resize); resize();
+    function burst(x, y, n) {
+      for (var i = 0; i < n; i++) {
+        var a = Math.random() * Math.PI * 2, sp = 4 + Math.random() * 9;
+        parts.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 7, w: 6 + Math.random() * 6, h: 8 + Math.random() * 10, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: COLORS[i % COLORS.length], life: 0 });
+      }
+      if (!running) { running = true; requestAnimationFrame(frame); }
+    }
+    function frame() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      parts = parts.filter(function (p) { return p.y < innerHeight + 40 && p.life < 300; });
+      parts.forEach(function (p) {
+        p.vy += 0.28; p.vx *= 0.985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.life * .12)));
+        ctx.restore();
+      });
+      if (parts.length) requestAnimationFrame(frame); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+    }
+    function celebrate() {
+      if (reduce) return;
+      burst(innerWidth * 0.2, innerHeight * 0.65, 90);
+      setTimeout(function () { burst(innerWidth * 0.8, innerHeight * 0.65, 90); }, 180);
+      setTimeout(function () { burst(innerWidth * 0.5, innerHeight * 0.5, 120); }, 360);
+    }
+    $('#celebrate').addEventListener('click', celebrate);
+    if ('IntersectionObserver' in window) {
+      var champIO = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { celebrate(); champIO.disconnect(); }
+      }, { threshold: 0.45 });
+      champIO.observe($('.champ-title'));
+    }
+  })();
   </script>
 </body>
 </html>
