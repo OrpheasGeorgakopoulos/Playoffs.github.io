@@ -123,7 +123,7 @@
     /* Hero background: live WebGL gradient ("the clash line" between the two teams), CSS fallback underneath */
     .hero-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: var(--bg); }
     .hero-fallback { position: absolute; inset: -20%; }
-    .hero-fallback i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(80px); opacity: .55; animation: blobDrift 18s ease-in-out infinite alternate; }
+    .hero-fallback i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(80px); opacity: .7; animation: blobDrift 18s ease-in-out infinite alternate; }
     .hero-fallback i:nth-child(1) { background: var(--pat); left: -5%; top: 15%; }
     .hero-fallback i:nth-child(2) { background: var(--gly); right: -5%; top: 10%; animation-delay: -6s; }
     .hero-fallback i:nth-child(3) { background: var(--gold); left: 35%; top: 45%; width: 35vmax; height: 35vmax; opacity: .3; animation-delay: -12s; }
@@ -1460,7 +1460,7 @@
         ' vec2 r=vec2(fbm(p*1.6+3.*q+vec2(1.7,9.2)+t*1.3),fbm(p*1.6+3.*q+vec2(8.3,2.8)-t));',
         ' float f=fbm(p*1.8+2.5*r);',
         ' vec2 rp=vec2((uv.x-uRip.x)*asp,uv.y-uRip.y);float rd=length(rp);',
-        ' float ring=exp(-pow((rd-uRip.z*.9)*12.,2.))*exp(-uRip.z*1.4);',
+        ' float rw=(rd-uRip.z*.9)*12.;float ring=exp(-rw*rw)*exp(-min(uRip.z,20.)*1.4);',
         ' float split=mix(.5,uM.x,.55)+uBias*.17;',
         ' float d=uv.x-split+(f-.5)*.55+(q.y-.5)*.25+ring*.06;',
         ' float side=smoothstep(-.22,.22,d);',
@@ -1472,7 +1472,7 @@
         ' vec2 mp=vec2((uv.x-uM.x)*asp,uv.y-uM.y);',
         ' col+=vec3(1.,.92,.8)*exp(-dot(mp,mp)*10.)*.16;',
         ' col+=gold*ring*.9;',
-        ' float v=smoothstep(1.2,.2,abs(uv.y-.48)*2.);col*=mix(.3,1.,v);',
+        ' float v=1.-smoothstep(.2,1.2,abs(uv.y-.48)*2.);col*=mix(.3,1.,v);',
         ' col*=uPow;',
         ' col=vec3(.027,.031,.043)+col*.9;',
         ' col+=(hash(gl_FragCoord.xy+fract(uT))-.5)/255.;',
@@ -1520,7 +1520,17 @@
         gl.uniform3f(U.uRip, heroState.rip[0], heroState.rip[1], heroState.rip[2]);
         gl.uniform1f(U.uPow, heroState.power);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
-        if (!glCanvas.classList.contains('ready')) { glCanvas.classList.add('ready'); setTimeout(function () { $('.hero-fallback').style.display = 'none'; }, 1300); }
+        if (!glCanvas.classList.contains('ready')) {
+          // sanity check: the shader always adds a dark base colour, so pure black means the GPU failed — keep the CSS fallback
+          var px = new Uint8Array(4), ok = false;
+          [[.25, .5], [.5, .5], [.75, .5]].forEach(function (c) {
+            gl.readPixels(Math.floor(glCanvas.width * c[0]), Math.floor(glCanvas.height * c[1]), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+            if (px[0] + px[1] + px[2] > 6) ok = true;
+          });
+          if (!ok || gl.getError() !== gl.NO_ERROR) { glCanvas.style.display = 'none'; return; }
+          glCanvas.classList.add('ready');
+          setTimeout(function () { $('.hero-fallback').style.display = 'none'; }, 1300);
+        }
         if (visible && !document.hidden && !reduce) raf = requestAnimationFrame(draw);
       }
       heroState.kick = function () { if (!raf) raf = requestAnimationFrame(draw); };
