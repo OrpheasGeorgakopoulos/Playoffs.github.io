@@ -14,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&family=Sofia+Sans+Condensed:wght@600;700;800&family=Sofia+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="media/court-duo.jpg" />
   <style>
     :root {
       --bg: #07080b;
@@ -121,17 +120,32 @@
       overflow: hidden;
       isolation: isolate;
     }
-    .hero-bg { position: absolute; inset: 0; z-index: -2; }
-    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; filter: grayscale(.35) contrast(1.1) brightness(.5); transform: scale(1.08); }
+    /* Hero background: live WebGL gradient ("the clash line" between the two teams), CSS fallback underneath */
+    .hero-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: var(--bg); }
+    .hero-fallback { position: absolute; inset: -20%; }
+    .hero-fallback i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(80px); opacity: .55; animation: blobDrift 18s ease-in-out infinite alternate; }
+    .hero-fallback i:nth-child(1) { background: var(--pat); left: -5%; top: 15%; }
+    .hero-fallback i:nth-child(2) { background: var(--gly); right: -5%; top: 10%; animation-delay: -6s; }
+    .hero-fallback i:nth-child(3) { background: var(--gold); left: 35%; top: 45%; width: 35vmax; height: 35vmax; opacity: .3; animation-delay: -12s; }
+    #heroGL { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; }
+    #heroGL.ready { opacity: 1; }
     .hero-bg::after {
-      content: ''; position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(60% 60% at 0% 60%, rgba(255,122,26,0.42), transparent 70%),
-        radial-gradient(60% 60% at 100% 60%, rgba(43,184,255,0.40), transparent 70%),
-        linear-gradient(180deg, rgba(7,8,11,0.7) 0%, rgba(7,8,11,0.5) 45%, var(--bg) 100%);
+        radial-gradient(120% 80% at 50% 40%, transparent 40%, rgba(7,8,11,.55) 100%),
+        linear-gradient(180deg, rgba(7,8,11,.35) 0%, transparent 25%, transparent 70%, var(--bg) 100%);
     }
+    .hero-hint { position: absolute; right: var(--gutter); bottom: 26px; font-family: var(--cond); font-weight: 700; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.45); pointer-events: none; }
+    @media (hover: none) { .hero-hint { display: none; } }
+
+    /* Interactive hero letters */
+    .hero-title .ch { display: inline-block; transition: transform .45s var(--ease), color .3s, -webkit-text-stroke-color .3s; cursor: default; }
+    .hero-title .outline .ch.hit { color: var(--ink); -webkit-text-stroke-color: transparent; transform: translateY(-.08em) rotate(-4deg) scale(1.06); text-shadow: 0 0 40px rgba(255,255,255,.35); }
     .court-lines { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; opacity: .5; pointer-events: none; }
     .hero-inner { position: relative; text-align: center; }
+    .hero-sub, .cd-label { text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+    .hero-sub span { color: rgba(255,255,255,.7) !important; }
+    .cd-label { padding: .35rem .8rem; border-radius: 999px; background: rgba(7,8,11,.5); backdrop-filter: blur(6px); }
     .eyebrow {
       display: inline-flex; align-items: center; gap: .6rem;
       font-family: var(--cond); font-weight: 700; font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;
@@ -155,10 +169,11 @@
     }
     .hero-title .solid {
       display: block;
-      background: linear-gradient(90deg, var(--pat) 0%, var(--pat-2) 35%, var(--gly-2) 65%, var(--gly) 100%);
+      background: linear-gradient(90deg, var(--pat) 0%, var(--pat-2) 22%, var(--gold) 38%, var(--gly-2) 58%, var(--gly) 78%, var(--gly-2) 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
       filter: drop-shadow(0 10px 40px rgba(0,0,0,.5));
     }
+    .hero .hero-title .solid.rise { background-size: 220% 100%; animation: rise 1s var(--ease) var(--d) forwards, sheen 9s ease-in-out 1.2s infinite alternate; }
     .hero-sub {
       font-family: var(--cond); font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
       font-size: clamp(1.05rem, 2.6vw, 1.6rem); color: var(--ink);
@@ -176,8 +191,10 @@
     .fo-team.gly .fo-logo { filter: drop-shadow(0 0 40px var(--gly-glow)); animation: floatR 5s ease-in-out infinite; }
     .fo-team:hover .fo-logo { transform: scale(1.08) rotate(-3deg); }
     .fo-name { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.4rem, 4.2vw, 2.4rem); line-height: .9; letter-spacing: .02em; }
-    .pat .fo-name { color: var(--pat); } .gly .fo-name { color: var(--gly); }
-    .fo-tag { font-family: var(--cond); font-weight: 700; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .fo-name { color: #fff; text-shadow: 0 2px 24px rgba(0,0,0,.7); }
+    .fo-name::after { content: ''; display: block; height: 3px; width: 40%; margin: .35rem auto 0; border-radius: 3px; background: var(--pat); }
+    .gly .fo-name::after { background: var(--gly); }
+    .fo-tag { font-family: var(--cond); font-weight: 700; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: #fff; padding: .3rem .7rem; border-radius: 999px; background: rgba(7,8,11,.55); backdrop-filter: blur(6px); }
     .fo-vs {
       font-family: var(--display); font-weight: 900; font-style: italic;
       font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1;
@@ -196,8 +213,8 @@
       min-width: clamp(64px, 16vw, 96px);
       padding: .7rem .5rem .55rem;
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border: 1px solid var(--line-2);
+      background: linear-gradient(180deg, rgba(7,8,11,0.45), rgba(7,8,11,0.6));
+      border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(8px);
       text-align: center;
     }
@@ -512,12 +529,93 @@
     .foot-logos { display: flex; gap: .8rem; }
     .foot-logos img { width: 40px; height: 40px; object-fit: contain; opacity: .85; }
 
+
+    /* ───────── SCROLL PROGRESS + AMBIENT ───────── */
+    .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 200; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--pat), var(--gold), var(--gly)); box-shadow: 0 0 12px rgba(255,204,61,.6); pointer-events: none; }
+    @property --amb1 { syntax: '<color>'; inherits: false; initial-value: #ff7a1a; }
+    @property --amb2 { syntax: '<color>'; inherits: false; initial-value: #2bb8ff; }
+    .ambient {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(60vmax 60vmax at -10% 25%, color-mix(in srgb, var(--amb1) 13%, transparent), transparent 70%),
+        radial-gradient(60vmax 60vmax at 110% 75%, color-mix(in srgb, var(--amb2) 13%, transparent), transparent 70%);
+      transition: --amb1 1.4s ease, --amb2 1.4s ease;
+    }
+    main, footer { position: relative; }
+
+    /* ───────── PICK A SIDE ───────── */
+    .side-pick { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: .8rem; margin-bottom: clamp(1rem, 2.5vw, 1.8rem); }
+    .side-btn {
+      --c: var(--pat); --glow: var(--pat-glow);
+      position: relative; overflow: hidden; display: flex; align-items: center; gap: .9rem; text-align: left;
+      padding: .9rem 1.1rem; border-radius: 20px; border: 1px solid var(--line-2); background: var(--bg-2);
+      transition: transform .3s var(--ease), border-color .3s, box-shadow .3s, background .3s;
+    }
+    .side-btn.gly { --c: var(--gly); --glow: var(--gly-glow); flex-direction: row-reverse; text-align: right; }
+    .side-btn img { width: 52px; height: 52px; object-fit: contain; transition: transform .4s var(--ease); }
+    .side-btn b { display: block; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: 1.5rem; line-height: .9; }
+    .side-btn small { font-family: var(--cond); font-weight: 700; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .side-btn:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--c) 60%, transparent); }
+    .side-btn:hover img { transform: rotate(-8deg) scale(1.08); }
+    .side-btn[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 14%, var(--bg-2)); box-shadow: 0 14px 40px -16px var(--glow), inset 0 0 0 1px var(--c); }
+    .side-btn[aria-pressed="true"] small { color: var(--c); }
+    .side-mid { display: grid; place-items: center; text-align: center; font-family: var(--cond); font-weight: 800; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); max-width: 110px; }
+    .side-mid b { display: block; font-family: var(--display); font-size: 1.6rem; color: var(--ink); letter-spacing: .02em; }
+    html[data-side="pat"] .team.gly, html[data-side="gly"] .team.pat { opacity: .72; filter: saturate(.7); }
+    .team { transition: opacity .5s, filter .5s; }
+    html[data-side] .team.fav { box-shadow: 0 30px 80px -40px var(--glow); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+
+    /* holographic foil on player cards */
+    .player::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .35s; mix-blend-mode: color-dodge;
+      background: linear-gradient(115deg, transparent 20%, rgba(255,0,170,.35) 36%, rgba(0,220,255,.35) 46%, rgba(255,230,0,.35) 56%, transparent 72%);
+      background-size: 250% 250%; background-position: var(--mx, 50%) var(--my, 50%);
+    }
+    .player:hover::before { opacity: .55; }
+    .player.mvp-card { border-color: rgba(255,204,61,.35); }
+
+    /* countdown tick */
+    .cd-num.tick { animation: tickPop .35s var(--ease); }
+    .fo-vs { animation: vsPulse 2.4s ease-in-out infinite; }
+
+    /* ───────── GAME ───────── */
+    .game { position: relative; border-radius: 28px; overflow: hidden; border: 1px solid var(--line-2); background: #0b0d12; user-select: none; -webkit-user-select: none; }
+    #hoops { display: block; width: 100%; height: clamp(380px, 58vh, 540px); cursor: grab; touch-action: none; }
+    #hoops.dragging { cursor: grabbing; }
+    .hud { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-start; padding: 1rem 1.2rem; pointer-events: none; gap: 1rem; }
+    .hud-box { display: flex; flex-direction: column; }
+    .hud-box.r { text-align: right; align-items: flex-end; }
+    .hud-k { font-family: var(--cond); font-weight: 800; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .hud-v { font-family: var(--display); font-weight: 900; font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: .9; font-variant-numeric: tabular-nums; }
+    .hud-v.time { color: var(--gold); }
+    .hud-mid { text-align: center; }
+    .game-overlay { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 1.5rem; background: radial-gradient(circle at 50% 50%, rgba(7,8,11,.55), rgba(7,8,11,.88)); backdrop-filter: blur(3px); transition: opacity .35s; }
+    .game-overlay[hidden] { display: none; }
+    .game-overlay h3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: .85; }
+    .game-overlay p { color: var(--ink-2); margin: .8rem auto 1.4rem; max-width: 380px; }
+    .game-overlay .best { font-family: var(--cond); font-weight: 800; letter-spacing: .18em; text-transform: uppercase; font-size: .78rem; color: var(--gold); margin-top: 1rem; }
+    .game-pop { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); pointer-events: none; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.2rem, 7vw, 4rem); line-height: 1; color: var(--gold); text-shadow: 0 6px 30px rgba(0,0,0,.6); opacity: 0; white-space: nowrap; }
+    .game-pop.show { animation: popUp 1s var(--ease) forwards; }
+    .streak { display: inline-flex; align-items: center; gap: .3rem; margin-top: .3rem; font-family: var(--cond); font-weight: 800; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--pat-2); min-height: 1.2em; }
+
+    /* ───────── SMALL UI ───────── */
+    .info-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: clamp(1.2rem, 3vw, 1.8rem); }
+    .toast { position: fixed; left: 50%; bottom: 24px; z-index: 1200; transform: translate(-50%, 140%); padding: .8rem 1.2rem; border-radius: 999px; background: var(--ink); color: #000; font-family: var(--cond); font-weight: 800; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; box-shadow: 0 20px 50px rgba(0,0,0,.5); transition: transform .45s var(--ease); white-space: nowrap; }
+    .toast.show { transform: translate(-50%, 0); }
+    .stakes-emoji { cursor: pointer; pointer-events: auto; }
+    .btn { will-change: transform; }
+
     /* ───────── REVEAL ───────── */
     .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
     .reveal.in { opacity: 1; transform: none; }
     .hero .rise { opacity: 0; transform: translateY(40px); animation: rise 1s var(--ease) forwards; animation-delay: var(--d, 0s); }
 
     /* ───────── KEYFRAMES ───────── */
+    @keyframes blobDrift { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(8vw,-6vh) scale(1.15); } 100% { transform: translate(-6vw,8vh) scale(.95); } }
+    @keyframes sheen { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+    @keyframes tickPop { 0% { transform: translateY(-30%); opacity: .2; } 100% { transform: none; opacity: 1; } }
+    @keyframes vsPulse { 0%,100% { transform: scale(1); } 8% { transform: scale(1.12); } 16% { transform: scale(1); } 24% { transform: scale(1.08); } 32% { transform: scale(1); } }
+    @keyframes popUp { 0% { opacity: 0; transform: translate(-50%, -20%) scale(.6); } 20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } 70% { opacity: 1; transform: translate(-50%, -60%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -90%) scale(.95); } }
     @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(255,59,78,.7); } 80%, 100% { box-shadow: 0 0 0 9px rgba(255,59,78,0); } }
     @keyframes floatL { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
@@ -562,6 +660,13 @@
       .h2h-side img { display: none; }
       .scroll-hint { display: none; }
       .gallery { columns: 2; }
+      .side-pick { grid-template-columns: 1fr 1fr; }
+      .side-mid { display: none; }
+      .side-btn { padding: .75rem; gap: .6rem; flex-direction: column; text-align: center; }
+      .side-btn.gly { flex-direction: column; text-align: center; }
+      .side-btn img { width: 44px; height: 44px; }
+      .side-btn b { font-size: 1.2rem; }
+      .hud { padding: .8rem .9rem; }
       .gitem { border-radius: 14px; }
       .gitem figcaption { opacity: 1; transform: none; font-size: .64rem; padding: .7rem; }
       .stakes-emoji { font-size: 8rem; right: -18px; bottom: -24px; opacity: .3; }
@@ -587,6 +692,8 @@
   </style>
 </head>
 <body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
 
   <!-- ───────── NAV ───────── -->
   <nav class="nav" id="nav" aria-label="Κύρια πλοήγηση">
@@ -601,6 +708,7 @@
         <li><a href="#champions">Πρωταθλητές</a></li>
         <li><a href="#stakes">Στοίχημα</a></li>
         <li><a href="#media">Media</a></li>
+        <li><a href="#game">Παιχνίδι</a></li>
         <li><a href="#info">Πρόγραμμα</a></li>
       </ul>
       <a href="#top" class="nav-cta" id="navCta"><span class="dot"></span><span id="navCtaText">Πέμπτη 19:15</span></a>
@@ -610,7 +718,10 @@
 
   <!-- ───────── HERO ───────── -->
   <header class="hero" id="top">
-    <div class="hero-bg"><img src="media/court-duo.jpg" alt="" /></div>
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-fallback"><i></i><i></i><i></i></div>
+      <canvas id="heroGL"></canvas>
+    </div>
     <svg class="court-lines" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <g fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="2">
         <line x1="720" y1="0" x2="720" y2="900"/>
@@ -665,6 +776,7 @@
       </div>
     </div>
     <div class="scroll-hint" aria-hidden="true"></div>
+    <div class="hero-hint" aria-hidden="true">Κούνησε το ποντίκι · κλικ για κύμα</div>
   </header>
 
   <!-- ───────── TICKER ───────── -->
@@ -694,6 +806,18 @@
           <p class="sec-lede reveal" style="--d:.1s">Τέσσερις εναντίον τεσσάρων. Το καλοκαίρι άλλαξαν φανέλες, ήρθαν νέα πρόσωπα — και ο τίτλος μπαίνει ξανά στο τραπέζι.</p>
         </div>
 
+        <div class="side-pick reveal" role="group" aria-label="Διάλεξε ομάδα">
+          <button class="side-btn pat" data-side="pat" aria-pressed="false">
+            <img src="media/logo-patisia.webp" alt="" />
+            <span><b>Πατήσια</b><small id="sidePatTxt">Είμαι με τους πρωταθλητές</small></span>
+          </button>
+          <div class="side-mid"><span><b>?</b>Με ποιον είσαι;</span></div>
+          <button class="side-btn gly" data-side="gly" aria-pressed="false">
+            <img src="media/logo-glyfada.webp" alt="" />
+            <span><b>Γλυφάδα</b><small id="sideGlyTxt">Είμαι με τους διεκδικητές</small></span>
+          </button>
+        </div>
+
         <div class="rosters">
           <!-- Άνω Πατήσια -->
           <article class="team pat reveal" id="team-pat">
@@ -706,7 +830,7 @@
               </div>
             </div>
             <ul class="players">
-              <li class="player" data-tilt>
+              <li class="player mvp-card" data-tilt>
                 <span class="player-slot">01</span>
                 <span class="mono">ΠΛ</span>
                 <span class="p-first">Πέτρος</span>
@@ -748,7 +872,7 @@
               </div>
             </div>
             <ul class="players">
-              <li class="player" data-tilt>
+              <li class="player mvp-card" data-tilt>
                 <span class="player-slot">01</span>
                 <span class="mono">ΧΗ</span>
                 <span class="p-first">Χρήστος</span>
@@ -879,7 +1003,7 @@
     <section id="stakes">
       <div class="wrap">
         <div class="stakes reveal">
-          <span class="stakes-emoji" aria-hidden="true">🦞</span>
+          <span class="stakes-emoji" id="lobster" role="button" tabindex="0" aria-label="Βροχή από αστακούς">🦞</span>
           <div class="stakes-k">04 · Τι παίζεται στο τέλος</div>
           <h2>Ο χαμένος <em>κερνάει.</em></h2>
           <p>Ο <strong>χαμένος</strong> των playoffs κερνάει τη νικήτρια ομάδα <strong>αστακομακαρονάδα από το Mezeclick</strong> 🦞🍝. Πέρσι η Πατήσια έφαγε. Φέτος;</p>
@@ -943,12 +1067,41 @@
       </div>
     </section>
 
+    <!-- ───────── GAME ───────── -->
+    <section id="game">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="reveal">
+            <div class="sec-kicker"><span class="n">06</span> Mini Game</div>
+            <h2 class="sec-title">Estia <span class="o">Shootout</span></h2>
+          </div>
+          <p class="sec-lede reveal" style="--d:.1s">30 δευτερόλεπτα. Τράβα την μπάλα πίσω, άφησέ την και βάλε όσα περισσότερα καλάθια μπορείς. Μακρινά σουτ = τρίποντα. Τρία στη σειρά = 🔥 διπλοί πόντοι.</p>
+        </div>
+        <div class="game reveal" id="gameBox">
+          <canvas id="hoops" aria-label="Παιχνίδι μπάσκετ: τράβα και άφησε την μπάλα για να σουτάρεις"></canvas>
+          <div class="hud">
+            <div class="hud-box"><span class="hud-k">Πόντοι</span><span class="hud-v" id="gScore">0</span><span class="streak" id="gStreak"></span></div>
+            <div class="hud-box r"><span class="hud-k">Χρόνος</span><span class="hud-v time" id="gTime">30</span><span class="hud-k" id="gBest">Ρεκόρ 0</span></div>
+          </div>
+          <div class="game-pop" id="gPop"></div>
+          <div class="game-overlay" id="gOverlay">
+            <div>
+              <h3 id="gTitle">Estia<br/>Shootout</h3>
+              <p id="gText">Πάτα πάνω στην μπάλα, τράβα προς τα πίσω σαν σφεντόνα και άφησε. Το καλάθι αλλάζει θέση μετά από κάθε καλάθι.</p>
+              <button class="btn btn-primary" id="gStart">🏀 Παίξε</button>
+              <div class="best" id="gBestTxt"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ───────── INFO ───────── -->
     <section id="info">
       <div class="wrap">
         <div class="sec-head">
           <div class="reveal">
-            <div class="sec-kicker"><span class="n">06</span> Το Ραντεβού</div>
+            <div class="sec-kicker"><span class="n">07</span> Το Ραντεβού</div>
             <h2 class="sec-title">Πού <span class="o">&amp;</span> Πότε</h2>
           </div>
         </div>
@@ -971,6 +1124,10 @@
             <div class="info-v">Πάρκο Estia</div>
             <span class="big" aria-hidden="true">ES</span>
           </div>
+        </div>
+        <div class="info-actions reveal">
+          <button class="btn btn-primary" id="addCal">📅 Πρόσθεσε στο ημερολόγιο</button>
+          <button class="btn btn-ghost" id="shareBtn">↗ Στείλε το site στην ομάδα</button>
         </div>
       </div>
     </section>
@@ -997,6 +1154,7 @@
   </div>
 
   <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
   (function () {
@@ -1044,6 +1202,12 @@
       return { d: dayIdx[p.weekday], s: (+p.hour) * 3600 + (+p.minute) * 60 + (+p.second) };
     }
     var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    function setNum(sel, v) {
+      var el = $(sel);
+      if (el.textContent === v) return;
+      el.textContent = v;
+      if (!reduce) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+    }
     var cd = $('#countdown'), cdLabel = $('#cdLabel'), navCtaText = $('#navCtaText');
     function tick() {
       var now = athensNow();
@@ -1061,7 +1225,7 @@
       cd.classList.remove('is-live');
       var left = weekSec - since;
       var d = Math.floor(left / 86400), h = Math.floor(left % 86400 / 3600), m = Math.floor(left % 3600 / 60), s = left % 60;
-      $('#cdD').textContent = d; $('#cdH').textContent = pad(h); $('#cdM').textContent = pad(m); $('#cdS').textContent = pad(s);
+      setNum('#cdD', '' + d); setNum('#cdH', pad(h)); setNum('#cdM', pad(m)); setNum('#cdS', pad(s));
       cdLabel.textContent = d === 0 ? 'Σήμερα στις 19:15 · Estia' : 'Επόμενο τζάμπολ · Πέμπτη 19:15';
       navCtaText.textContent = d === 0 ? 'Σήμερα 19:15' : 'Σε ' + d + (d === 1 ? ' μέρα' : ' μέρες');
     }
@@ -1214,20 +1378,29 @@
     var COLORS = ['#ffcc3d', '#fff0a8', '#ff7a1a', '#ffb347', '#ffffff', '#2bb8ff'];
     function resize() { var dpr = Math.min(window.devicePixelRatio || 1, 2); canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     window.addEventListener('resize', resize); resize();
-    function burst(x, y, n) {
+    function startConfetti() { if (!running) { running = true; requestAnimationFrame(frame); } }
+    function burst(x, y, n, colors) {
+      colors = colors || COLORS;
       for (var i = 0; i < n; i++) {
         var a = Math.random() * Math.PI * 2, sp = 4 + Math.random() * 9;
-        parts.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 7, w: 6 + Math.random() * 6, h: 8 + Math.random() * 10, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: COLORS[i % COLORS.length], life: 0 });
+        parts.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 7, w: 6 + Math.random() * 6, h: 8 + Math.random() * 10, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: colors[i % colors.length], g: .28, max: 300, life: 0 });
       }
-      if (!running) { running = true; requestAnimationFrame(frame); }
+      startConfetti();
+    }
+    function rain(emojis, n) {
+      for (var i = 0; i < n; i++) {
+        parts.push({ x: Math.random() * innerWidth, y: -40 - Math.random() * innerHeight * .8, vx: (Math.random() - .5) * 1.5, vy: 2 + Math.random() * 3, r: Math.random() * 6, vr: (Math.random() - .5) * .08, e: emojis[i % emojis.length], size: 22 + Math.random() * 26, g: .04, max: 900, life: 0 });
+      }
+      startConfetti();
     }
     function frame() {
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      parts = parts.filter(function (p) { return p.y < innerHeight + 40 && p.life < 300; });
+      parts = parts.filter(function (p) { return p.y < innerHeight + 60 && p.life < p.max; });
       parts.forEach(function (p) {
-        p.vy += 0.28; p.vx *= 0.985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+        p.vy += p.g; p.vx *= 0.985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
-        ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.life * .12)));
+        if (p.e) { ctx.font = p.size + 'px serif'; ctx.textAlign = 'center'; ctx.fillText(p.e, 0, 0); }
+        else { ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.life * .12))); }
         ctx.restore();
       });
       if (parts.length) requestAnimationFrame(frame); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
@@ -1245,6 +1418,568 @@
       }, { threshold: 0.45 });
       champIO.observe($('.champ-title'));
     }
+
+    /* ── Toast ── */
+    var toastEl = $('#toast'), toastT;
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastT);
+      toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2400);
+    }
+    function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+
+    /* ── Hero: interactive letters ── */
+    var outline = $('.hero-title .outline');
+    outline.setAttribute('aria-label', outline.textContent);
+    outline.innerHTML = outline.textContent.split('').map(function (c) { return '<span class="ch" aria-hidden="true">' + c + '</span>'; }).join('');
+    $$('.ch', outline).forEach(function (ch) {
+      function hit() { ch.classList.add('hit'); clearTimeout(ch._t); ch._t = setTimeout(function () { ch.classList.remove('hit'); }, 650); }
+      ch.addEventListener('pointerenter', hit);
+      ch.addEventListener('pointerdown', hit);
+    });
+
+    /* ── Hero: live WebGL gradient — the "clash line" between Πατήσια orange and Γλυφάδα blue ── */
+    var hero = $('.hero'), glCanvas = $('#heroGL');
+    var heroState = { mx: .5, my: .5, tx: .5, ty: .5, bias: 0, tbias: 0, power: 1, rip: [.5, .5, 99], mouseSeen: false };
+    (function initGL() {
+      var gl = glCanvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false, powerPreference: 'low-power' });
+      if (!gl) return;
+      var VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      var FS = [
+        'precision mediump float;',
+        'uniform vec2 uRes;uniform float uT;uniform vec2 uM;uniform float uBias;uniform vec3 uRip;uniform float uPow;',
+        'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);',
+        ' return mix(mix(hash(i),hash(i+vec2(1.,0.)),u.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),u.x),u.y);}',
+        'float fbm(vec2 p){float v=0.,a=.5;mat2 r=mat2(.8,.6,-.6,.8);for(int i=0;i<5;i++){v+=a*noise(p);p=r*p*2.02+.13;a*=.5;}return v;}',
+        'void main(){',
+        ' vec2 uv=gl_FragCoord.xy/uRes;float asp=uRes.x/uRes.y;vec2 p=vec2(uv.x*asp,uv.y);',
+        ' float t=uT*.06;',
+        ' vec2 q=vec2(fbm(p*1.4+vec2(0.,t)),fbm(p*1.4+vec2(5.2,1.3)-t));',
+        ' vec2 r=vec2(fbm(p*1.6+3.*q+vec2(1.7,9.2)+t*1.3),fbm(p*1.6+3.*q+vec2(8.3,2.8)-t));',
+        ' float f=fbm(p*1.8+2.5*r);',
+        ' vec2 rp=vec2((uv.x-uRip.x)*asp,uv.y-uRip.y);float rd=length(rp);',
+        ' float ring=exp(-pow((rd-uRip.z*.9)*12.,2.))*exp(-uRip.z*1.4);',
+        ' float split=mix(.5,uM.x,.55)+uBias*.17;',
+        ' float d=uv.x-split+(f-.5)*.55+(q.y-.5)*.25+ring*.06;',
+        ' float side=smoothstep(-.22,.22,d);',
+        ' vec3 orange=vec3(1.,.43,.08);vec3 blue=vec3(.1,.62,1.);vec3 gold=vec3(1.,.8,.25);',
+        ' vec3 col=mix(orange,blue,side);',
+        ' col*=.16+pow(f,1.6)*1.55;',
+        ' float seam=exp(-abs(d)*9.);',
+        ' col+=gold*seam*(.3+.4*f);',
+        ' vec2 mp=vec2((uv.x-uM.x)*asp,uv.y-uM.y);',
+        ' col+=vec3(1.,.92,.8)*exp(-dot(mp,mp)*10.)*.16;',
+        ' col+=gold*ring*.9;',
+        ' float v=smoothstep(1.2,.2,abs(uv.y-.48)*2.);col*=mix(.3,1.,v);',
+        ' col*=uPow;',
+        ' col=vec3(.027,.031,.043)+col*.9;',
+        ' col+=(hash(gl_FragCoord.xy+fract(uT))-.5)/255.;',
+        ' gl_FragColor=vec4(col,1.);',
+        '}'
+      ].join('\n');
+      function sh(type, src) { var o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; }
+      var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+      if (!vs || !fs) return;
+      var prog = gl.createProgram();
+      gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      var U = {};
+      ['uRes', 'uT', 'uM', 'uBias', 'uRip', 'uPow'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+
+      var SCALE = window.matchMedia('(max-width: 680px)').matches ? .45 : .55;
+      function size() {
+        var w = Math.max(1, Math.round(glCanvas.clientWidth * SCALE)), h = Math.max(1, Math.round(glCanvas.clientHeight * SCALE));
+        if (glCanvas.width !== w || glCanvas.height !== h) { glCanvas.width = w; glCanvas.height = h; gl.viewport(0, 0, w, h); }
+      }
+      var visible = true, t0 = performance.now(), last = t0, raf = null, slow = .016, frames = 0;
+      function draw(now) {
+        raf = null;
+        var raw = (now - last) / 1000, dt = Math.min(raw, .1); last = now;
+        var t = (now - t0) / 1000;
+        // adaptive quality: drop render resolution on slow devices
+        if (raw < .5) { slow = slow * .95 + raw * .05; if (++frames > 90 && slow > .034 && SCALE > .26) { SCALE *= .75; frames = 0; slow = .016; } }
+        if (!heroState.mouseSeen) { heroState.tx = .5 + Math.sin(t * .35) * .22; heroState.ty = .5 + Math.cos(t * .27) * .15; }
+        heroState.mx += (heroState.tx - heroState.mx) * Math.min(1, dt * 3);
+        heroState.my += (heroState.ty - heroState.my) * Math.min(1, dt * 3);
+        heroState.bias += (heroState.tbias - heroState.bias) * Math.min(1, dt * 2.5);
+        heroState.power += (1 - heroState.power) * Math.min(1, dt * 2);
+        heroState.rip[2] += dt;
+        size();
+        gl.uniform2f(U.uRes, glCanvas.width, glCanvas.height);
+        gl.uniform1f(U.uT, reduce ? 12 : t + 20);
+        gl.uniform2f(U.uM, heroState.mx, heroState.my);
+        gl.uniform1f(U.uBias, heroState.bias);
+        gl.uniform3f(U.uRip, heroState.rip[0], heroState.rip[1], heroState.rip[2]);
+        gl.uniform1f(U.uPow, heroState.power);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        if (!glCanvas.classList.contains('ready')) { glCanvas.classList.add('ready'); setTimeout(function () { $('.hero-fallback').style.display = 'none'; }, 1300); }
+        if (visible && !document.hidden && !reduce) raf = requestAnimationFrame(draw);
+      }
+      heroState.kick = function () { if (!raf) raf = requestAnimationFrame(draw); };
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) { visible = e[0].isIntersecting; if (visible) heroState.kick(); }).observe(hero);
+      }
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) { last = performance.now(); heroState.kick(); } });
+      window.addEventListener('resize', heroState.kick);
+      heroState.kick();
+    })();
+    function heroPoint(e) {
+      var r = hero.getBoundingClientRect();
+      return [(e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height];
+    }
+    hero.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var pt = heroPoint(e);
+      heroState.mouseSeen = true; heroState.tx = pt[0]; heroState.ty = pt[1];
+      if (reduce && heroState.kick) heroState.kick();
+    });
+    hero.addEventListener('pointerleave', function () { heroState.mouseSeen = false; });
+    hero.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('a, button')) return;
+      var pt = heroPoint(e);
+      heroState.rip = [pt[0], pt[1], 0];
+      heroState.power = 1.35;
+      if (e.pointerType === 'touch') { heroState.tx = pt[0]; heroState.ty = pt[1]; }
+      if (heroState.kick) heroState.kick();
+    });
+
+    /* ── Pick a side: themes the gradient, highlights your team, remembered on this device ── */
+    var SIDES = {
+      pat: { bias: 1, name: 'Πατήσια', colors: ['#ff7a1a', '#ffb347', '#ffcc3d', '#ffffff'], msg: 'Είσαι με την Πατήσια 🧡' },
+      gly: { bias: -1, name: 'Γλυφάδα', colors: ['#2bb8ff', '#7fe0ff', '#ffffff', '#ffcc3d'], msg: 'Είσαι με τη Γλυφάδα 💙' }
+    };
+    var sideTxt = { pat: $('#sidePatTxt'), gly: $('#sideGlyTxt') };
+    var sideDefault = { pat: sideTxt.pat.textContent, gly: sideTxt.gly.textContent };
+    function applySide(side, fx, srcEl) {
+      var root = document.documentElement;
+      if (side) root.setAttribute('data-side', side); else root.removeAttribute('data-side');
+      $$('.side-btn').forEach(function (b) {
+        var on = b.getAttribute('data-side') === side;
+        b.setAttribute('aria-pressed', on);
+        sideTxt[b.getAttribute('data-side')].textContent = on ? '✓ Η ομάδα σου' : sideDefault[b.getAttribute('data-side')];
+      });
+      $('#team-pat').classList.toggle('fav', side === 'pat');
+      $('#team-gly').classList.toggle('fav', side === 'gly');
+      heroState.tbias = side ? SIDES[side].bias : 0;
+      if (heroState.kick) heroState.kick();
+      store('estia-side', side || null);
+      if (fx && side) {
+        toast(SIDES[side].msg);
+        if (!reduce && srcEl) { var r = srcEl.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 80, SIDES[side].colors); }
+      }
+    }
+    $$('.side-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var s = b.getAttribute('data-side');
+        applySide(document.documentElement.getAttribute('data-side') === s ? null : s, true, b);
+      });
+    });
+    var savedSide = store('estia-side');
+    if (savedSide === 'pat' || savedSide === 'gly') applySide(savedSide, false);
+
+    /* ── Scroll-driven bits: progress bar, ticker speed, ambient colours ── */
+    var progress = $('#progress');
+    track.style.animation = 'none';
+    var tickX = 0, lastY = window.scrollY, vel = 0, tickerHover = false, lastT = performance.now();
+    $('.ticker').addEventListener('pointerenter', function () { tickerHover = true; });
+    $('.ticker').addEventListener('pointerleave', function () { tickerHover = false; });
+    function loop(now) {
+      var dt = Math.min((now - lastT) / 16.67, 3); lastT = now;
+      var y = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+      vel += ((y - lastY) - vel) * .12; lastY = y;
+      if (!reduce) {
+        var speed = (tickerHover ? .25 : 1) + Math.min(Math.abs(vel) * .35, 14);
+        tickX -= speed * (vel < -0.5 ? -1 : 1) * dt;
+        var half = track.scrollWidth / 2;
+        if (half > 0) { if (tickX <= -half) tickX += half; if (tickX > 0) tickX -= half; }
+        track.style.transform = 'translate3d(' + tickX + 'px,0,0)';
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    var AMB = {
+      rosters: ['#ff7a1a', '#2bb8ff'], transfers: ['#2bb8ff', '#ff7a1a'], champions: ['#ffcc3d', '#ff7a1a'],
+      stakes: ['#ff3b4e', '#ff7a1a'], media: ['#2bb8ff', '#ffcc3d'], game: ['#ff7a1a', '#2bb8ff'], info: ['#ffcc3d', '#2bb8ff']
+    };
+    var ambient = $('#ambient');
+    if ('IntersectionObserver' in window) {
+      var ambIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || !AMB[e.target.id]) return;
+          ambient.style.setProperty('--amb1', AMB[e.target.id][0]);
+          ambient.style.setProperty('--amb2', AMB[e.target.id][1]);
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      $$('main section[id]').forEach(function (s) { ambIO.observe(s); });
+    }
+
+    /* ── Section titles: scramble in ── */
+    var GLYPHS = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ#%&0123456789';
+    function scramble(el) {
+      var nodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) nodes.push({ n: walker.currentNode, t: walker.currentNode.nodeValue });
+      var start = null, dur = 750;
+      function step(now) {
+        if (!start) start = now;
+        var p = Math.min((now - start) / dur, 1);
+        nodes.forEach(function (o) {
+          var keep = Math.floor(o.t.length * p), out = o.t.slice(0, keep);
+          for (var i = keep; i < o.t.length; i++) out += /\s/.test(o.t[i]) ? o.t[i] : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+          o.n.nodeValue = out;
+        });
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    if (!reduce && 'IntersectionObserver' in window) {
+      var scrIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { scramble(e.target); scrIO.unobserve(e.target); } });
+      }, { threshold: .6 });
+      $$('.sec-title').forEach(function (t) { scrIO.observe(t); });
+    }
+
+    /* ── Magnetic buttons ── */
+    if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      $$('.btn, .nav-cta').forEach(function (b) {
+        b.addEventListener('pointermove', function (e) {
+          var r = b.getBoundingClientRect();
+          b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .22) + 'px,' + ((e.clientY - r.top - r.height / 2) * .35) + 'px)';
+        });
+        b.addEventListener('pointerleave', function () { b.style.transform = ''; });
+      });
+    }
+
+    /* ── Lobster rain easter egg ── */
+    var lobster = $('#lobster');
+    function lobsterRain() { if (!reduce) rain(['🦞', '🍝', '🦞'], 45); toast('Αστακομακαρονάδα για τους νικητές 🦞'); }
+    lobster.addEventListener('click', lobsterRain);
+    lobster.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lobsterRain(); } });
+
+    /* ── Add to calendar (.ics, weekly every Thursday 19:15 Athens) ── */
+    $('#addCal').addEventListener('click', function () {
+      var f = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Athens', year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+      var p = {}; f.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      var add = (GAME_DAY - dayIdx[p.weekday] + 7) % 7;
+      if (add === 0 && (+p.hour * 60 + +p.minute) >= GAME_H * 60 + GAME_M + GAME_LEN_MIN) add = 7;
+      var d = new Date(Date.UTC(+p.year, +p.month - 1, +p.day + add));
+      var ymd = d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate());
+      var stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+      var ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Playoffs Estia//EL', 'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT', 'UID:playoffs-estia-weekly@estia', 'DTSTAMP:' + stamp,
+        'DTSTART;TZID=Europe/Athens:' + ymd + 'T191500', 'DURATION:PT2H', 'RRULE:FREQ=WEEKLY;BYDAY=TH',
+        'SUMMARY:🏀 Playoffs Estia · Άνω Πατήσια vs Άνω Γλυφάδα', 'LOCATION:Πάρκο Estia\\, Αθήνα',
+        'DESCRIPTION:Κάθε Πέμπτη 19:15. Ο χαμένος κερνάει αστακομακαρονάδα 🦞',
+        'BEGIN:VALARM', 'TRIGGER:-PT1H', 'ACTION:DISPLAY', 'DESCRIPTION:Playoffs Estia σε 1 ώρα', 'END:VALARM',
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n');
+      var url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+      var a = document.createElement('a'); a.href = url; a.download = 'playoffs-estia.ics';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      toast('📅 Άνοιξε το αρχείο για να μπει στο ημερολόγιο');
+    });
+
+    /* ── Share ── */
+    $('#shareBtn').addEventListener('click', function () {
+      var data = { title: 'Playoffs Estia', text: 'Άνω Πατήσια vs Άνω Γλυφάδα · Κάθε Πέμπτη 19:15 🏀', url: location.href.split('#')[0] };
+      if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+      if (navigator.clipboard) navigator.clipboard.writeText(data.url).then(function () { toast('🔗 Ο σύνδεσμος αντιγράφηκε'); }, function () { toast(data.url); });
+      else toast(data.url);
+    });
+
+    /* ── Mini game: Estia Shootout ── */
+    (function game() {
+      var cv = $('#hoops'), g = cv.getContext('2d');
+      var overlay = $('#gOverlay'), elScore = $('#gScore'), elTime = $('#gTime'), elBest = $('#gBest'), elStreak = $('#gStreak'), pop = $('#gPop');
+      var W = 0, H = 0, R = 15, G = .8, K = .17, MAXPULL = 160, FLOOR = 0;
+      var ball, hoop, start, shot = null, drag = null, trail = [], sparks = [];
+      var running = false, ended = false, score = 0, timeLeft = 30, streak = 0, best = +(store('estia-best') || 0), netKick = 0;
+      var inView = false, raf = null, lastT = 0;
+      elBest.textContent = 'Ρεκόρ ' + best;
+      if (best) $('#gBestTxt').textContent = 'Ρεκόρ σου: ' + best;
+
+      function layout() {
+        var r = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var oldW = W;
+        W = r.width; H = r.height;
+        cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+        g.setTransform(dpr, 0, 0, dpr, 0, 0);
+        R = Math.max(12, Math.min(18, H * .034));
+        FLOOR = H - Math.max(26, H * .07);
+        G = H * .0017;
+        MAXPULL = Math.min(H * .36, 190);
+        K = Math.sqrt(2 * G * H * 1.15) / MAXPULL;
+        start = { x: Math.max(R * 3, W * (W < 560 ? .16 : .13)), y: FLOOR - H * .2 };
+        if (!hoop || !oldW) placeHoop(true); else { hoop.x = hoop.tx = Math.min(hoop.x / oldW * W, W - R * 6); }
+        if (!shot) resetBall();
+      }
+      function placeHoop(instant) {
+        var x = W * (.55 + Math.random() * .3), y = H * (.3 + Math.random() * .25);
+        x = Math.min(x, W - R * 6);
+        if (!hoop) hoop = { x: x, y: y, tx: x, ty: y };
+        hoop.tx = x; hoop.ty = y;
+        if (instant) { hoop.x = x; hoop.y = y; }
+      }
+      function resetBall() { ball = { x: start.x, y: start.y, vx: 0, vy: 0, rot: 0, ready: true, drop: 1 }; trail = []; }
+      function rimPts() { var w = R * 2 * 2.3; return { fx: hoop.x - w / 2, bx: hoop.x + w / 2, y: hoop.y }; }
+      function isThree() { return hoop.tx - start.x > W * .56; }
+
+      function launch(dx, dy) {
+        ball.vx = dx * K; ball.vy = dy * K; ball.ready = false;
+        shot = { t: 0, scored: false, rim: false, three: isThree() };
+      }
+      function popText(txt, color) {
+        pop.textContent = txt; pop.style.color = color || 'var(--gold)';
+        pop.classList.remove('show'); void pop.offsetWidth; pop.classList.add('show');
+      }
+      function scored() {
+        shot.scored = true; shot.at = shot.t;
+        var pts = shot.three ? 3 : 2;
+        streak++;
+        var fire = streak >= 3;
+        if (fire) pts *= 2;
+        score += pts;
+        elScore.textContent = score;
+        elStreak.textContent = fire ? '🔥 On fire ×2' : (streak > 1 ? 'Σερί ' + streak : '');
+        netKick = 1;
+        var label = !shot.rim ? 'Swish! +' + pts : '+' + pts;
+        if (shot.three) label = (fire ? '🔥 ' : '') + 'Τρίποντο! +' + pts;
+        else if (fire) label = '🔥 +' + pts;
+        if (timeLeft <= 0) label = 'Buzzer beater! +' + pts;
+        popText(label, fire ? '#ffb347' : null);
+        for (var i = 0; i < 26; i++) {
+          var a = Math.random() * Math.PI * 2, sp = 1 + Math.random() * 4;
+          sparks.push({ x: hoop.x, y: hoop.y + R, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1.5, life: 1, c: ['#ffcc3d', '#ff7a1a', '#2bb8ff', '#fff'][i % 4] });
+        }
+      }
+      function endShot() {
+        if (!shot.scored) { if (streak >= 3) popText('Έσβησε η φωτιά', '#8a8f9a'); streak = 0; elStreak.textContent = ''; }
+        var wasScored = shot.scored;
+        shot = null;
+        if (wasScored) placeHoop(false);
+        resetBall();
+        if (timeLeft <= 0 && running) finish();
+      }
+      function finish() {
+        running = false; ended = true;
+        var record = score > best;
+        if (record) { best = score; store('estia-best', '' + best); }
+        elBest.textContent = 'Ρεκόρ ' + best;
+        $('#gTitle').innerHTML = record && score > 0 ? 'Νέο<br/>ρεκόρ!' : 'Τέλος<br/>χρόνου';
+        $('#gText').textContent = 'Έβαλες ' + score + ' πόντους. ' + (score >= 30 ? 'MVP επίπεδο 👑' : score >= 16 ? 'Δυνατός σουτέρ 🔥' : score > 0 ? 'Καλό ζέσταμα — ξανά;' : 'Τράβα πιο δυνατά την επόμενη φορά!');
+        $('#gStart').textContent = '🔁 Ξανά';
+        $('#gBestTxt').textContent = 'Ρεκόρ σου: ' + best;
+        overlay.hidden = false;
+        if (record && score > 0 && !reduce) { var r = cv.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 140); }
+      }
+      $('#gStart').addEventListener('click', function () {
+        score = 0; streak = 0; timeLeft = 30; ended = false;
+        elScore.textContent = '0'; elTime.textContent = '30'; elStreak.textContent = '';
+        shot = null; placeHoop(true); resetBall();
+        overlay.hidden = true; running = true;
+        kick();
+      });
+
+      // input: drag anywhere, slingshot style
+      function pt(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+      cv.addEventListener('pointerdown', function (e) {
+        if (!running || !ball.ready) return;
+        drag = { s: pt(e), n: pt(e) };
+        cv.setPointerCapture(e.pointerId); cv.classList.add('dragging');
+      });
+      cv.addEventListener('pointermove', function (e) { if (drag) drag.n = pt(e); });
+      function release() {
+        if (!drag) return;
+        var dx = drag.s.x - drag.n.x, dy = drag.s.y - drag.n.y, len = Math.hypot(dx, dy);
+        if (len > MAXPULL) { dx *= MAXPULL / len; dy *= MAXPULL / len; }
+        if (len > 14 && ball.ready) launch(dx, dy);
+        drag = null; cv.classList.remove('dragging');
+      }
+      cv.addEventListener('pointerup', release);
+      cv.addEventListener('pointercancel', function () { drag = null; cv.classList.remove('dragging'); });
+
+      function pullVec() {
+        var dx = drag.s.x - drag.n.x, dy = drag.s.y - drag.n.y, len = Math.hypot(dx, dy);
+        if (len > MAXPULL) { dx *= MAXPULL / len; dy *= MAXPULL / len; len = MAXPULL; }
+        return { dx: dx, dy: dy, len: len };
+      }
+
+      function physics(dt) {
+        hoop.x += (hoop.tx - hoop.x) * Math.min(1, dt * .08);
+        hoop.y += (hoop.ty - hoop.y) * Math.min(1, dt * .08);
+        if (ball.drop > 0) ball.drop = Math.max(0, ball.drop - dt * .06);
+        if (!shot) return;
+        shot.t += dt;
+        var steps = 4, h = dt / steps, rim = rimPts();
+        var boardX = rim.bx + 5, boardTop = hoop.y - R * 4.6, boardBot = hoop.y + R * 1.3;
+        for (var i = 0; i < steps; i++) {
+          var prevY = ball.y;
+          ball.vy += G * h;
+          ball.x += ball.vx * h; ball.y += ball.vy * h;
+          ball.rot += ball.vx * h * .05;
+          // rim points
+          [[rim.fx, rim.y], [rim.bx, rim.y]].forEach(function (P) {
+            var dx = ball.x - P[0], dy = ball.y - P[1], dist = Math.hypot(dx, dy), min = R + 2;
+            if (dist < min && dist > 0) {
+              var nx = dx / dist, ny = dy / dist;
+              ball.x = P[0] + nx * min; ball.y = P[1] + ny * min;
+              var vn = ball.vx * nx + ball.vy * ny;
+              if (vn < 0) { ball.vx -= 1.55 * vn * nx; ball.vy -= 1.55 * vn * ny; }
+              shot.rim = true;
+            }
+          });
+          // backboard (front face)
+          if (ball.x + R > boardX && ball.x < boardX + 6 && ball.y > boardTop - R * .5 && ball.y < boardBot + R * .5 && ball.vx > 0) {
+            ball.x = boardX - R; ball.vx = -ball.vx * .55; shot.rim = true;
+          }
+          // score: crossing rim plane downward between the rim points
+          if (!shot.scored && ball.vy > 0 && prevY < rim.y && ball.y >= rim.y && ball.x > rim.fx + R * .35 && ball.x < rim.bx - R * .35) scored();
+          // floor + walls
+          if (ball.y + R > FLOOR) { ball.y = FLOOR - R; ball.vy = -ball.vy * .55; ball.vx *= .82; if (Math.abs(ball.vy) < 1.2) ball.vy = 0; }
+          if (ball.x < R) { ball.x = R; ball.vx = Math.abs(ball.vx) * .6; }
+        }
+        trail.push({ x: ball.x, y: ball.y }); if (trail.length > 10) trail.shift();
+        var resting = ball.y >= FLOOR - R - .5 && Math.abs(ball.vx) < .4;
+        if (ball.x > W + R * 3 || resting || (shot.scored ? shot.t - shot.at > 45 : shot.t > 250)) endShot();
+      }
+
+      // drawing
+      function rr(x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+      function sideColor() { var s = document.documentElement.getAttribute('data-side'); return s === 'gly' ? '43,184,255' : s === 'pat' ? '255,122,26' : '255,204,61'; }
+      function drawBall(x, y, rot, scale) {
+        var r = R * (scale || 1);
+        var grd = g.createRadialGradient(x - r * .35, y - r * .4, r * .1, x, y, r);
+        grd.addColorStop(0, '#ffb066'); grd.addColorStop(.6, '#f26a12'); grd.addColorStop(1, '#a8400a');
+        g.fillStyle = grd; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+        g.save(); g.translate(x, y); g.rotate(rot);
+        g.strokeStyle = 'rgba(40,14,0,.75)'; g.lineWidth = Math.max(1.2, r * .09);
+        g.beginPath(); g.moveTo(-r, 0); g.lineTo(r, 0); g.moveTo(0, -r); g.lineTo(0, r); g.stroke();
+        g.beginPath(); g.arc(-r * 1.25, 0, r * .95, -0.9, 0.9); g.stroke();
+        g.beginPath(); g.arc(r * 1.25, 0, r * .95, Math.PI - 0.9, Math.PI + 0.9); g.stroke();
+        g.restore();
+      }
+      function render() {
+        var sc = sideColor();
+        g.clearRect(0, 0, W, H);
+        // backdrop
+        var bg = g.createLinearGradient(0, 0, 0, H);
+        bg.addColorStop(0, '#0b0d12'); bg.addColorStop(1, '#10131b');
+        g.fillStyle = bg; g.fillRect(0, 0, W, H);
+        var glow = g.createRadialGradient(hoop.x, hoop.y, 0, hoop.x, hoop.y, H * .8);
+        glow.addColorStop(0, 'rgba(' + sc + ',.18)'); glow.addColorStop(1, 'rgba(' + sc + ',0)');
+        g.fillStyle = glow; g.fillRect(0, 0, W, H);
+        // floor
+        var fl = g.createLinearGradient(0, FLOOR, 0, H);
+        fl.addColorStop(0, '#3a1f17'); fl.addColorStop(1, '#1d100c');
+        g.fillStyle = fl; g.fillRect(0, FLOOR, W, H - FLOOR);
+        g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 2;
+        g.beginPath(); g.moveTo(0, FLOOR + 1); g.lineTo(W, FLOOR + 1); g.stroke();
+        // three-point marker on the floor
+        var threeX = hoop.tx - W * .56;
+        g.setLineDash([6, 8]); g.strokeStyle = 'rgba(255,204,61,.35)';
+        g.beginPath(); g.moveTo(threeX, FLOOR + 4); g.lineTo(threeX, H); g.stroke(); g.setLineDash([]);
+        if (threeX > 10) { g.fillStyle = 'rgba(255,204,61,.6)'; g.font = '800 11px "Sofia Sans Condensed", sans-serif'; g.textAlign = 'center'; g.fillText('3PT', threeX, H - 6); }
+
+        var rim = rimPts(), boardX = rim.bx + 5, boardTop = hoop.y - R * 4.6, boardBot = hoop.y + R * 1.3;
+        // pole
+        g.fillStyle = '#2a2f3a'; g.fillRect(boardX + 10, boardBot - 4, 7, FLOOR - boardBot + 4);
+        g.fillRect(boardX + 2, hoop.y - R * 1.2, 15, 5);
+        // board
+        g.fillStyle = 'rgba(255,255,255,.12)'; g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 2.5;
+        rr(boardX, boardTop, 7, boardBot - boardTop, 2); g.fill(); g.stroke();
+        // three badge
+        if (isThree()) {
+          g.fillStyle = '#ffcc3d'; rr(boardX - 34, boardTop - 24, 30, 18, 5); g.fill();
+          g.fillStyle = '#1a1200'; g.font = '900 13px "Sofia Sans Extra Condensed", sans-serif'; g.textAlign = 'center'; g.fillText('+3', boardX - 19, boardTop - 10);
+        }
+        // trail
+        trail.forEach(function (p, i) { g.fillStyle = 'rgba(' + sc + ',' + (i / trail.length * .25) + ')'; g.beginPath(); g.arc(p.x, p.y, R * (i / trail.length), 0, Math.PI * 2); g.fill(); });
+        // ball shadow
+        var sh = Math.max(.15, 1 - (FLOOR - ball.y) / H);
+        g.fillStyle = 'rgba(0,0,0,' + (.45 * sh) + ')'; g.beginPath(); g.ellipse(ball.x, FLOOR + 3, R * 1.1 * sh, R * .3 * sh, 0, 0, Math.PI * 2); g.fill();
+        // ball
+        var by = ball.y - ball.drop * H * .25;
+        drawBall(ball.x, by, ball.rot, ball.ready ? 1 + Math.sin(performance.now() / 300) * .03 : 1);
+        // off-screen marker when the ball flies above the canvas
+        if (by < -R) {
+          g.fillStyle = 'rgba(255,122,26,.9)';
+          g.beginPath(); g.moveTo(ball.x, 6); g.lineTo(ball.x - 7, 18); g.lineTo(ball.x + 7, 18); g.closePath(); g.fill();
+        }
+        // net
+        netKick *= .92;
+        var netLen = R * 2.6 * (1 + netKick * .35), bw = (rim.bx - rim.fx), botW = bw * (.55 - netKick * .12);
+        var cx = (rim.fx + rim.bx) / 2;
+        g.strokeStyle = 'rgba(255,255,255,.7)'; g.lineWidth = 1.2;
+        for (var i = 0; i <= 5; i++) {
+          var tx = rim.fx + bw * i / 5, bx2 = cx - botW / 2 + botW * i / 5;
+          g.beginPath(); g.moveTo(tx, rim.y); g.lineTo(bx2, rim.y + netLen); g.stroke();
+        }
+        for (var j = 1; j <= 3; j++) {
+          var yy = rim.y + netLen * j / 3, ww = bw - (bw - botW) * j / 3;
+          g.beginPath(); g.moveTo(cx - ww / 2, yy); g.lineTo(cx + ww / 2, yy); g.stroke();
+        }
+        // rim
+        g.strokeStyle = '#ff4d1a'; g.lineWidth = 4; g.lineCap = 'round';
+        g.beginPath(); g.moveTo(rim.fx, rim.y); g.lineTo(rim.bx + 4, rim.y); g.stroke();
+        // sparks
+        sparks = sparks.filter(function (s) { return s.life > 0; });
+        sparks.forEach(function (s) {
+          s.x += s.vx; s.y += s.vy; s.vy += .12; s.life -= .025;
+          g.globalAlpha = Math.max(0, s.life); g.fillStyle = s.c; g.fillRect(s.x - 2, s.y - 2, 4, 4);
+        });
+        g.globalAlpha = 1;
+        // aim
+        if (drag && ball.ready) {
+          var v = pullVec(), vx = v.dx * K, vy = v.dy * K, x = ball.x, y = ball.y;
+          var pct = v.len / MAXPULL;
+          g.strokeStyle = 'rgba(' + sc + ',.9)'; g.lineWidth = 3;
+          g.beginPath(); g.arc(ball.x, ball.y, R + 7, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * pct); g.stroke();
+          for (var k = 0; k < 34; k++) {
+            for (var m = 0; m < 2; m++) { vy += G; x += vx; y += vy; }
+            if (y > FLOOR) break;
+            g.fillStyle = 'rgba(255,255,255,' + (.75 - k * .02) + ')';
+            g.beginPath(); g.arc(x, y, Math.max(1, 3 - k * .06), 0, Math.PI * 2); g.fill();
+          }
+        }
+        // idle hint
+        if (running && ball.ready && !drag && score === 0 && timeLeft > 27) {
+          g.fillStyle = 'rgba(255,255,255,.6)'; g.font = '800 12px "Sofia Sans Condensed", sans-serif'; g.textAlign = 'center';
+          g.fillText('ΤΡΑΒΑ ΠΙΣΩ & ΑΦΗΣΕ ↗', ball.x + 40, ball.y + R * 3);
+        }
+      }
+      function frameG(now) {
+        raf = null;
+        var realDt = Math.min((now - lastT) / 1000, .25), dt = Math.min(realDt * 60, 3); lastT = now;
+        if (running && timeLeft > 0) {
+          timeLeft = Math.max(0, timeLeft - realDt);
+          var shown = Math.ceil(timeLeft);
+          if (elTime.textContent !== '' + shown) elTime.textContent = shown;
+          if (timeLeft <= 0 && !shot) finish();
+        }
+        physics(dt);
+        render();
+        if ((inView && !document.hidden) && (running || shot || sparks.length || netKick > .01 || ball.drop > 0 || drag)) raf = requestAnimationFrame(frameG);
+      }
+      function kick() { if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(frameG); } }
+      window.addEventListener('resize', function () { layout(); kick(); });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { inView = e[0].isIntersecting; if (inView) kick(); }).observe(cv);
+      else inView = true;
+      cv.addEventListener('pointerdown', kick);
+      (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { layout(); kick(); });
+      layout();
+    })();
   })();
   </script>
 </body>
