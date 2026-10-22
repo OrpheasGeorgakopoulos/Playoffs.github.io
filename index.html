@@ -817,6 +817,111 @@
       .flip-ic { width: 22px; height: 22px; right: .45rem; bottom: .45rem; }
       .info { grid-template-columns: 1fr; }
     }
+
+    /* ───────── GAME v2 ───────── */
+    .gold-t { color: var(--gold); }
+    .hud-mid { display: flex; gap: .4rem; pointer-events: auto; }
+    .g-ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: var(--ink); font-size: 1rem; transition: background .2s, transform .2s; -webkit-tap-highlight-color: transparent; }
+    .g-ic:hover { background: rgba(255,255,255,.16); }
+    .g-ic:active { transform: scale(.92); }
+    .g-ic svg { width: 18px; height: 18px; }
+    .g-exit { display: none; }
+    .hud-v.time.hurry { color: var(--live); animation: hurry .5s ease-in-out infinite alternate; }
+    .g-count { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; font-family: var(--display); font-weight: 900; font-size: clamp(6rem, 22vw, 11rem); color: #fff; text-shadow: 0 10px 50px rgba(0,0,0,.6); }
+    .g-count:empty { display: none; }
+    .g-count span { animation: countPop .8s var(--ease) forwards; }
+    .go-inner { width: 100%; max-width: 440px; max-height: 100%; overflow-y: auto; padding: .4rem; scrollbar-width: none; }
+    .go-inner::-webkit-scrollbar { display: none; }
+    .go-big { font-family: var(--display); font-weight: 900; font-size: clamp(4.4rem, 16vw, 6.5rem); line-height: .85; color: var(--gold); margin-top: .4rem; }
+    .go-big small { font-size: .3em; color: var(--muted); margin-left: .2em; }
+    .go-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; margin: 1rem 0 1.1rem; }
+    .go-stats div { padding: .55rem .3rem; border-radius: 12px; background: rgba(255,255,255,.06); }
+    .go-stats b { display: block; font-family: var(--display); font-weight: 900; font-size: 1.5rem; line-height: 1; }
+    .go-stats span { font-family: var(--cond); font-weight: 800; font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .go-actions { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin-top: 1rem; }
+    .go-top3 { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .go-top3 .lb-k { display: block; margin-bottom: .5rem; }
+    .go-top3 ol { list-style: none; display: grid; gap: .3rem; }
+    .go-top3 li { display: flex; align-items: center; gap: .5rem; font-family: var(--cond); font-weight: 700; font-size: .9rem; color: var(--ink-2); }
+    .go-top3 li b { margin-left: auto; font-family: var(--display); font-size: 1.15rem; color: #fff; }
+    .lb-form { margin-top: .2rem; padding: .9rem; border-radius: 16px; background: rgba(255,204,61,.08); border: 1px solid rgba(255,204,61,.3); text-align: left; }
+    .lb-form label { display: block; font-family: var(--cond); font-weight: 800; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: .55rem; }
+    .lb-row { display: flex; gap: .5rem; }
+    .lb-row input { flex: 1; min-width: 0; height: 46px; padding: 0 .9rem; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(0,0,0,.4); color: #fff; font: 600 1rem var(--body); outline: none; transition: border-color .2s; }
+    .lb-row input:focus { border-color: var(--gold); }
+    .lb-row button { flex: none; height: 46px; padding: 0 1rem; border-radius: 12px; background: var(--gold); color: #1a1200; font-family: var(--cond); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; }
+    .lb-row button:disabled { opacity: .5; }
+    .lb-msg { display: block; min-height: 1.2em; margin-top: .5rem; font-size: .82rem; color: var(--ink-2); }
+    .lb-msg.ok { color: var(--ok); }
+    .lb-msg.err { color: #ff8a95; }
+    .btn-sm { padding: .75rem 1.1rem; font-size: .8rem; }
+
+    /* phones: the game takes the whole screen while you play */
+    .game.immersive { position: fixed; inset: 0; z-index: 400; border-radius: 0; border: 0; }
+    .game.immersive #hoops { height: 100vh; height: 100dvh; }
+    .game.immersive .g-exit { display: grid; }
+    .game.immersive .hud { padding-top: calc(.8rem + env(safe-area-inset-top)); }
+    .game.immersive .game-overlay { padding: calc(1rem + env(safe-area-inset-top)) 1rem calc(1rem + env(safe-area-inset-bottom)); }
+    html.game-on, html.game-on body { overflow: hidden; }
+
+    /* ───────── LEADERBOARD ───────── */
+    .lb { margin-top: clamp(1.2rem, 3vw, 1.8rem); border-radius: 28px; border: 1px solid var(--line-2); background: var(--card); padding: clamp(1.1rem, 3vw, 1.8rem); }
+    .lb-prize { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(.8rem, 2.5vw, 1.4rem); padding: clamp(.9rem, 2.5vw, 1.3rem); border-radius: 20px; background: radial-gradient(120% 140% at 0% 0%, rgba(255,204,61,.22), transparent 60%), rgba(255,204,61,.05); border: 1px solid rgba(255,204,61,.3); }
+    .lb-coin { width: clamp(58px, 10vw, 76px); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: clamp(1.4rem, 3.4vw, 1.9rem); color: #3a2600; background: radial-gradient(circle at 35% 30%, #fff3b0, #ffcc3d 45%, #b8860b); box-shadow: inset 0 -4px 0 rgba(0,0,0,.18), 0 10px 30px -8px rgba(255,204,61,.6); animation: coin 6s ease-in-out infinite; }
+    .lb-k { font-family: var(--cond); font-weight: 800; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+    .lb-prize h3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.5rem, 3.6vw, 2.3rem); line-height: .92; margin: .2rem 0 .3rem; }
+    .lb-prize h3 em { font-style: normal; color: var(--gold); }
+    .lb-prize p { color: var(--ink-2); font-size: .9rem; line-height: 1.4; }
+    .lb-timer { text-align: right; }
+    .lb-timer span { display: block; font-family: var(--cond); font-weight: 800; font-size: .64rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .lb-timer b { font-family: var(--display); font-weight: 900; font-size: clamp(1.3rem, 3vw, 1.8rem); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: 1.2rem 0 .8rem; }
+    .lb-tabs { display: inline-flex; gap: .25rem; padding: .25rem; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line-2); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+    .lb-tabs button { white-space: nowrap; padding: .55rem .95rem; border-radius: 999px; font-family: var(--cond); font-weight: 800; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); transition: background .2s, color .2s; }
+    .lb-tabs button[aria-selected="true"] { background: var(--ink); color: #000; }
+    .lb-refresh { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--bg-2); color: var(--ink-2); font-size: 1.1rem; transition: transform .5s var(--ease); }
+    .lb-refresh.spin { transform: rotate(360deg); }
+    .lb-list { list-style: none; display: grid; gap: .4rem; }
+    .lb-row-i { display: grid; grid-template-columns: 2.2rem 28px minmax(0, 1fr) auto; align-items: center; gap: .65rem; padding: .6rem .8rem; border-radius: 14px; background: rgba(255,255,255,.03); border: 1px solid var(--line); animation: rowIn .45s var(--ease) both; }
+    .lb-row-i.top { background: linear-gradient(90deg, rgba(255,204,61,.14), rgba(255,204,61,.02)); border-color: rgba(255,204,61,.35); }
+    .lb-row-i.me { box-shadow: inset 3px 0 0 var(--gly); }
+    .lb-rank { font-family: var(--display); font-weight: 900; font-size: 1.25rem; text-align: center; color: var(--muted); }
+    .lb-row-i img, .lb-row-i .lb-noteam { width: 28px; height: 28px; object-fit: contain; }
+    .lb-noteam { display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.06); font-size: .8rem; }
+    .lb-name { min-width: 0; }
+    .lb-name b { display: block; font-family: var(--cond); font-weight: 800; font-size: 1rem; letter-spacing: .02em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lb-name span { font-size: .72rem; color: var(--muted); }
+    .lb-score { font-family: var(--display); font-weight: 900; font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+    .lb-row-i.top .lb-score { color: var(--gold); }
+    .lb-empty { padding: 1.4rem 1rem; text-align: center; color: var(--muted); border: 1px dashed var(--line-2); border-radius: 14px; }
+    .lb-empty button { margin-top: .6rem; }
+    .lb-last { margin-top: .9rem; display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem; border-radius: 14px; background: rgba(255,255,255,.04); font-size: .9rem; color: var(--ink-2); }
+    .lb-last b { color: #fff; }
+    .lb-last[hidden] { display: none; }
+    .lb-tabs { min-width: 0; flex: 0 1 auto; }
+    .t-short { display: none; }
+    @media (max-width: 380px) { .t-long { display: none; } .t-short { display: inline; } }
+    .lb-rules { margin-top: .9rem; font-size: .76rem; line-height: 1.5; color: var(--muted); }
+    .lb-offline { margin-top: .6rem; font-size: .8rem; color: #ffd27a; }
+    .tabbar a[href="#game"] { position: relative; }
+    .tab-badge { position: absolute; top: 3px; left: calc(50% + 6px); padding: 1px 5px; border-radius: 999px; background: var(--gold); color: #1a1200; font-family: var(--display); font-weight: 900; font-size: .62rem; letter-spacing: 0; line-height: 1.3; }
+
+    @keyframes hurry { from { transform: scale(1); } to { transform: scale(1.12); } }
+    @keyframes countPop { 0% { transform: scale(1.8); opacity: 0; } 25% { transform: scale(1); opacity: 1; } 80% { opacity: 1; } 100% { transform: scale(.85); opacity: 0; } }
+    @keyframes rowIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    @keyframes coin { 0%, 70%, 100% { transform: rotateY(0); } 80% { transform: rotateY(180deg); } 90% { transform: rotateY(360deg); } }
+
+    @media (max-width: 680px) {
+      .lb-prize { grid-template-columns: auto 1fr; }
+      .lb-timer { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; text-align: left; padding-top: .7rem; border-top: 1px solid rgba(255,204,61,.2); }
+      .go-stats b { font-size: 1.25rem; }
+      .lb-row-i { grid-template-columns: 1.8rem 24px minmax(0, 1fr) auto; gap: .5rem; padding: .55rem .65rem; }
+      .lb-row-i img, .lb-row-i .lb-noteam { width: 24px; height: 24px; }
+      .lb-tabs button { padding: .5rem .7rem; font-size: .68rem; }
+    }
+
+    .go-tips { font-size: .82rem !important; color: var(--muted) !important; margin: 0 auto 1rem !important; }
+
     /* ───────── REVEAL ───────── */
     .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
     .reveal.in { opacity: 1; transform: none; }
@@ -921,7 +1026,7 @@
     <a href="#result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M12 5v14M6.5 10v4M15.5 10h2.5v4h-2.5z"/></svg><span>Ματς</span></a>
     <a href="#rosters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.3A5 5 0 0 1 21.5 20"/></svg><span>Ομάδες</span></a>
     <a href="#media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span>Media</span></a>
-    <a href="#game"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.7 5.7c3 3 3 9.6 0 12.6M18.3 5.7c-3 3-3 9.6 0 12.6"/></svg><span>Παιχνίδι</span></a>
+    <a href="#game"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.7 5.7c3 3 3 9.6 0 12.6M18.3 5.7c-3 3-3 9.6 0 12.6"/></svg><span>Παιχνίδι</span><span class="tab-badge" aria-label="έπαθλο €1">€1</span></a>
     <a href="#info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Πρόγραμμα</span></a>
   </nav>
 
@@ -990,6 +1095,7 @@
       <div class="ticker-item"><span class="k">Μεταγραφή</span> Δημήτριος Κοσμάς → Άνω Πατήσια <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Νέος</span> Ο Ζαλιάρης φοράει τα χρώματα της Πατήσια <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Πρωταθλητές</span> Άνω Πατήσια 2025–26 <span class="sep">🏆</span></div>
+      <div class="ticker-item"><span class="k">Shootout</span> €1 στον νικητή του leaderboard κάθε εβδομάδας 🏆 <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Στοίχημα</span> Ο χαμένος κερνάει αστακομακαρονάδα 🦞 <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Ραντεβού</span> Κάθε Πέμπτη 19:15 · Estia <span class="sep">🏀</span></div>
     </div>
@@ -1179,7 +1285,7 @@
       </div>
     </section>
 
-    <!-- ───────── GAME ───────── -->
+    <!-- ───────── GAME + LEADERBOARD ───────── -->
     <section id="game">
       <div class="wrap">
         <div class="sec-head">
@@ -1187,28 +1293,48 @@
             <div class="sec-kicker"><span class="n">06</span> Mini Game</div>
             <h2 class="sec-title">Estia <span class="o">Shootout</span></h2>
           </div>
-          <p class="sec-lede reveal" style="--d:.1s">30 δευτερόλεπτα. Τράβα την μπάλα πίσω, άφησέ την και βάλε όσα περισσότερα καλάθια μπορείς. Μακρινά σουτ = τρίποντα. Τρία στη σειρά = 🔥 διπλοί πόντοι.</p>
+          <p class="sec-lede reveal" style="--d:.1s">30 δευτερόλεπτα, όσα καλάθια μπορείς. Ανέβασε το σκορ σου — ο νικητής κάθε εβδομάδας παίρνει <b class="gold-t">€1</b>.</p>
         </div>
+
         <div class="game reveal" id="gameBox">
           <canvas id="hoops" aria-label="Παιχνίδι μπάσκετ: τράβα και άφησε την μπάλα για να σουτάρεις"></canvas>
           <div class="hud">
             <div class="hud-box"><span class="hud-k">Πόντοι</span><span class="hud-v" id="gScore">0</span><span class="streak" id="gStreak"></span></div>
+            <div class="hud-mid">
+              <button class="g-ic" id="gSound" aria-label="Ήχος"></button>
+              <button class="g-ic g-exit" id="gExit" aria-label="Κλείσιμο παιχνιδιού">✕</button>
+            </div>
             <div class="hud-box r"><span class="hud-k">Χρόνος</span><span class="hud-v time" id="gTime">30</span><span class="hud-k" id="gBest">Ρεκόρ 0</span></div>
           </div>
           <div class="game-pop" id="gPop"></div>
+          <div class="g-count" id="gCount" aria-live="assertive"></div>
           <div class="game-overlay" id="gOverlay">
-            <div>
-              <h3 id="gTitle">Estia<br/>Shootout</h3>
-              <ol class="game-steps" id="gSteps">
-                <li><b>1</b>Πάτα οπουδήποτε στο γήπεδο</li>
-                <li><b>2</b>Τράβα προς τα πίσω — βλέπεις πού θα πάει</li>
-                <li><b>3</b>Άφησε για σουτ · 30 δευτερόλεπτα!</li>
-              </ol>
-              <p id="gText" hidden></p>
-              <button class="btn btn-primary" id="gStart">🏀 Παίξε</button>
-              <div class="best" id="gBestTxt"></div>
-            </div>
+            <div class="go-inner" id="gPanel"></div>
           </div>
+        </div>
+
+        <!-- weekly leaderboard -->
+        <div class="lb reveal" id="leaderboard">
+          <div class="lb-prize">
+            <div class="lb-coin" aria-hidden="true">€1</div>
+            <div class="lb-prize-txt">
+              <span class="lb-k">Εβδομαδιαίο έπαθλο</span>
+              <h3>Ο νικητής της εβδομάδας παίρνει <em>€1</em></h3>
+              <p id="lbPrizeNote">Η εβδομάδα κλείνει κάθε Πέμπτη στις 19:15 — το €1 δίνεται στο γήπεδο.</p>
+            </div>
+            <div class="lb-timer"><span>Κλείνει σε</span><b id="lbCountdown">—</b></div>
+          </div>
+          <div class="lb-bar">
+            <div class="lb-tabs" role="tablist" aria-label="Leaderboard">
+              <button role="tab" aria-selected="true" data-view="week"><span class="t-long">Αυτή την εβδομάδα</span><span class="t-short">Εβδομάδα</span></button>
+              <button role="tab" aria-selected="false" data-view="all"><span class="t-long">Όλων των εποχών</span><span class="t-short">Ρεκόρ</span></button>
+            </div>
+            <button class="lb-refresh" id="lbRefresh" aria-label="Ανανέωση">↻</button>
+          </div>
+          <ol class="lb-list" id="lbList"><li class="lb-empty">Φορτώνει…</li></ol>
+          <div class="lb-last" id="lbLast" hidden></div>
+          <p class="lb-rules">Κανόνες: ένα ψευδώνυμο ανά παίκτη · χωρίς πραγματικά ονόματα · σκορ που φαίνονται ψεύτικα διαγράφονται · ο νικητής επιβεβαιώνεται στο γήπεδο.</p>
+          <p class="lb-offline" id="lbOffline" hidden>⚠️ Το κοινό leaderboard δεν έχει συνδεθεί ακόμα — τα σκορ φαίνονται προς το παρόν μόνο σε αυτή τη συσκευή.</p>
         </div>
       </div>
     </section>
@@ -1318,6 +1444,10 @@
         ]
       }
     ];
+
+    // Online leaderboard (Supabase). Empty = scores are kept on this device only.
+    // Fill in the Project URL and the anon / publishable key from Supabase → Project Settings → API.
+    var LEADERBOARD = { url: '', key: '' };
 
     var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var winnerOf = function (g) { return g.pat > g.gly ? 'pat' : g.gly > g.pat ? 'gly' : null; };
@@ -2113,21 +2243,222 @@
       else toast(data.url);
     });
 
+    /* ── Sound effects (synthesised, no files) ── */
+    var Sound = (function () {
+      var ctx = null, on = store('estia-sound') !== 'off', noiseBuf = null;
+      function ac() {
+        if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (e) { return null; } }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tone(f, dur, type, vol, delay, slide) {
+        var c = ac(); if (!c) return;
+        var t = c.currentTime + (delay || 0), o = c.createOscillator(), gn = c.createGain();
+        o.type = type || 'sine'; o.frequency.setValueAtTime(f, t);
+        if (slide) o.frequency.exponentialRampToValueAtTime(slide, t + dur);
+        gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(vol || .15, t + .008); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(gn).connect(c.destination); o.start(t); o.stop(t + dur + .02);
+      }
+      function noise(dur, vol, freq, type, delay) {
+        var c = ac(); if (!c) return;
+        if (!noiseBuf) { noiseBuf = c.createBuffer(1, c.sampleRate, c.sampleRate); var d = noiseBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+        var t = c.currentTime + (delay || 0), s = c.createBufferSource(), f = c.createBiquadFilter(), gn = c.createGain();
+        s.buffer = noiseBuf; f.type = type || 'highpass'; f.frequency.value = freq || 1000;
+        gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(vol || .1, t + .02); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        s.connect(f).connect(gn).connect(c.destination); s.start(t); s.stop(t + dur + .02);
+      }
+      var SFX = {
+        launch: function () { noise(.18, .07, 900, 'bandpass'); },
+        rim: function () { tone(540, .09, 'square', .05); tone(820, .07, 'square', .03); },
+        board: function () { tone(170, .09, 'triangle', .14); },
+        bounce: function () { tone(110, .08, 'sine', .16, 0, 70); },
+        swish: function () { noise(.3, .12, 2600); },
+        score: function () { tone(660, .12, 'sine', .14); tone(990, .2, 'sine', .14, .08); },
+        fire: function () { tone(660, .1, 'triangle', .12); tone(880, .1, 'triangle', .12, .07); tone(1320, .22, 'triangle', .12, .14); },
+        money: function () { tone(1320, .1, 'sine', .1); tone(1760, .1, 'sine', .1, .06); tone(2640, .25, 'sine', .08, .12); },
+        tick: function () { tone(1000, .05, 'sine', .1); },
+        count: function () { tone(440, .16, 'sine', .16); },
+        go: function () { tone(880, .35, 'sine', .18); },
+        buzzer: function () { tone(150, .75, 'sawtooth', .09); tone(153, .75, 'sawtooth', .07); }
+      };
+      return {
+        unlock: ac,
+        isOn: function () { return on; },
+        toggle: function () { on = !on; store('estia-sound', on ? null : 'off'); return on; },
+        play: function (n) { if (on && SFX[n]) try { SFX[n](); } catch (e) {} }
+      };
+    })();
+
+    /* ── Leaderboard storage: Supabase when configured, otherwise this device only ── */
+    var LB = (function () {
+      var cfg = LEADERBOARD, online = !!(cfg.url && cfg.key);
+      var base = online ? cfg.url.replace(/\/+$/, '') + '/rest/v1/' : '';
+      function headers(extra) {
+        var h = { apikey: cfg.key, 'Content-Type': 'application/json' };
+        if (/^eyJ/.test(cfg.key)) h.Authorization = 'Bearer ' + cfg.key;
+        for (var k in extra) h[k] = extra[k];
+        return h;
+      }
+      function req(path, opts) {
+        var ctl = window.AbortController ? new AbortController() : null, to = ctl && setTimeout(function () { ctl.abort(); }, 9000);
+        opts = opts || {}; if (ctl) opts.signal = ctl.signal;
+        return fetch(base + path, opts).then(function (r) {
+          clearTimeout(to);
+          if (!r.ok) return r.text().then(function (t) { throw new Error(t || ('HTTP ' + r.status)); });
+          return r.status === 204 || r.status === 201 ? null : r.json();
+        });
+      }
+      function local() { try { return JSON.parse(store('estia-lb-local') || '[]'); } catch (e) { return []; } }
+      return {
+        online: online,
+        list: function (since, until, limit) {
+          if (online) {
+            var q = 'scores?select=name,score,team,made,shots,created_at&order=score.desc,created_at.asc&limit=' + (limit || 100);
+            if (since) q += '&created_at=gte.' + encodeURIComponent(since.toISOString());
+            if (until) q += '&created_at=lt.' + encodeURIComponent(until.toISOString());
+            return req(q, { headers: headers() });
+          }
+          var rows = local().filter(function (r) { var t = new Date(r.created_at); return (!since || t >= since) && (!until || t < until); });
+          rows.sort(function (a, b) { return b.score - a.score || new Date(a.created_at) - new Date(b.created_at); });
+          return Promise.resolve(rows.slice(0, limit || 100));
+        },
+        add: function (row) {
+          if (online) return req('scores', { method: 'POST', headers: headers({ Prefer: 'return=minimal' }), body: JSON.stringify(row) });
+          var rows = local(); row.created_at = new Date().toISOString(); rows.push(row);
+          store('estia-lb-local', JSON.stringify(rows.slice(-200)));
+          return Promise.resolve(null);
+        }
+      };
+    })();
+
+    // the competition week closes every Thursday 19:15 (Athens) — at game time, so the €1 is handed over at the court
+    function weekWindow() {
+      var now = athensNow(), weekSec = 7 * 86400;
+      var since = ((now.d * 86400 + now.s) - (GAME_DAY * 86400 + GAME_H * 3600 + GAME_M * 60) + weekSec) % weekSec;
+      var start = new Date(Date.now() - since * 1000);
+      start.setMilliseconds(0);
+      return { start: start, end: new Date(start.getTime() + weekSec * 1000), prev: new Date(start.getTime() - weekSec * 1000) };
+    }
+    function bestPerName(rows, n) {
+      var seen = {}, out = [];
+      rows.forEach(function (r) { var k = String(r.name).toLowerCase(); if (!seen[k]) { seen[k] = 1; out.push(r); } });
+      return out.slice(0, n || 10);
+    }
+    function ago(iso) {
+      var s = Math.max(0, (Date.now() - new Date(iso)) / 1000);
+      if (s < 60) return 'μόλις τώρα';
+      if (s < 3600) return 'πριν ' + Math.floor(s / 60) + 'λ';
+      if (s < 86400) return 'πριν ' + Math.floor(s / 3600) + 'ω';
+      return 'πριν ' + Math.floor(s / 86400) + (Math.floor(s / 86400) === 1 ? ' μέρα' : ' μέρες');
+    }
+    var BAD = ['μαλακ', 'γαμ', 'πουτ', 'αρχιδ', 'καριολ', 'πουστ', 'μουν', 'σκατ', 'fuck', 'shit', 'bitch', 'dick', 'cunt', 'nigg', 'porn', 'sex'];
+    function cleanName(raw) {
+      var n = String(raw || '').replace(/\s+/g, ' ').trim();
+      if (n.length < 2) return { err: 'Γράψε ψευδώνυμο με 2+ γράμματα' };
+      if (n.length > 16) return { err: 'Μέχρι 16 χαρακτήρες' };
+      if (!/^[\p{L}\p{N} _.\-]+$/u.test(n)) return { err: 'Μόνο γράμματα, αριθμοί, κενά και _ . -' };
+      var flat = n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      for (var i = 0; i < BAD.length; i++) if (flat.indexOf(BAD[i]) > -1) return { err: 'Διάλεξε άλλο ψευδώνυμο 🙂' };
+      return { name: n };
+    }
+
+    /* ── Leaderboard section ── */
+    var Board = (function () {
+      var list = $('#lbList'), view = 'week', weekRows = [], loading = false;
+      var myName = function () { return (store('estia-name') || '').toLowerCase(); };
+      $('#lbOffline').hidden = LB.online;
+      if (!LB.online) $('#lbPrizeNote').textContent = 'Η εβδομάδα κλείνει κάθε Πέμπτη στις 19:15 — το €1 δίνεται στο γήπεδο. Το online leaderboard ανοίγει σύντομα.';
+      function teamImg(t) { return TEAMS[t] ? '<img src="' + TEAMS[t].logo + '" alt="' + TEAMS[t].short + '" />' : '<span class="lb-noteam" aria-hidden="true">🏀</span>'; }
+      function row(r, i) {
+        var medal = view === 'week' && i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1);
+        var stat = (r.made != null && r.shots ? r.made + '/' + r.shots + ' καλάθια · ' : '') + ago(r.created_at);
+        return '<li class="lb-row-i' + (i === 0 ? ' top' : '') + (String(r.name).toLowerCase() === myName() ? ' me' : '') + '" style="animation-delay:' + (i * 40) + 'ms">' +
+          '<span class="lb-rank">' + medal + '</span>' + teamImg(r.team) +
+          '<span class="lb-name"><b>' + esc(r.name) + '</b><span>' + stat + '</span></span>' +
+          '<span class="lb-score">' + (+r.score) + '</span></li>';
+      }
+      function empty(msg, withPlay) {
+        list.innerHTML = '<li class="lb-empty">' + msg + (withPlay ? '<br/><button class="btn btn-primary btn-sm" data-play>🏀 Παίξε τώρα</button>' : '') + '</li>';
+      }
+      function load() {
+        if (loading) return; loading = true;
+        var w = weekWindow();
+        $('#lbRefresh').classList.add('spin');
+        var p = view === 'week' ? LB.list(w.start, null, 100) : LB.list(null, null, 200);
+        p.then(function (rows) {
+          rows = bestPerName(rows || [], 10);
+          if (view === 'week') { weekRows = rows; Game.top3(rows); }
+          if (!rows.length) empty(view === 'week' ? 'Κανένα σκορ ακόμα αυτή την εβδομάδα — γίνε ο πρώτος!' : 'Κανένα σκορ ακόμα.', true);
+          else list.innerHTML = rows.map(row).join('');
+        }).catch(function () {
+          empty('Δεν φόρτωσε το leaderboard.<br/><button class="btn btn-ghost btn-sm" data-retry>Δοκίμασε ξανά</button>');
+        }).then(function () { loading = false; setTimeout(function () { $('#lbRefresh').classList.remove('spin'); }, 500); });
+        // last week's winner
+        LB.list(w.prev, w.start, 1).then(function (rows) {
+          var el = $('#lbLast');
+          if (rows && rows[0]) { el.hidden = false; el.innerHTML = '🏆 <span>Νικητής περασμένης εβδομάδας: <b>' + esc(rows[0].name) + '</b> με ' + (+rows[0].score) + ' πόντους — κέρδισε το €1!</span>'; }
+          else el.hidden = true;
+        }).catch(function () {});
+      }
+      $$('.lb-tabs button').forEach(function (b) {
+        b.addEventListener('click', function () {
+          view = b.getAttribute('data-view');
+          $$('.lb-tabs button').forEach(function (x) { x.setAttribute('aria-selected', x === b); });
+          load();
+        });
+      });
+      $('#lbRefresh').addEventListener('click', load);
+      list.addEventListener('click', function (e) {
+        if (e.target.closest('[data-retry]')) load();
+        if (e.target.closest('[data-play]')) Game.play();
+      });
+      function tickWeek() {
+        var left = Math.max(0, (weekWindow().end - Date.now()) / 1000);
+        var d = Math.floor(left / 86400), h = Math.floor(left % 86400 / 3600), m = Math.floor(left % 3600 / 60);
+        $('#lbCountdown').textContent = (d ? d + 'μ ' : '') + h + 'ω ' + pad(m) + 'λ';
+      }
+      tickWeek(); setInterval(tickWeek, 30000);
+      if ('IntersectionObserver' in window) {
+        var seen = false;
+        new IntersectionObserver(function (e) { if (e[0].isIntersecting && !seen) { seen = true; load(); } }, { rootMargin: '300px' }).observe($('#game'));
+      } else load();
+      return {
+        load: load,
+        rankOf: function (name, score) {
+          return LB.list(weekWindow().start, null, 100).then(function (rows) {
+            rows = bestPerName(rows || [], 100);
+            for (var i = 0; i < rows.length; i++) if (String(rows[i].name).toLowerCase() === name.toLowerCase()) return i + 1;
+            return null;
+          });
+        }
+      };
+    })();
+
     /* ── Mini game: Estia Shootout ── */
-    (function game() {
-      var cv = $('#hoops'), g = cv.getContext('2d');
-      var overlay = $('#gOverlay'), elScore = $('#gScore'), elTime = $('#gTime'), elBest = $('#gBest'), elStreak = $('#gStreak'), pop = $('#gPop');
+    var Game = (function game() {
+      var box = $('#gameBox'), cv = $('#hoops'), g = cv.getContext('2d');
+      var overlay = $('#gOverlay'), panel = $('#gPanel'), elScore = $('#gScore'), elTime = $('#gTime'), elBest = $('#gBest'), elStreak = $('#gStreak'), pop = $('#gPop'), countEl = $('#gCount');
       var W = 0, H = 0, R = 15, G = .8, K = .17, MAXPULL = 160, FLOOR = 0;
       var ball, hoop, start, shot = null, drag = null, trail = [], sparks = [];
-      var running = false, ended = false, score = 0, timeLeft = 30, streak = 0, best = +(store('estia-best') || 0), netKick = 0;
+      var state = 'start', running = false, score = 0, timeLeft = 30, streak = 0, best = +(store('estia-best') || 0), netKick = 0;
+      var stats, submitted = false, lastTick = 0, level = 0, top3 = [];
       var inView = false, raf = null, lastT = 0;
+      var phone = function () { return window.matchMedia('(max-width: 760px)').matches; };
       elBest.textContent = 'Ρεκόρ ' + best;
-      if (best) $('#gBestTxt').textContent = 'Ρεκόρ σου: ' + best;
+
+      // sound toggle
+      var ICON_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+      var ICON_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>';
+      var sBtn = $('#gSound');
+      function soundIcon() { sBtn.innerHTML = Sound.isOn() ? ICON_ON : ICON_OFF; sBtn.setAttribute('aria-label', Sound.isOn() ? 'Σίγαση' : 'Ήχος'); }
+      soundIcon();
+      sBtn.addEventListener('click', function (e) { e.stopPropagation(); Sound.unlock(); Sound.toggle(); soundIcon(); });
 
       function layout() {
         var r = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
         var oldW = W;
         W = r.width; H = r.height;
+        if (!W || !H) return;
         cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
         g.setTransform(dpr, 0, 0, dpr, 0, 0);
         R = Math.max(12, Math.min(18, H * .034));
@@ -2136,25 +2467,25 @@
         MAXPULL = Math.min(H * .36, 190);
         K = Math.sqrt(2 * G * H * 1.15) / MAXPULL;
         start = { x: Math.max(R * 3, W * (W < 560 ? .16 : .13)), y: FLOOR - H * .2 };
-        if (!hoop || !oldW) placeHoop(true); else { hoop.x = hoop.tx = Math.min(hoop.x / oldW * W, W - R * 6); }
+        if (!hoop || !oldW) placeHoop(true); else { hoop.tx = Math.min(hoop.tx / oldW * W, W - R * 6 - W * .08); hoop.x = hoop.tx; hoop.ty = Math.max(hoop.ty, R * 4.6 + 104); hoop.y = hoop.ty; }
         if (!shot) resetBall();
       }
       function placeHoop(instant) {
         var x = W * (.55 + Math.random() * .3), y = Math.max(H * (.3 + Math.random() * .25), R * 4.6 + 104);
-        x = Math.min(x, W - R * 6);
-        if (!hoop) hoop = { x: x, y: y, tx: x, ty: y };
+        x = Math.min(x, W - R * 6 - W * .08);
+        if (!hoop) hoop = { x: x, y: y, tx: x, ty: y, phase: 0 };
         hoop.tx = x; hoop.ty = y;
         if (instant) { hoop.x = x; hoop.y = y; }
       }
-      function resetBall() { ball = { x: start.x, y: start.y, vx: 0, vy: 0, rot: 0, ready: true, drop: 1 }; trail = []; }
+      function resetBall() { ball = { x: start.x, y: start.y, vx: 0, vy: 0, rot: 0, ready: true, drop: 1, money: stats ? (stats.shots + 1) % 5 === 0 : false }; trail = []; }
       function rimPts() { var w = R * 2 * 2.3; return { fx: hoop.x - w / 2, bx: hoop.x + w / 2, y: hoop.y }; }
       function isThree() { return hoop.tx - start.x > W * .56; }
 
-      var shotsTaken = 0;
       function launch(dx, dy) {
-        shotsTaken++;
+        stats.shots++;
         ball.vx = dx * K; ball.vy = dy * K; ball.ready = false;
-        shot = { t: 0, scored: false, rim: false, three: isThree() };
+        shot = { t: 0, scored: false, rim: false, three: isThree(), money: ball.money, lastHit: -99 };
+        Sound.play('launch');
       }
       function popText(txt, color) {
         pop.textContent = txt; pop.style.color = color || 'var(--gold)';
@@ -2163,22 +2494,33 @@
       function scored() {
         shot.scored = true; shot.at = shot.t;
         var pts = shot.three ? 3 : 2;
-        streak++;
+        streak++; stats.made++; stats.bestStreak = Math.max(stats.bestStreak, streak);
+        if (shot.three) stats.threes++;
         var fire = streak >= 3;
         if (fire) pts *= 2;
+        if (shot.money) { pts += 2; stats.money++; }
+        var swish = !shot.rim;
+        if (swish) { stats.swishes++; timeLeft = Math.min(30, timeLeft + 1); }
         score += pts;
         elScore.textContent = score;
         elStreak.textContent = fire ? '🔥 On fire ×2' : (streak > 1 ? 'Σερί ' + streak : '');
         netKick = 1;
         buzz(fire ? [15, 30, 15] : 15);
-        var label = !shot.rim ? 'Swish! +' + pts : '+' + pts;
-        if (shot.three) label = (fire ? '🔥 ' : '') + 'Τρίποντο! +' + pts;
+        Sound.play(swish ? 'swish' : 'score');
+        if (shot.money) Sound.play('money'); else if (fire) Sound.play('fire'); else if (swish) setTimeout(function () { Sound.play('score'); }, 120);
+        var label = '+' + pts;
+        if (shot.money) label = '€ Money ball +' + pts;
+        else if (shot.three) label = (fire ? '🔥 ' : '') + 'Τρίποντο! +' + pts;
+        else if (swish) label = 'Swish! +' + pts;
         else if (fire) label = '🔥 +' + pts;
+        if (swish) label += ' · +1s';
         if (timeLeft <= 0) label = 'Buzzer beater! +' + pts;
-        popText(label, fire ? '#ffb347' : null);
+        popText(label, shot.money ? '#fff0a8' : fire ? '#ffb347' : null);
+        var nl = score >= 40 ? 2 : score >= 20 ? 1 : 0;
+        if (nl > level) { level = nl; setTimeout(function () { popText(level === 1 ? 'Level 2 · το καλάθι κινείται!' : 'Level 3 · πιο γρήγορα!', '#7fe0ff'); }, 900); }
         for (var i = 0; i < 26; i++) {
           var a = Math.random() * Math.PI * 2, sp = 1 + Math.random() * 4;
-          sparks.push({ x: hoop.x, y: hoop.y + R, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1.5, life: 1, c: ['#ffcc3d', '#ff7a1a', '#2bb8ff', '#fff'][i % 4] });
+          sparks.push({ x: hoop.x, y: hoop.y + R, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1.5, life: 1, c: shot.money ? ['#ffcc3d', '#fff0a8', '#ffffff'][i % 3] : ['#ffcc3d', '#ff7a1a', '#2bb8ff', '#fff'][i % 4] });
         }
       }
       function endShot() {
@@ -2189,31 +2531,134 @@
         resetBall();
         if (timeLeft <= 0 && running) finish();
       }
+
+      /* overlay screens */
+      function startScreen() {
+        state = 'start';
+        panel.innerHTML =
+          '<h3>Estia<br/>Shootout</h3>' +
+          '<ol class="game-steps">' +
+            '<li><b>1</b>Πάτα οπουδήποτε στο γήπεδο</li>' +
+            '<li><b>2</b>Τράβα προς τα πίσω — βλέπεις πού θα πάει</li>' +
+            '<li><b>3</b>Άφησε για σουτ · 30 δευτερόλεπτα!</li>' +
+          '</ol>' +
+          '<p class="go-tips">🔥 3 στη σειρά = ×2 · 💰 κάθε 5η μπάλα = +2 · 🎯 swish = +1s</p>' +
+          '<div class="go-actions"><button class="btn btn-primary" data-go>🏀 Παίξε</button></div>' +
+          (best ? '<div class="best">Ρεκόρ σου: ' + best + '</div>' : '') +
+          '<div class="go-top3"><span class="lb-k">🏆 Top 3 της εβδομάδας · €1 στον 1ο</span><ol>' + top3Html() + '</ol></div>';
+        overlay.hidden = false;
+      }
+      function top3Html() {
+        if (!top3.length) return '<li>Κανείς ακόμα — πάρε την 1η θέση!</li>';
+        return top3.map(function (r, i) { return '<li>' + ['🥇', '🥈', '🥉'][i] + ' ' + esc(r.name) + '<b>' + (+r.score) + '</b></li>'; }).join('');
+      }
+      function overScreen(record) {
+        state = 'over'; submitted = false;
+        var acc = stats.shots ? Math.round(stats.made / stats.shots * 100) : 0;
+        panel.innerHTML =
+          '<span class="lb-k">' + (record ? '🎉 Νέο προσωπικό ρεκόρ!' : 'Τέλος χρόνου') + '</span>' +
+          '<div class="go-big">' + score + '<small>πόντοι</small></div>' +
+          '<div class="go-stats">' +
+            '<div><b>' + stats.made + '/' + stats.shots + '</b><span>Καλάθια</span></div>' +
+            '<div><b>' + acc + '%</b><span>Εύστοχα</span></div>' +
+            '<div><b>' + stats.bestStreak + '</b><span>Σερί</span></div>' +
+            '<div><b>' + stats.threes + '</b><span>Τρίποντα</span></div>' +
+          '</div>' +
+          (score > 0 ?
+            '<form class="lb-form" id="lbForm" novalidate>' +
+              '<label for="lbName">🏆 Ανέβασε το σκορ στο leaderboard</label>' +
+              '<div class="lb-row"><input id="lbName" maxlength="16" placeholder="Το ψευδώνυμό σου" autocomplete="nickname" enterkeyhint="send" value="' + esc(store('estia-name') || '') + '" />' +
+              '<button type="submit">Ανέβασμα</button></div>' +
+              '<small class="lb-msg" id="lbMsg">' + (LB.online ? 'Ο 1ος της εβδομάδας παίρνει €1 · μόνο ψευδώνυμο, όχι πραγματικό όνομα' : 'Προς το παρόν αποθηκεύεται μόνο σε αυτή τη συσκευή') + '</small>' +
+            '</form>' : '<p>Τράβα πιο δυνατά την επόμενη φορά — η τελεία δείχνει πού θα πάει η μπάλα.</p>') +
+          '<div class="go-actions"><button class="btn btn-primary btn-sm" data-go>🔁 Ξανά</button>' +
+          (box.classList.contains('immersive') ? '<button class="btn btn-ghost btn-sm" data-close>Κλείσιμο</button>' : '<a class="btn btn-ghost btn-sm" href="#leaderboard" data-tolb>🏆 Leaderboard</a>') + '</div>';
+        overlay.hidden = false;
+        var form = $('#lbForm');
+        if (form) form.addEventListener('submit', submit);
+      }
+      function submit(e) {
+        e.preventDefault();
+        if (submitted) return;
+        var input = $('#lbName'), msg = $('#lbMsg'), btn = $('#lbForm button'), c = cleanName(input.value);
+        if (c.err) { msg.className = 'lb-msg err'; msg.textContent = c.err; input.focus(); return; }
+        btn.disabled = true; msg.className = 'lb-msg'; msg.textContent = 'Ανεβαίνει…';
+        var side = document.documentElement.getAttribute('data-side');
+        LB.add({ name: c.name, score: score, team: side === 'pat' || side === 'gly' ? side : null, made: stats.made, shots: stats.shots })
+          .then(function () {
+            submitted = true; store('estia-name', c.name);
+            input.disabled = true; btn.textContent = '✓';
+            return Board.rankOf(c.name, score);
+          })
+          .then(function (rank) {
+            msg.className = 'lb-msg ok';
+            msg.textContent = rank === 1 ? '🥇 Είσαι 1ος αυτή την εβδομάδα — το €1 είναι δικό σου αν κρατήσεις!' : rank ? '✓ Ανέβηκε! Είσαι #' + rank + ' αυτή την εβδομάδα' : '✓ Ανέβηκε!';
+            if (rank === 1 && !reduce) { var r = cv.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 3, 120); }
+            buzz([10, 40, 10]);
+            Board.load();
+          })
+          .catch(function (err) {
+            btn.disabled = false;
+            msg.className = 'lb-msg err';
+            msg.textContent = /too fast/i.test(err && err.message) ? 'Περίμενε λίγα δευτερόλεπτα και ξαναδοκίμασε' : 'Κάτι πήγε στραβά — δοκίμασε ξανά';
+          });
+      }
+      overlay.addEventListener('click', function (e) {
+        if (e.target.closest('[data-go]')) { play(); return; }
+        if (e.target.closest('[data-close]')) { immersive(false); startScreen(); return; }
+        if (e.target.closest('[data-tolb]')) return;
+        // on the start screen, a tap anywhere starts the game
+        if (state === 'start' && !e.target.closest('button, a, input, form')) play();
+      });
+      $('#gExit').addEventListener('click', function (e) {
+        e.stopPropagation();
+        running = false; shot = null; countEl.innerHTML = ''; clearTimeout(countT);
+        immersive(false); startScreen(); resetBall(); kick();
+      });
+
+      function immersive(on) {
+        if (on && !phone()) return;
+        box.classList.toggle('immersive', on);
+        document.documentElement.classList.toggle('game-on', on);
+        layout(); kick();
+        if (!on) box.scrollIntoView({ block: 'center' });
+      }
+      var countT = null;
+      function play() {
+        Sound.unlock();
+        stats = { shots: 0, made: 0, bestStreak: 0, threes: 0, swishes: 0, money: 0 };
+        score = 0; streak = 0; timeLeft = 30; level = 0; lastTick = 0;
+        elScore.textContent = '0'; elTime.textContent = '30'; elTime.classList.remove('hurry'); elStreak.textContent = '';
+        shot = null; overlay.hidden = true; state = 'count'; running = false;
+        if (!box.classList.contains('immersive')) {
+          if (phone()) immersive(true);
+          else box.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+        }
+        placeHoop(true); resetBall(); kick();
+        var seq = reduce ? ['GO!'] : ['3', '2', '1', 'GO!'], i = 0;
+        (function step() {
+          if (state !== 'count') return;
+          if (i >= seq.length) { countEl.innerHTML = ''; state = 'play'; running = true; lastT = performance.now(); kick(); return; }
+          countEl.innerHTML = '<span>' + seq[i] + '</span>';
+          Sound.play(seq[i] === 'GO!' ? 'go' : 'count');
+          i++; countT = setTimeout(step, seq[i - 1] === 'GO!' ? 450 : 700);
+        })();
+      }
       function finish() {
-        running = false; ended = true;
-        var record = score > best;
+        running = false;
+        Sound.play('buzzer'); buzz([30, 60, 30]);
+        elTime.classList.remove('hurry');
+        var record = score > best && score > 0;
         if (record) { best = score; store('estia-best', '' + best); }
         elBest.textContent = 'Ρεκόρ ' + best;
-        $('#gTitle').innerHTML = record && score > 0 ? 'Νέο<br/>ρεκόρ!' : 'Τέλος<br/>χρόνου';
-        $('#gSteps').hidden = true; $('#gText').hidden = false;
-        $('#gText').textContent = 'Έβαλες ' + score + ' πόντους. ' + (score >= 30 ? 'MVP επίπεδο 👑' : score >= 16 ? 'Δυνατός σουτέρ 🔥' : score > 0 ? 'Καλό ζέσταμα — ξανά;' : 'Τράβα πιο δυνατά την επόμενη φορά!');
-        $('#gStart').textContent = '🔁 Ξανά';
-        $('#gBestTxt').textContent = 'Ρεκόρ σου: ' + best;
-        overlay.hidden = false;
-        if (record && score > 0 && !reduce) { var r = cv.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 140); }
+        overScreen(record);
+        if (record && !reduce) { var r = cv.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 140); }
       }
-      overlay.addEventListener('click', function (e) { if (e.target !== $('#gStart')) $('#gStart').click(); });
-      $('#gStart').addEventListener('click', function () {
-        score = 0; streak = 0; timeLeft = 30; ended = false; shotsTaken = 0;
-        elScore.textContent = '0'; elTime.textContent = '30'; elStreak.textContent = '';
-        shot = null; placeHoop(true); resetBall();
-        overlay.hidden = true; running = true;
-        kick();
-      });
 
       // input: drag anywhere, slingshot style
       function pt(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
       cv.addEventListener('pointerdown', function (e) {
+        kick();
         if (!running || !ball.ready) return;
         drag = { s: pt(e), n: pt(e) };
         cv.setPointerCapture(e.pointerId); cv.classList.add('dragging');
@@ -2223,12 +2668,11 @@
         if (!drag) return;
         var dx = drag.s.x - drag.n.x, dy = drag.s.y - drag.n.y, len = Math.hypot(dx, dy);
         if (len > MAXPULL) { dx *= MAXPULL / len; dy *= MAXPULL / len; }
-        if (len > 14 && ball.ready) launch(dx, dy);
+        if (len > 14 && ball.ready && running) launch(dx, dy);
         drag = null; cv.classList.remove('dragging');
       }
       cv.addEventListener('pointerup', release);
       cv.addEventListener('pointercancel', function () { drag = null; cv.classList.remove('dragging'); });
-
       function pullVec() {
         var dx = drag.s.x - drag.n.x, dy = drag.s.y - drag.n.y, len = Math.hypot(dx, dy);
         if (len > MAXPULL) { dx *= MAXPULL / len; dy *= MAXPULL / len; len = MAXPULL; }
@@ -2236,7 +2680,11 @@
       }
 
       function physics(dt) {
-        hoop.x += (hoop.tx - hoop.x) * Math.min(1, dt * .08);
+        // levels: from 20 points the hoop sways, from 40 it sways faster
+        var amp = level === 2 ? W * .08 : level === 1 ? W * .05 : 0;
+        if (running && amp) hoop.phase += dt * (level === 2 ? .035 : .02);
+        var targetX = hoop.tx + Math.sin(hoop.phase) * amp;
+        hoop.x += (targetX - hoop.x) * Math.min(1, dt * (amp ? .25 : .08));
         hoop.y += (hoop.ty - hoop.y) * Math.min(1, dt * .08);
         if (ball.drop > 0) ball.drop = Math.max(0, ball.drop - dt * .06);
         if (!shot) return;
@@ -2248,28 +2696,27 @@
           ball.vy += G * h;
           ball.x += ball.vx * h; ball.y += ball.vy * h;
           ball.rot += ball.vx * h * .05;
-          // rim points
           [[rim.fx, rim.y], [rim.bx, rim.y]].forEach(function (P) {
             var dx = ball.x - P[0], dy = ball.y - P[1], dist = Math.hypot(dx, dy), min = R + 2;
             if (dist < min && dist > 0) {
               var nx = dx / dist, ny = dy / dist;
               ball.x = P[0] + nx * min; ball.y = P[1] + ny * min;
               var vn = ball.vx * nx + ball.vy * ny;
-              if (vn < 0) { ball.vx -= 1.55 * vn * nx; ball.vy -= 1.55 * vn * ny; }
+              if (vn < 0) { ball.vx -= 1.55 * vn * nx; ball.vy -= 1.55 * vn * ny; if (shot.t - shot.lastHit > 6) { Sound.play('rim'); shot.lastHit = shot.t; } }
               shot.rim = true;
             }
           });
-          // backboard (front face)
           if (ball.x + R > boardX && ball.x < boardX + 6 && ball.y > boardTop - R * .5 && ball.y < boardBot + R * .5 && ball.vx > 0) {
-            ball.x = boardX - R; ball.vx = -ball.vx * .55; shot.rim = true;
+            ball.x = boardX - R; ball.vx = -ball.vx * .55; shot.rim = true; Sound.play('board');
           }
-          // score: crossing rim plane downward between the rim points
           if (!shot.scored && ball.vy > 0 && prevY < rim.y && ball.y >= rim.y && ball.x > rim.fx + R * .35 && ball.x < rim.bx - R * .35) scored();
-          // floor + walls
-          if (ball.y + R > FLOOR) { ball.y = FLOOR - R; ball.vy = -ball.vy * .55; ball.vx *= .82; if (Math.abs(ball.vy) < 1.2) ball.vy = 0; }
+          if (ball.y + R > FLOOR) {
+            if (ball.vy > 3) Sound.play('bounce');
+            ball.y = FLOOR - R; ball.vy = -ball.vy * .55; ball.vx *= .82; if (Math.abs(ball.vy) < 1.2) ball.vy = 0;
+          }
           if (ball.x < R) { ball.x = R; ball.vx = Math.abs(ball.vx) * .6; }
         }
-        trail.push({ x: ball.x, y: ball.y }); if (trail.length > 10) trail.shift();
+        trail.push({ x: ball.x, y: ball.y }); if (trail.length > (streak >= 3 ? 16 : 10)) trail.shift();
         var resting = ball.y >= FLOOR - R - .5 && Math.abs(ball.vx) < .4;
         if (ball.x > W + R * 3 || resting || (shot.scored ? shot.t - shot.at > 45 : shot.t > 250)) endShot();
       }
@@ -2277,66 +2724,67 @@
       // drawing
       function rr(x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
       function sideColor() { var s = document.documentElement.getAttribute('data-side'); return s === 'gly' ? '43,184,255' : s === 'pat' ? '255,122,26' : '255,204,61'; }
-      function drawBall(x, y, rot, scale) {
+      function drawBall(x, y, rot, scale, money) {
         var r = R * (scale || 1);
         var grd = g.createRadialGradient(x - r * .35, y - r * .4, r * .1, x, y, r);
-        grd.addColorStop(0, '#ffb066'); grd.addColorStop(.6, '#f26a12'); grd.addColorStop(1, '#a8400a');
+        if (money) { grd.addColorStop(0, '#fff6c2'); grd.addColorStop(.55, '#ffcc3d'); grd.addColorStop(1, '#a6740a'); }
+        else { grd.addColorStop(0, '#ffb066'); grd.addColorStop(.6, '#f26a12'); grd.addColorStop(1, '#a8400a'); }
+        if (money) { g.save(); g.shadowColor = 'rgba(255,204,61,.9)'; g.shadowBlur = 18; }
         g.fillStyle = grd; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+        if (money) g.restore();
         g.save(); g.translate(x, y); g.rotate(rot);
-        g.strokeStyle = 'rgba(40,14,0,.75)'; g.lineWidth = Math.max(1.2, r * .09);
+        g.strokeStyle = money ? 'rgba(90,60,0,.6)' : 'rgba(40,14,0,.75)'; g.lineWidth = Math.max(1.2, r * .09);
         g.beginPath(); g.moveTo(-r, 0); g.lineTo(r, 0); g.moveTo(0, -r); g.lineTo(0, r); g.stroke();
         g.beginPath(); g.arc(-r * 1.25, 0, r * .95, -0.9, 0.9); g.stroke();
         g.beginPath(); g.arc(r * 1.25, 0, r * .95, Math.PI - 0.9, Math.PI + 0.9); g.stroke();
         g.restore();
+        if (money) { g.fillStyle = '#3a2600'; g.font = '900 ' + Math.round(r * 1.1) + 'px "Sofia Sans Extra Condensed", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('€', x, y + 1); g.textBaseline = 'alphabetic'; }
       }
       function render() {
-        var sc = sideColor();
+        var sc = sideColor(), fire = streak >= 3;
         g.clearRect(0, 0, W, H);
-        // backdrop
         var bg = g.createLinearGradient(0, 0, 0, H);
         bg.addColorStop(0, '#0b0d12'); bg.addColorStop(1, '#10131b');
         g.fillStyle = bg; g.fillRect(0, 0, W, H);
         var glow = g.createRadialGradient(hoop.x, hoop.y, 0, hoop.x, hoop.y, H * .8);
-        glow.addColorStop(0, 'rgba(' + sc + ',.18)'); glow.addColorStop(1, 'rgba(' + sc + ',0)');
+        glow.addColorStop(0, 'rgba(' + (fire ? '255,122,26' : sc) + ',' + (fire ? .26 : .18) + ')'); glow.addColorStop(1, 'rgba(' + sc + ',0)');
         g.fillStyle = glow; g.fillRect(0, 0, W, H);
-        // floor
         var fl = g.createLinearGradient(0, FLOOR, 0, H);
         fl.addColorStop(0, '#3a1f17'); fl.addColorStop(1, '#1d100c');
         g.fillStyle = fl; g.fillRect(0, FLOOR, W, H - FLOOR);
         g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 2;
         g.beginPath(); g.moveTo(0, FLOOR + 1); g.lineTo(W, FLOOR + 1); g.stroke();
-        // three-point marker on the floor
         var threeX = hoop.tx - W * .56;
         g.setLineDash([6, 8]); g.strokeStyle = 'rgba(255,204,61,.35)';
         g.beginPath(); g.moveTo(threeX, FLOOR + 4); g.lineTo(threeX, H); g.stroke(); g.setLineDash([]);
         if (threeX > 10) { g.fillStyle = 'rgba(255,204,61,.6)'; g.font = '800 11px "Sofia Sans Condensed", sans-serif'; g.textAlign = 'center'; g.fillText('3PT', threeX, H - 6); }
 
         var rim = rimPts(), boardX = rim.bx + 5, boardTop = hoop.y - R * 4.6, boardBot = hoop.y + R * 1.3;
-        // pole
         g.fillStyle = '#2a2f3a'; g.fillRect(boardX + 10, boardBot - 4, 7, FLOOR - boardBot + 4);
         g.fillRect(boardX + 2, hoop.y - R * 1.2, 15, 5);
-        // board
         g.fillStyle = 'rgba(255,255,255,.12)'; g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 2.5;
         rr(boardX, boardTop, 7, boardBot - boardTop, 2); g.fill(); g.stroke();
-        // three badge
         if (isThree()) {
           g.fillStyle = '#ffcc3d'; rr(boardX - 34, boardTop - 24, 30, 18, 5); g.fill();
           g.fillStyle = '#1a1200'; g.font = '900 13px "Sofia Sans Extra Condensed", sans-serif'; g.textAlign = 'center'; g.fillText('+3', boardX - 19, boardTop - 10);
         }
-        // trail
-        trail.forEach(function (p, i) { g.fillStyle = 'rgba(' + sc + ',' + (i / trail.length * .25) + ')'; g.beginPath(); g.arc(p.x, p.y, R * (i / trail.length), 0, Math.PI * 2); g.fill(); });
-        // ball shadow
+        trail.forEach(function (p, i) {
+          var a = i / trail.length;
+          g.fillStyle = fire ? 'rgba(255,' + Math.round(120 + 100 * a) + ',30,' + (a * .45) + ')' : 'rgba(' + sc + ',' + (a * .25) + ')';
+          g.beginPath(); g.arc(p.x, p.y, R * a * (fire ? 1.15 : 1), 0, Math.PI * 2); g.fill();
+        });
         var sh = Math.max(.15, 1 - (FLOOR - ball.y) / H);
         g.fillStyle = 'rgba(0,0,0,' + (.45 * sh) + ')'; g.beginPath(); g.ellipse(ball.x, FLOOR + 3, R * 1.1 * sh, R * .3 * sh, 0, 0, Math.PI * 2); g.fill();
-        // ball
         var by = ball.y - ball.drop * H * .25;
-        drawBall(ball.x, by, ball.rot, ball.ready ? 1 + Math.sin(performance.now() / 300) * .03 : 1);
-        // off-screen marker when the ball flies above the canvas
+        drawBall(ball.x, by, ball.rot, ball.ready ? 1 + Math.sin(performance.now() / 300) * .03 : 1, ball.money);
+        if (ball.ready && ball.money && running) {
+          g.fillStyle = '#ffcc3d'; g.font = '800 11px "Sofia Sans Condensed", sans-serif'; g.textAlign = 'center';
+          g.fillText('MONEY BALL +2', ball.x, by + R + 18);
+        }
         if (by < -R) {
           g.fillStyle = 'rgba(255,122,26,.9)';
           g.beginPath(); g.moveTo(ball.x, 6); g.lineTo(ball.x - 7, 18); g.lineTo(ball.x + 7, 18); g.closePath(); g.fill();
         }
-        // net
         netKick *= .92;
         var netLen = R * 2.6 * (1 + netKick * .35), bw = (rim.bx - rim.fx), botW = bw * (.55 - netKick * .12);
         var cx = (rim.fx + rim.bx) / 2;
@@ -2349,17 +2797,14 @@
           var yy = rim.y + netLen * j / 3, ww = bw - (bw - botW) * j / 3;
           g.beginPath(); g.moveTo(cx - ww / 2, yy); g.lineTo(cx + ww / 2, yy); g.stroke();
         }
-        // rim
-        g.strokeStyle = '#ff4d1a'; g.lineWidth = 4; g.lineCap = 'round';
+        g.strokeStyle = fire ? '#ffb347' : '#ff4d1a'; g.lineWidth = 4; g.lineCap = 'round';
         g.beginPath(); g.moveTo(rim.fx, rim.y); g.lineTo(rim.bx + 4, rim.y); g.stroke();
-        // sparks
         sparks = sparks.filter(function (s) { return s.life > 0; });
         sparks.forEach(function (s) {
           s.x += s.vx; s.y += s.vy; s.vy += .12; s.life -= .025;
           g.globalAlpha = Math.max(0, s.life); g.fillStyle = s.c; g.fillRect(s.x - 2, s.y - 2, 4, 4);
         });
         g.globalAlpha = 1;
-        // aim
         if (drag && ball.ready) {
           var v = pullVec(), vx = v.dx * K, vy = v.dy * K, x = ball.x, y = ball.y;
           var pct = v.len / MAXPULL;
@@ -2372,9 +2817,7 @@
             g.beginPath(); g.arc(x, y, Math.max(1, 3 - k * .06), 0, Math.PI * 2); g.fill();
           }
         }
-        // idle hint
-        if (running && ball.ready && !drag && !shotsTaken) {
-          // first-shot guide: a ghost finger pulls back from the ball, then a dotted arc shows the release
+        if (running && ball.ready && !drag && stats && !stats.shots) {
           var ph = (performance.now() % 1800) / 1800, pull = Math.min(1, ph / .6), k2 = 1 - Math.pow(1 - pull, 3);
           var gx = ball.x - 70 * k2, gy = ball.y + 55 * k2;
           g.strokeStyle = 'rgba(255,255,255,.35)'; g.setLineDash([4, 6]); g.lineWidth = 2;
@@ -2391,21 +2834,29 @@
         if (running && timeLeft > 0) {
           timeLeft = Math.max(0, timeLeft - realDt);
           var shown = Math.ceil(timeLeft);
-          if (elTime.textContent !== '' + shown) elTime.textContent = shown;
+          if (elTime.textContent !== '' + shown) {
+            elTime.textContent = shown;
+            if (shown <= 5 && shown > 0) { elTime.classList.add('hurry'); if (shown !== lastTick) { lastTick = shown; Sound.play('tick'); } }
+            else elTime.classList.remove('hurry');
+          }
           if (timeLeft <= 0 && !shot) finish();
         }
-        physics(dt);
-        render();
-        if ((inView && !document.hidden) && (running || shot || sparks.length || netKick > .01 || ball.drop > 0 || drag)) raf = requestAnimationFrame(frameG);
+        if (W) { physics(dt); render(); }
+        var busy = running || state === 'count' || shot || sparks.length || netKick > .01 || ball.drop > 0 || drag || (hoop && Math.abs(hoop.x - hoop.tx) > .5 && level);
+        if (inView && !document.hidden && busy) raf = requestAnimationFrame(frameG);
       }
       function kick() { if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(frameG); } }
       window.addEventListener('resize', function () { layout(); kick(); });
       document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
       if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { inView = e[0].isIntersecting; if (inView) kick(); }).observe(cv);
       else inView = true;
-      cv.addEventListener('pointerdown', kick);
       (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { layout(); kick(); });
       layout();
+      startScreen();
+      return {
+        play: function () { if (state !== 'play' && state !== 'count') play(); },
+        top3: function (rows) { top3 = rows.slice(0, 3); if (state === 'start') { var ol = $('.go-top3 ol', panel); if (ol) ol.innerHTML = top3Html(); } }
+      };
     })();
   })();
   </script>
