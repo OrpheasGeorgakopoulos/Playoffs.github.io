@@ -1445,9 +1445,9 @@
       }
     ];
 
-    // Online leaderboard (Supabase). Empty = scores are kept on this device only.
-    // Fill in the Project URL and the anon / publishable key from Supabase → Project Settings → API.
-    var LEADERBOARD = { url: '', key: '' };
+    // Online leaderboard (Supabase project "estia-shootout"). The publishable key is meant to be public:
+    // the database only lets visitors read and add scores (see leaderboard-setup.sql). Empty = this device only.
+    var LEADERBOARD = { url: 'https://uoxhwnttdnpfbbspvvea.supabase.co', key: 'sb_publishable_1EmjpqrKhuOq1slJoRrt9A__LYMgQ2e' };
 
     var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var winnerOf = function (g) { return g.pat > g.gly ? 'pat' : g.gly > g.pat ? 'gly' : null; };
