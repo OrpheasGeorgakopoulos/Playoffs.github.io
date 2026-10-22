@@ -24,12 +24,14 @@ create policy "scores are public" on public.scores for select using (true);
 drop policy if exists "anyone can add a score" on public.scores;
 create policy "anyone can add a score" on public.scores for insert with check (true);
 
+-- website visitors may only read and add — never edit, delete or empty the board
+revoke all on public.scores from anon, authenticated;
 grant select, insert on public.scores to anon, authenticated;
 
 -- Anti-spam: one game takes 30+ seconds, so the same name can't post faster than that,
 -- and the whole board accepts at most 30 new scores per minute.
 create or replace function public.scores_guard() returns trigger
-language plpgsql security definer set search_path = public as $$
+language plpgsql set search_path = public as $$
 begin
   new.created_at := now();
   new.name := btrim(regexp_replace(new.name, '\s+', ' ', 'g'));
@@ -46,3 +48,4 @@ end $$;
 drop trigger if exists scores_guard on public.scores;
 create trigger scores_guard before insert on public.scores
   for each row execute function public.scores_guard();
+revoke execute on function public.scores_guard() from public, anon, authenticated;
