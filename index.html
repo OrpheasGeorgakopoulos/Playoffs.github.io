@@ -655,6 +655,12 @@
     .w-badge.pat { background: var(--pat); color: #1a0800; box-shadow: 0 6px 20px var(--pat-glow); }
     .sc-nums .win.pat { color: var(--pat); text-shadow: 0 0 50px rgba(255,122,26,.45); }
     .sc-team.pat.win img { filter: drop-shadow(0 0 30px var(--pat-glow)); }
+    .res-mvp { --c: var(--gly); --c2: var(--gly-2); --glow: var(--gly-glow); display: flex; align-items: center; gap: .7rem; width: fit-content; max-width: 100%; margin: 1rem auto 0; padding: .5rem .9rem .5rem .5rem; border-radius: 999px; background: rgba(255,204,61,.08); border: 1px solid rgba(255,204,61,.35); }
+    .res-mvp.pat { --c: var(--pat); --c2: var(--pat-2); --glow: var(--pat-glow); }
+    .res-mvp .mono { width: 38px; height: 38px; font-size: 1.05rem; border-radius: 50%; margin: 0; flex: none; }
+    .res-mvp small { display: block; font-family: var(--cond); font-weight: 800; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+    .res-mvp b { display: block; font-family: var(--display); font-weight: 900; font-size: 1.25rem; text-transform: uppercase; line-height: 1; }
+    .res-mvp img { width: 28px; height: 28px; object-fit: contain; }
     @keyframes cardIn { from { opacity: .3; transform: translateY(10px) scale(.99); } to { opacity: 1; transform: none; } }
 
     /* ───────── MOBILE ───────── */
@@ -1429,7 +1435,7 @@
       { first: 'Ορφέας', last: 'Πετρόπουλος', mono: 'ΟΠ', before: 'pat', now: 'gly', champ: true, bomb: true, note: 'Πρωταθλητής με την Πατήσια — τώρα φοράει τα μπλε.' },
       { first: 'Μαρίνος', last: 'Σμαραγδάκης', mono: 'ΜΣ', before: 'gly', now: 'gly', note: 'Παραμένει στη Γλυφάδα.' }
     ];
-    // Season 2026–27 games, oldest first. photos: [file, alt text, caption]
+    // Season 2026–27 games, oldest first. mvp: player's last name (optional). photos: [file, alt text, caption]
     var RESULTS = [
       {
         date: 'Πέμπτη 8 Οκτωβρίου 2026', short: '8/10', pat: 86, gly: 88,
@@ -1442,6 +1448,11 @@
           ['media/m1008-free-throw.jpg', 'Παίκτης με την μπάλα πριν τη βολή', 'Βολή'],
           ['media/m1008-in-motion.jpg', 'Παίκτης σε φάση με την μπάλα', 'Σε φάση']
         ]
+      },
+      {
+        date: 'Πέμπτη 22 Οκτωβρίου 2026', short: '22/10', pat: 96, gly: 110, mvp: 'Σμαραγδάκης',
+        title: 'Η Γλυφάδα κάνει το 2–0',
+        text: 'Η Άνω Γλυφάδα νίκησε ξανά τους πρωταθλητές, αυτή τη φορά καθαρά με 14 πόντους διαφορά. Μεγάλος πρωταγωνιστής ο Μαρίνος Σμαραγδάκης.'
       }
     ];
 
@@ -1490,6 +1501,11 @@
         '</div>' +
         '<p class="result-head">' + esc(g.title || 'Τελικό') + ' · <span>' + esc(head) + '</span></p>' +
         (g.text ? '<p class="result-sub">' + esc(g.text) + '</p>' : '') +
+        (function () {
+          var m = g.mvp && PLAYERS.filter(function (pl) { return pl.last === g.mvp; })[0];
+          if (!m) return '';
+          return '<div class="res-mvp ' + m.now + '"><span class="mono">' + esc(m.mono) + '</span><span><small>🏅 MVP αγώνα</small><b>' + esc(m.first + ' ' + m.last) + '</b></span><img src="' + TEAMS[m.now].logo + '" alt="" /></div>';
+        })() +
         '<div class="series" aria-label="Σειρά σεζόν ' + series.pat + '–' + series.gly + '">' +
           '<span class="series-n pat">' + series.pat + '</span>' +
           '<span class="series-bar"><i class="pat" style="width:' + (series.pat / tot * 100) + '%"></i><i class="gly" style="width:' + (series.gly / tot * 100) + '%"></i></span>' +
@@ -1542,10 +1558,12 @@
     function tagsFor(p) {
       var t = [];
       if (p.mvp) t.push('<span class="tag tag-mvp">★ MVP</span>');
+      var gm = RESULTS.filter(function (g) { return g.mvp === p.last; }).length;
+      if (gm) t.push('<span class="tag tag-mvp">🏅 MVP αγώνα' + (gm > 1 ? ' ×' + gm : '') + '</span>');
       if (p.champ) t.push('<span class="tag tag-champ">Πρωταθλητής</span>');
       if (!p.before) t.push('<span class="tag tag-new">✦ Νέος</span>');
       else if (p.before !== p.now) t.push('<span class="tag tag-transfer">⇄ Από ' + TEAMS[p.before].short + '</span>');
-      else if (!p.mvp && !p.champ) t.push('<span class="tag">Παραμένει</span>');
+      else if (!p.mvp && !p.champ && !gm) t.push('<span class="tag">Παραμένει</span>');
       return t.join('');
     }
     ['pat', 'gly'].forEach(function (team) {
