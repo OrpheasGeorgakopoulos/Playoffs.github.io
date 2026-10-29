@@ -422,11 +422,13 @@
     .panel[hidden] { display: none; }
     .panel { animation: fadeIn .45s var(--ease); }
 
-    .interviews { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2vw, 1.4rem); }
+    .interviews { display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); gap: clamp(1rem, 2vw, 1.4rem); justify-content: center; }
     .vcard { border-radius: 22px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
-    .vcard video { width: 100%; aspect-ratio: 16/9; background: #000; object-fit: cover; }
-    .vcard-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; }
+    .vcard video { width: 100%; aspect-ratio: 9/16; background: #000; object-fit: cover; }
+    .vcard-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem .8rem; padding: 1rem 1.2rem; }
     .vcard-meta b { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: 1.4rem; line-height: 1; }
+    .v-open { font-family: var(--cond); font-weight: 800; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); white-space: nowrap; padding: .4rem .7rem; border-radius: 999px; background: rgba(255,204,61,.1); }
+    .reel-open { pointer-events: auto; }
     .vcard-meta span { font-family: var(--cond); font-weight: 700; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 
     .reels { display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); gap: clamp(1rem, 2vw, 1.4rem); justify-content: center; }
@@ -1006,7 +1008,10 @@
     }
     @media (max-width: 680px) {
 
-      .interviews { grid-template-columns: 1fr; }
+      .interviews { grid-template-columns: 1fr 1fr; gap: .7rem; }
+      .vcard { border-radius: 18px; }
+      .vcard-meta { padding: .7rem .75rem; }
+      .vcard-meta b { font-size: 1.1rem; }
       .reels { grid-template-columns: 1fr 1fr; gap: .7rem; }
       .reel { border-radius: 18px; }
       .reel-ui { padding: .8rem; }
@@ -1307,11 +1312,11 @@
           <div class="interviews">
             <div class="vcard">
               <video controls preload="none" playsinline poster="media/interview1-poster.jpg"><source src="media/interview1.mp4" type="video/mp4" /></video>
-              <div class="vcard-meta"><b>Συνέντευξη #1</b><span>0:40</span></div>
+              <div class="vcard-meta"><b>Συνέντευξη #1</b><a class="v-open" href="videos/interview-1/">0:40 · Άνοιγμα ↗</a></div>
             </div>
             <div class="vcard">
               <video controls preload="none" playsinline poster="media/interview2-poster.jpg"><source src="media/interview2.mp4" type="video/mp4" /></video>
-              <div class="vcard-meta"><b>Συνέντευξη #2</b><span>0:58</span></div>
+              <div class="vcard-meta"><b>Συνέντευξη #2</b><a class="v-open" href="videos/interview-2/">0:58 · Άνοιγμα ↗</a></div>
             </div>
           </div>
         </div>
@@ -1321,12 +1326,12 @@
             <div class="reel">
               <span class="reel-live">Clip</span>
               <video muted loop playsinline preload="none" poster="media/blog_1-poster.jpg"><source src="media/blog_1.mp4" type="video/mp4" /></video>
-              <div class="reel-ui"><div><small>Ανάλυση</small><b>Ο δρόμος προς τον τελικό</b></div><button class="sound" aria-label="Ήχος on/off"></button></div>
+              <div class="reel-ui"><div><small>Ανάλυση</small><b><a href="videos/clip-road-to-the-final/" class="reel-open">Ο δρόμος προς τον τελικό ↗</a></b></div><button class="sound" aria-label="Ήχος on/off"></button></div>
             </div>
             <div class="reel">
               <span class="reel-live">Clip</span>
               <video muted loop playsinline preload="none" poster="media/blog_2-poster.jpg"><source src="media/blog_2.mp4" type="video/mp4" /></video>
-              <div class="reel-ui"><div><small>Αφιέρωμα</small><b>Οι πρωταγωνιστές</b></div><button class="sound" aria-label="Ήχος on/off"></button></div>
+              <div class="reel-ui"><div><small>Αφιέρωμα</small><b><a href="videos/clip-protagonists/" class="reel-open">Οι πρωταγωνιστές ↗</a></b></div><button class="sound" aria-label="Ήχος on/off"></button></div>
             </div>
           </div>
         </div>
@@ -1862,7 +1867,7 @@
         if (v.paused) v.play().catch(function () {});
       });
       reel.addEventListener('click', function (e) {
-        if (e.target.closest('.sound')) return;
+        if (e.target.closest('.sound, a')) return;
         if (v.paused) v.play().catch(function () {}); else v.pause();
       });
     });
