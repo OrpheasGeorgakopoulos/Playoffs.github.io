@@ -3,16 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Playoffs Estia · Άνω Πατήσια vs Άνω Γλυφάδα</title>
-  <meta name="description" content="Playoffs Estia — Άνω Πατήσια vs Άνω Γλυφάδα. Νέα σεζόν, νέα ρόστερ, μεταγραφές, πρωταθλητές, βίντεο και φωτογραφίες. Κάθε Πέμπτη 19:15 στο Πάρκο Estia." />
+  <title>Playoffs Estia · Μπάσκετ Άνω Πατήσια vs Άνω Γλυφάδα</title>
+  <meta name="description" content="Playoffs Estia (playoffs.blog): το μπάσκετ Άνω Πατήσια vs Άνω Γλυφάδα κάθε Πέμπτη 19:15 στο Πάρκο Estia. Αποτελέσματα, ρόστερ, μεταγραφές, φωτογραφίες και το Estia Shootout με €1 έπαθλο κάθε εβδομάδα." />
   <meta name="theme-color" content="#07080b" />
   <meta property="og:title" content="Playoffs Estia · Νέα Σεζόν" />
   <meta property="og:description" content="Άνω Πατήσια vs Άνω Γλυφάδα. Νέα ρόστερ, μεγάλες μεταγραφές. Κάθε Πέμπτη 19:15 · Πάρκο Estia." />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Playoffs Estia" />
+  <meta property="og:locale" content="el_GR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="application-name" content="Playoffs Estia" />
+  <meta name="apple-mobile-web-app-title" content="Playoffs" />
   <meta property="og:image" content="https://playoffs.blog/media/champions-poster.jpg" />
   <meta property="og:url" content="https://playoffs.blog/" />
   <link rel="canonical" href="https://playoffs.blog/" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23ff7a1a'/%3E%3Cg fill='none' stroke='%2307080b' stroke-width='3.5'%3E%3Cpath d='M3 32h58M32 3v58'/%3E%3Cpath d='M12 11c8 7 8 35 0 42M52 11c-8 7-8 35 0 42'/%3E%3C/g%3E%3C/svg%3E" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://playoffs.blog/#website",
+        "url": "https://playoffs.blog/",
+        "name": "Playoffs Estia",
+        "alternateName": ["Playoffs", "Playoffs Blog", "playoffs.blog"],
+        "inLanguage": "el",
+        "publisher": { "@id": "https://playoffs.blog/#league" }
+      },
+      {
+        "@type": "SportsOrganization",
+        "@id": "https://playoffs.blog/#league",
+        "name": "Playoffs Estia",
+        "sport": "Basketball",
+        "url": "https://playoffs.blog/",
+        "logo": "https://playoffs.blog/media/icon-512.png",
+        "location": { "@type": "Place", "name": "Πάρκο Estia", "address": { "@type": "PostalAddress", "addressLocality": "Αθήνα", "addressCountry": "GR" } }
+      },
+      { "@type": "SportsTeam", "name": "Άνω Πατήσια", "sport": "Basketball", "logo": "https://playoffs.blog/media/logo-patisia.webp", "memberOf": { "@id": "https://playoffs.blog/#league" } },
+      { "@type": "SportsTeam", "name": "Άνω Γλυφάδα", "sport": "Basketball", "logo": "https://playoffs.blog/media/logo-glyfada.webp", "memberOf": { "@id": "https://playoffs.blog/#league" } }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&family=Sofia+Sans+Condensed:wght@600;700;800&family=Sofia+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -434,6 +469,8 @@
     /* ───────── FOOTER ───────── */
     footer { position: relative; border-top: 1px solid var(--line); padding: clamp(3rem, 8vw, 5rem) 0 2rem; overflow: hidden; }
     .foot-wm { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .8; font-size: clamp(2.6rem, 13.5vw, 15rem); letter-spacing: -.01em; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.12); white-space: nowrap; text-align: center; user-select: none; }
+    .foot-about { margin-top: 1.6rem; max-width: 760px; text-align: center; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+    .foot-about b { color: var(--ink-2); font-weight: 600; }
     .foot-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2rem; font-family: var(--cond); font-weight: 700; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
     .foot-row .champ { color: var(--gold); }
     .foot-logos { display: flex; gap: .8rem; }
@@ -1396,6 +1433,7 @@
   <!-- ───────── FOOTER ───────── -->
   <footer>
     <div class="foot-wm" aria-hidden="true">Playoffs Estia</div>
+    <p class="wrap foot-about">Το <b>Playoffs Estia</b> (playoffs.blog) είναι η σελίδα του εβδομαδιαίου αγώνα μπάσκετ <b>Άνω Πατήσια – Άνω Γλυφάδα</b> στο Πάρκο Estia, κάθε Πέμπτη στις 19:15. Εδώ θα βρεις αποτελέσματα, ρόστερ, μεταγραφές, φωτογραφίες, βίντεο και το mini game Estia Shootout με εβδομαδιαίο leaderboard.</p>
     <div class="wrap foot-row">
       <span>Playoffs Estia · Αθήνα · Σεζόν 2026–27</span>
       <span class="champ">🏆 Πρωταθλητές 2025–26: Άνω Πατήσια</span>
