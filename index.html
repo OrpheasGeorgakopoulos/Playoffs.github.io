@@ -564,6 +564,7 @@
     .last-result { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; padding: .45rem .9rem; border-radius: 999px; background: rgba(7,8,11,.55); backdrop-filter: blur(6px); border: 1px solid rgba(43,184,255,.4); font-family: var(--cond); font-weight: 700; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); transition: border-color .25s, transform .25s var(--ease); }
     .last-result b { color: #fff; font-weight: 800; }
     .last-result b em { font-style: normal; color: var(--gly-2); }
+    .last-result b em.pat { color: var(--pat-2); }
     .last-result:hover { border-color: var(--gly); transform: translateY(-2px); }
 
     /* ───────── MOBILE TAB BAR ───────── */
@@ -699,6 +700,9 @@
     .result.win-pat .result-head span { color: var(--pat-2); }
     .result { transition: border-color .4s, background .4s; }
     @media (max-width: 420px) { .game-chip { padding: .45rem .7rem; font-size: .7rem; gap: .4rem; } }
+    .sc-nums.wide { font-size: clamp(3rem, 11.5vw, 8rem); }
+    .score { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+    .sc-team b { overflow-wrap: anywhere; }
     .res-mvp { --c: var(--gly); --c2: var(--gly-2); --glow: var(--gly-glow); display: flex; align-items: center; gap: .7rem; width: fit-content; max-width: 100%; margin: 1rem auto 0; padding: .5rem .9rem .5rem .5rem; border-radius: 999px; background: rgba(255,204,61,.08); border: 1px solid rgba(255,204,61,.35); }
     .res-mvp.pat { --c: var(--pat); --c2: var(--pat-2); --glow: var(--pat-glow); }
     .res-mvp .mono { width: 38px; height: 38px; font-size: 1.05rem; border-radius: 50%; margin: 0; flex: none; }
@@ -1516,6 +1520,11 @@
         date: 'Πέμπτη 5 Νοεμβρίου 2026', short: '5/11', pat: 105, gly: 108, mvp: 'Δαμίγος',
         title: 'Θρίλερ μέχρι το τέλος',
         text: 'Μόλις 3 πόντοι διαφορά — η Άνω Γλυφάδα κράτησε τη νίκη στο φινάλε και ανεβαίνει στο 4–1 στη σειρά. MVP ο Άρης Δαμίγος.'
+      },
+      {
+        date: 'Πέμπτη 12 Νοεμβρίου 2026', short: '12/11', pat: 138, gly: 128, mvp: 'Ζαλιάρης',
+        title: 'Ρεκόρ σεζόν για την Πατήσια',
+        text: 'Το πιο σκοράτο ματς της χρονιάς (266 πόντοι) πήγε στην Άνω Πατήσια, που μειώνει σε 2–4. MVP ο Ζαλιάρης στην πρώτη του σεζόν στο Estia.'
       }
     ];
 
@@ -1562,7 +1571,7 @@
         '<div class="result-top"><span class="final-badge">Τελικό</span><span>' + esc(g.date) + ' · Πάρκο Estia</span></div>' +
         '<div class="score" role="img" aria-label="' + esc(TEAMS.pat.name + ' ' + g.pat + ', ' + TEAMS.gly.name + ' ' + g.gly) + '">' +
           '<div class="sc-team pat ' + (w === 'pat' ? 'win' : w ? 'lose' : '') + '"><span class="sc-logo"><img src="' + TEAMS.pat.logo + '" alt="" />' + (w === 'pat' ? '<span class="w-badge pat">W</span>' : '') + '</span><b>' + TEAMS.pat.name + '</b></div>' +
-          '<div class="sc-nums" aria-hidden="true"><span class="' + (w === 'pat' ? 'win pat' : 'lose') + '" data-count="' + g.pat + '">0</span><span class="dash">–</span><span class="' + (w === 'gly' ? 'win' : 'lose') + '" data-count="' + g.gly + '">0</span></div>' +
+          '<div class="sc-nums' + (Math.max(g.pat, g.gly) >= 100 ? ' wide' : '') + '" aria-hidden="true"><span class="' + (w === 'pat' ? 'win pat' : 'lose') + '" data-count="' + g.pat + '">0</span><span class="dash">–</span><span class="' + (w === 'gly' ? 'win' : 'lose') + '" data-count="' + g.gly + '">0</span></div>' +
           '<div class="sc-team gly ' + (w === 'gly' ? 'win' : w ? 'lose' : '') + '"><span class="sc-logo"><img src="' + TEAMS.gly.logo + '" alt="" />' + (w === 'gly' ? '<span class="w-badge">W</span>' : '') + '</span><b>' + TEAMS.gly.name + '</b></div>' +
         '</div>' +
         '<p class="result-head">' + esc(g.title || 'Τελικό') + ' · <span>' + esc(head) + '</span></p>' +
@@ -1570,7 +1579,7 @@
         (function () {
           var m = g.mvp && PLAYERS.filter(function (pl) { return pl.last === g.mvp; })[0];
           if (!m) return '';
-          return '<div class="res-mvp ' + m.now + '"><span class="mono">' + esc(m.mono) + '</span><span><small>🏅 MVP αγώνα</small><b>' + esc(m.first + ' ' + m.last) + '</b></span><img src="' + TEAMS[m.now].logo + '" alt="" /></div>';
+          return '<div class="res-mvp ' + m.now + '"><span class="mono">' + esc(m.mono) + '</span><span><small>🏅 MVP αγώνα</small><b>' + esc((m.first ? m.first + ' ' : '') + m.last) + '</b></span><img src="' + TEAMS[m.now].logo + '" alt="" /></div>';
         })() +
         '<div class="series" aria-label="Σειρά σεζόν ' + series.pat + '–' + series.gly + '">' +
           '<span class="series-n pat">' + series.pat + '</span>' +
@@ -1606,7 +1615,7 @@
     // hero pill, ticker headline, team records, who pays
     (function () {
       var w = winnerOf(latest);
-      var hi = function (t) { return w === t ? '<em>' + TEAMS[t].short + ' ' + latest[t] + '</em>' : TEAMS[t].short + ' ' + latest[t]; };
+      var hi = function (t) { return w === t ? '<em class="' + t + '">' + TEAMS[t].short + ' ' + latest[t] + '</em>' : TEAMS[t].short + ' ' + latest[t]; };
       var first = w || 'gly', second = first === 'pat' ? 'gly' : 'pat';
       $('#lastResult').innerHTML = 'Τελευταίο ματς · <b>' + hi(first) + '–' + latest[second] + ' ' + TEAMS[second].short + '</b> →';
       var item = document.createElement('div');
