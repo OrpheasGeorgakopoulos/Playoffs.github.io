@@ -703,6 +703,11 @@
     .sc-nums.wide { font-size: clamp(3rem, 11.5vw, 8rem); }
     .score { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
     .sc-team b { overflow-wrap: anywhere; }
+    .g-paused { position: absolute; inset: 0; z-index: 6; display: grid; place-items: center; text-align: center; padding: 1.5rem; background: repeating-linear-gradient(-45deg, rgba(7,8,11,.86) 0 22px, rgba(20,22,30,.86) 22px 44px); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+    .g-paused[hidden], .lb-timer[hidden] { display: none; }
+    .g-stamp { display: inline-block; padding: .35rem 1.1rem .25rem; border: 4px solid var(--live); border-radius: 10px; color: var(--live); font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: .06em; font-size: clamp(2.4rem, 10vw, 5rem); line-height: 1; transform: rotate(-8deg); box-shadow: 0 0 40px rgba(255,59,78,.25), inset 0 0 20px rgba(255,59,78,.15); text-shadow: 0 0 20px rgba(255,59,78,.35); }
+    .g-paused p { margin-top: 1.6rem; color: var(--ink-2); font-size: .98rem; line-height: 1.5; }
+    html.game-paused .tab-badge { display: none; }
     .res-mvp { --c: var(--gly); --c2: var(--gly-2); --glow: var(--gly-glow); display: flex; align-items: center; gap: .7rem; width: fit-content; max-width: 100%; margin: 1rem auto 0; padding: .5rem .9rem .5rem .5rem; border-radius: 999px; background: rgba(255,204,61,.08); border: 1px solid rgba(255,204,61,.35); }
     .res-mvp.pat { --c: var(--pat); --c2: var(--pat-2); --glow: var(--pat-glow); }
     .res-mvp .mono { width: 38px; height: 38px; font-size: 1.05rem; border-radius: 50%; margin: 0; flex: none; }
@@ -1152,7 +1157,7 @@
       <div class="ticker-item"><span class="k">Μεταγραφή</span> Δημήτριος Κοσμάς → Άνω Πατήσια <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Νέος</span> Ο Ζαλιάρης φοράει τα χρώματα της Πατήσια <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Πρωταθλητές</span> Άνω Πατήσια 2025–26 <span class="sep">🏆</span></div>
-      <div class="ticker-item"><span class="k">Shootout</span> <span class="prize-amt">€1</span> στον νικητή του leaderboard κάθε εβδομάδας 🏆 <span class="sep">🏀</span></div>
+      <div class="ticker-item" id="tickShootout"><span class="k">Shootout</span> <span class="prize-amt">€1</span> στον νικητή του leaderboard κάθε εβδομάδας 🏆 <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Στοίχημα</span> Ο χαμένος κερνάει αστακομακαρονάδα 🦞 <span class="sep">🏀</span></div>
       <div class="ticker-item"><span class="k">Ραντεβού</span> Κάθε Πέμπτη 19:15 · Estia <span class="sep">🏀</span></div>
     </div>
@@ -1350,7 +1355,7 @@
             <div class="sec-kicker"><span class="n">06</span> Mini Game</div>
             <h2 class="sec-title">Estia <span class="o">Shootout</span></h2>
           </div>
-          <p class="sec-lede reveal" style="--d:.1s">30 δευτερόλεπτα, όσα καλάθια μπορείς. Ανέβασε το σκορ σου — ο νικητής κάθε εβδομάδας παίρνει <b class="gold-t"><span class="prize-amt">€1</span></b>.</p>
+          <p class="sec-lede reveal" style="--d:.1s" id="gameLede">30 δευτερόλεπτα, όσα καλάθια μπορείς. Ανέβασε το σκορ σου — ο νικητής κάθε εβδομάδας παίρνει <b class="gold-t"><span class="prize-amt">€1</span></b>.</p>
         </div>
 
         <div class="game reveal" id="gameBox">
@@ -1365,6 +1370,12 @@
           </div>
           <div class="game-pop" id="gPop"></div>
           <div class="g-count" id="gCount" aria-live="assertive"></div>
+          <div class="g-paused" id="gPaused" hidden>
+            <div>
+              <span class="g-stamp">Discontinued</span>
+              <p>Το Estia Shootout είναι προσωρινά εκτός λειτουργίας.<br />Τα σκορ και το leaderboard μένουν εδώ.</p>
+            </div>
+          </div>
           <div class="game-overlay" id="gOverlay">
             <div class="go-inner" id="gPanel"></div>
           </div>
@@ -1376,10 +1387,10 @@
             <div class="lb-coin" aria-hidden="true"><span class="prize-amt">€1</span></div>
             <div class="lb-prize-txt">
               <span class="lb-k">Εβδομαδιαίο έπαθλο</span>
-              <h3>Ο νικητής της εβδομάδας παίρνει <em><span class="prize-amt">€1</span></em></h3>
+              <h3 id="lbPrizeTitle">Ο νικητής της εβδομάδας παίρνει <em><span class="prize-amt">€1</span></em></h3>
               <p id="lbPrizeNote">Η εβδομάδα κλείνει κάθε Πέμπτη στις 19:15 — το <span class="prize-amt">€1</span> δίνεται στο γήπεδο.</p>
             </div>
-            <div class="lb-timer"><span>Κλείνει σε</span><b id="lbCountdown">—</b></div>
+            <div class="lb-timer" id="lbTimer"><span>Κλείνει σε</span><b id="lbCountdown">—</b></div>
           </div>
           <div class="lb-bar">
             <div class="lb-tabs" role="tablist" aria-label="Leaderboard">
@@ -1536,6 +1547,9 @@
     // Online leaderboard (Supabase project "estia-shootout"). The publishable key is meant to be public:
     // the database only lets visitors read and add scores (see leaderboard-setup.sql). Empty = this device only.
     // Weekly Shootout prize in euros. Key = the Thursday the week starts (19:15 Athens); other weeks get PRIZE_DEFAULT.
+    // Estia Shootout switched off for now: shows a "Discontinued" stamp over the game and pauses the prize.
+    // Set to false to bring the game (and the weekly prize) back.
+    var GAME_PAUSED = true;
     var PRIZE_DEFAULT = 1;
     var PRIZES = { '2026-11-12': 2 };
     var LEADERBOARD = { url: 'https://uoxhwnttdnpfbbspvvea.supabase.co', key: 'sb_publishable_1EmjpqrKhuOq1slJoRrt9A__LYMgQ2e' };
@@ -2472,6 +2486,19 @@
       var list = $('#lbList'), view = 'week', weekRows = [], loading = false;
       var myName = function () { return (store('estia-name') || '').toLowerCase(); };
       $('#lbOffline').hidden = LB.online;
+      if (GAME_PAUSED) {
+        document.documentElement.classList.add('game-paused');
+        $('#gPaused').hidden = false;
+        $('#gOverlay').hidden = true;
+        $$('[id="tickShootout"]').forEach(function (el) { el.remove(); }); // the ticker is duplicated for its loop
+        $('#gameLede').textContent = 'Το mini game είναι προσωρινά εκτός λειτουργίας. Τα σκορ και οι νικητές των προηγούμενων εβδομάδων μένουν στο leaderboard.';
+        $('#lbPrizeTitle').textContent = 'Το εβδομαδιαίο έπαθλο είναι σε παύση';
+        $('#lbPrizeNote').textContent = 'Επιστρέφει μαζί με το παιχνίδι.';
+        $('#lbTimer').hidden = true;
+        $('.lb-coin').textContent = '⏸';
+        view = 'all';
+        $$('.lb-tabs button').forEach(function (x) { x.setAttribute('aria-selected', x.getAttribute('data-view') === 'all'); });
+      }
       $$('.prize-amt').forEach(function (el) { el.textContent = prizeNow(); });
       if (!LB.online) $('#lbPrizeNote').textContent = 'Η εβδομάδα κλείνει κάθε Πέμπτη στις 19:15 — το ' + prizeNow() + ' δίνεται στο γήπεδο. Το online leaderboard ανοίγει σύντομα.';
       function teamImg(t) { return TEAMS[t] ? '<img src="' + TEAMS[t].logo + '" alt="' + TEAMS[t].short + '" />' : '<span class="lb-noteam" aria-hidden="true">🏀</span>'; }
@@ -2484,7 +2511,7 @@
           '<span class="lb-score">' + (+r.score) + '</span></li>';
       }
       function empty(msg, withPlay) {
-        list.innerHTML = '<li class="lb-empty">' + msg + (withPlay ? '<br/><button class="btn btn-primary btn-sm" data-play>🏀 Παίξε τώρα</button>' : '') + '</li>';
+        list.innerHTML = '<li class="lb-empty">' + msg + (withPlay && !GAME_PAUSED ? '<br/><button class="btn btn-primary btn-sm" data-play>🏀 Παίξε τώρα</button>' : '') + '</li>';
       }
       function load() {
         if (loading) return; loading = true;
@@ -2494,7 +2521,7 @@
         p.then(function (rows) {
           rows = bestPerName(rows || [], 10);
           if (view === 'week') { weekRows = rows; Game.top3(rows); }
-          if (!rows.length) empty(view === 'week' ? 'Κανένα σκορ ακόμα αυτή την εβδομάδα — γίνε ο πρώτος!' : 'Κανένα σκορ ακόμα.', true);
+          if (!rows.length) empty(view === 'week' ? (GAME_PAUSED ? 'Κανένα σκορ αυτή την εβδομάδα — το παιχνίδι είναι σε παύση.' : 'Κανένα σκορ ακόμα αυτή την εβδομάδα — γίνε ο πρώτος!') : 'Κανένα σκορ ακόμα.', true);
           else list.innerHTML = rows.map(row).join('');
         }).catch(function () {
           empty('Δεν φόρτωσε το leaderboard.<br/><button class="btn btn-ghost btn-sm" data-retry>Δοκίμασε ξανά</button>');
@@ -2731,6 +2758,7 @@
       }
       var countT = null;
       function play() {
+        if (GAME_PAUSED) return;
         Sound.unlock();
         stats = { shots: 0, made: 0, bestStreak: 0, threes: 0, swishes: 0, money: 0 };
         score = 0; streak = 0; timeLeft = 30; level = 0; lastTick = 0;
