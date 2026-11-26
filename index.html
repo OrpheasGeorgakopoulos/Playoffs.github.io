@@ -710,6 +710,7 @@
     html.game-paused .tab-badge { display: none; }
     .res-mvp { --c: var(--gly); --c2: var(--gly-2); --glow: var(--gly-glow); display: flex; align-items: center; gap: .7rem; width: fit-content; max-width: 100%; margin: 1rem auto 0; padding: .5rem .9rem .5rem .5rem; border-radius: 999px; background: rgba(255,204,61,.08); border: 1px solid rgba(255,204,61,.35); }
     .res-mvp.pat { --c: var(--pat); --c2: var(--pat-2); --glow: var(--pat-glow); }
+    .res-mvp.guest { --c: var(--gold); --c2: var(--gold-2); --glow: rgba(255,204,61,.4); padding-right: 1.1rem; }
     .res-mvp .mono { width: 38px; height: 38px; font-size: 1.05rem; border-radius: 50%; margin: 0; flex: none; }
     .res-mvp small { display: block; font-family: var(--cond); font-weight: 800; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
     .res-mvp b { display: block; font-family: var(--display); font-weight: 900; font-size: 1.25rem; text-transform: uppercase; line-height: 1; }
@@ -1498,7 +1499,7 @@
       { first: 'Ορφέας', last: 'Πετρόπουλος', mono: 'ΟΠ', before: 'pat', now: 'gly', champ: true, bomb: true, note: 'Πρωταθλητής με την Πατήσια — τώρα φοράει τα μπλε.' },
       { first: 'Μαρίνος', last: 'Σμαραγδάκης', mono: 'ΜΣ', before: 'gly', now: 'gly', note: 'Παραμένει στη Γλυφάδα.' }
     ];
-    // Season 2026–27 games, oldest first. mvp: player's last name (optional). photos: [file, alt text, caption]
+    // Season 2026–27 games, oldest first. mvp (optional): a roster player's last name, or the full name of someone not on a roster. photos: [file, alt text, caption]
     var RESULTS = [
       {
         date: 'Πέμπτη 8 Οκτωβρίου 2026', short: '8/10', pat: 86, gly: 88,
@@ -1541,6 +1542,11 @@
         date: 'Πέμπτη 19 Νοεμβρίου 2026', short: '19/11', pat: 149, gly: 160, mvp: 'Ηγούμενος',
         title: 'Νέο ρεκόρ: 309 πόντοι',
         text: 'Ένα ακόμα ματς-ρεκόρ στο Estia: 309 πόντοι συνολικά, το πιο σκοράτο της σεζόν. Η Άνω Γλυφάδα κέρδισε με 11 και πάει στο 5–2. MVP ο Χρήστος Ηγούμενος.'
+      },
+      {
+        date: 'Πέμπτη 26 Νοεμβρίου 2026', short: '26/11', pat: 173, gly: 174, mvp: 'Νεφκο Γραμματείας',
+        title: 'Το πιο κλειστό ματς της σεζόν',
+        text: 'Νέο ρεκόρ σεζόν με 347 πόντους συνολικά και μόλις 1 πόντο διαφορά στο τέλος. Η Άνω Γλυφάδα πάει στο 6–2. MVP ο Νεφκο Γραμματείας.'
       }
     ];
 
@@ -1596,8 +1602,13 @@
         '<p class="result-head">' + esc(g.title || 'Τελικό') + ' · <span>' + esc(head) + '</span></p>' +
         (g.text ? '<p class="result-sub">' + esc(g.text) + '</p>' : '') +
         (function () {
-          var m = g.mvp && PLAYERS.filter(function (pl) { return pl.last === g.mvp; })[0];
-          if (!m) return '';
+          if (!g.mvp) return '';
+          var m = PLAYERS.filter(function (pl) { return pl.last === g.mvp; })[0];
+          if (!m) {
+            // MVP who isn't on a roster: show the full name as given, without a team logo
+            var ini = g.mvp.split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase();
+            return '<div class="res-mvp guest"><span class="mono">' + esc(ini) + '</span><span><small>🏅 MVP αγώνα</small><b>' + esc(g.mvp) + '</b></span></div>';
+          }
           return '<div class="res-mvp ' + m.now + '"><span class="mono">' + esc(m.mono) + '</span><span><small>🏅 MVP αγώνα</small><b>' + esc((m.first ? m.first + ' ' : '') + m.last) + '</b></span><img src="' + TEAMS[m.now].logo + '" alt="" /></div>';
         })() +
         '<div class="series" aria-label="Σειρά σεζόν ' + series.pat + '–' + series.gly + '">' +
